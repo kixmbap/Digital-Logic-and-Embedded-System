@@ -111,3 +111,9 @@ Laser Sensor 1 ใช้สำหรับควบคุมประตู 2
 | D9 | Laser TX 1 | ส่งลำแสง Laser |
 | D10 | Laser RX 1 | รับและตรวจจับลำแสง |
 
+Laser Sensor 2 ใช้สำหรับควบคุมประตู 3
+
+| Arduino Pin | Device | Function |
+|---|---|---|
+| D11 | Laser TX 2 | ส่งลำแสง Laser |
+| D12 | Laser RX 2 | รับและตรวจจับลำแสง |
