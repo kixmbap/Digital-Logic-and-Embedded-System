@@ -239,6 +239,10 @@ void loop() {
       door5.write(CLOSED);
       digitalWrite(yellow, HIGH);
       digitalWrite(green, LOW);
+    }else if(door5Locked = true){
+      digitalWrite(yellow, LOW);
+      digitalWrite(green, LOW);
+      digitalWrite(Red, HIGH)
     }
   }
 
