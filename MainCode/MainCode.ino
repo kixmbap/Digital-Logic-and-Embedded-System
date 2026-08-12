@@ -13,6 +13,16 @@ const int SERVO_DOOR3 = 4;
 const int SERVO_DOOR4 = 5;
 const int SERVO_DOOR5 = 6;
 
+// ----------------
+// Led Traffic
+// ----------------
+const int yellow = 13;
+const int green = 14;
+const int red = 15;
+unsigned long light = 0;
+unsigned long mil;
+unsigned long nowmillis;
+
 
 // -------------------------
 // SWITCH
@@ -103,6 +113,15 @@ const unsigned long DOOR5_INTERVAL = 5000;
 void setup() {
 
   Serial.begin(9600);
+
+
+  //=======================
+  // Led Traffic
+  // ======================
+  pinMode(yellow, OUTPUT);
+  pinMode(red, OUTPUT);
+  pinMode(green, OUTPUT);
+  digitalWrite(yellow, HIGH);
 
 
   // ===================================================
@@ -204,6 +223,24 @@ void setup() {
 // =====================================================
 
 void loop() {
+
+  //=============================
+  // Led Traffic
+  //=============================
+  nowmillis = millis();
+  mil = 5000;
+  if(nowmillis - light >= mil){
+    light = nowmillis;
+    if(digitalRead(yellow) == HIGH){
+      door5.write(OPEN);
+      digitalWrite(yellow, LOW);
+      digitalWrite(green, HIGH);
+    }else if(digitalRead(green) == HIGH){
+      door5.write(CLOSED);
+      digitalWrite(yellow, HIGH);
+      digitalWrite(green, LOW);
+    }
+  }
 
 
   // ===================================================
