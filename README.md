@@ -121,7 +121,7 @@ Laser Sensor 2 ใช้สำหรับควบคุมประตู 3
 ---
 
 ### 4.4 LED Traffic
-Led Traffic เชื่อมประตู 5
+Led Traffic เซอร์โว 5
 | Arduino Pin | Device | Function |
 |---|---|---|
 | D13 | Red | ประตูปิดถาวรเมื่อ ประตู3เปิด |
