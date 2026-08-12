@@ -1,0 +1,2181 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Robot Field Dashboard</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+
+    margin: 0;
+
+    font-family:
+        Arial,
+        "Noto Sans Thai",
+        sans-serif;
+
+    background: #eef1f5;
+
+    color: #1f2937;
+
+}
+
+
+/* =====================================================
+   MAIN LAYOUT
+===================================================== */
+
+.app {
+
+    min-height: 100vh;
+
+    display: flex;
+
+    flex-direction: column;
+
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.header {
+
+    height: 76px;
+
+    background: #ffffff;
+
+    border-bottom: 1px solid #e5e7eb;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0 28px;
+
+}
+
+
+.logo {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+}
+
+
+.logo-icon {
+
+    width: 44px;
+
+    height: 44px;
+
+    border-radius: 12px;
+
+    background: #111827;
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 23px;
+
+}
+
+
+.logo-text h1 {
+
+    margin: 0;
+
+    font-size: 21px;
+
+}
+
+
+.logo-text span {
+
+    font-size: 12px;
+
+    color: #6b7280;
+
+}
+
+
+/* =====================================================
+   CONNECTION
+===================================================== */
+
+.connection {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 9px 15px;
+
+    border-radius: 20px;
+
+    background: #ecfdf3;
+
+    color: #15803d;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+}
+
+
+.connection-dot {
+
+    width: 9px;
+
+    height: 9px;
+
+    border-radius: 50%;
+
+    background: #22c55e;
+
+    box-shadow:
+        0 0 0 4px #dcfce7;
+
+}
+
+
+/* =====================================================
+   CONTENT
+===================================================== */
+
+.content {
+
+    flex: 1;
+
+    padding: 22px;
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        320px;
+
+    gap: 20px;
+
+}
+
+
+/* =====================================================
+   FIELD PANEL
+===================================================== */
+
+.field-panel {
+
+    background: white;
+
+    border-radius: 16px;
+
+    border: 1px solid #e5e7eb;
+
+    overflow: hidden;
+
+    display: flex;
+
+    flex-direction: column;
+
+}
+
+
+.panel-header {
+
+    height: 62px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0 20px;
+
+    border-bottom: 1px solid #e5e7eb;
+
+}
+
+
+.panel-title {
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+}
+
+
+.panel-subtitle {
+
+    font-size: 12px;
+
+    color: #9ca3af;
+
+    margin-top: 3px;
+
+}
+
+
+.legend {
+
+    display: flex;
+
+    gap: 15px;
+
+    font-size: 11px;
+
+    color: #6b7280;
+
+}
+
+
+.legend-item {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+}
+
+
+.legend-dot {
+
+    width: 8px;
+
+    height: 8px;
+
+    border-radius: 50%;
+
+}
+
+
+.legend-green {
+    background: #22c55e;
+}
+
+
+.legend-red {
+    background: #ef4444;
+}
+
+
+.legend-blue {
+    background: #06b6d4;
+}
+
+
+/* =====================================================
+   FIELD
+===================================================== */
+
+.field {
+
+    position: relative;
+
+    flex: 1;
+
+    min-height: 600px;
+
+    background:
+        linear-gradient(
+            rgba(229,231,235,.45) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(229,231,235,.45) 1px,
+            transparent 1px
+        );
+
+    background-size: 35px 35px;
+
+    overflow: hidden;
+
+}
+
+
+/* =====================================================
+   FIELD BORDER
+===================================================== */
+
+.field-border {
+
+    position: absolute;
+
+    left: 5%;
+
+    right: 5%;
+
+    top: 7%;
+
+    bottom: 7%;
+
+    border: 3px solid #374151;
+
+    border-radius: 14px;
+
+}
+
+
+/* =====================================================
+   PATH
+===================================================== */
+
+.path {
+
+    position: absolute;
+
+    height: 6px;
+
+    background: #d1d5db;
+
+    border-radius: 10px;
+
+    transform-origin: left center;
+
+    z-index: 1;
+
+}
+
+
+.path.active {
+
+    background: #60a5fa;
+
+    box-shadow:
+        0 0 8px rgba(59,130,246,.45);
+
+}
+
+
+/* PATH 1 */
+
+.path1 {
+
+    left: 15%;
+
+    top: 20%;
+
+    width: 24%;
+
+}
+
+
+/* PATH 2 */
+
+.path2 {
+
+    left: 38%;
+
+    top: 20%;
+
+    width: 20%;
+
+    transform: rotate(25deg);
+
+}
+
+
+/* PATH 3 */
+
+.path3 {
+
+    left: 54%;
+
+    top: 31%;
+
+    width: 19%;
+
+    transform: rotate(-5deg);
+
+}
+
+
+/* PATH 4 */
+
+.path4 {
+
+    left: 60%;
+
+    top: 30%;
+
+    width: 2px;
+
+    height: 150px;
+
+    transform: rotate(0);
+
+}
+
+
+/* PATH 5 */
+
+.path5 {
+
+    left: 60%;
+
+    top: 55%;
+
+    width: 23%;
+
+}
+
+
+/* PATH 6 */
+
+.path6 {
+
+    left: 30%;
+
+    top: 65%;
+
+    width: 53%;
+
+}
+
+
+/* =====================================================
+   FIELD NODE
+===================================================== */
+
+.field-node {
+
+    position: absolute;
+
+    width: 48px;
+
+    height: 48px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 20px;
+
+    font-weight: bold;
+
+    z-index: 5;
+
+    transition: .25s;
+
+    box-shadow:
+        0 4px 12px rgba(0,0,0,.12);
+
+}
+
+
+.field-node:hover {
+
+    transform: scale(1.12);
+
+}
+
+
+/* =====================================================
+   NODE STATUS
+===================================================== */
+
+.node-open {
+
+    background: #dcfce7;
+
+    border: 3px solid #22c55e;
+
+    color: #15803d;
+
+}
+
+
+.node-closed {
+
+    background: #fee2e2;
+
+    border: 3px solid #ef4444;
+
+    color: #b91c1c;
+
+}
+
+
+.node-detected {
+
+    background: #cffafe;
+
+    border: 3px solid #06b6d4;
+
+    color: #0891b2;
+
+}
+
+
+.node-off {
+
+    background: #f3f4f6;
+
+    border: 3px solid #9ca3af;
+
+    color: #6b7280;
+
+}
+
+
+/* =====================================================
+   NODE POSITIONS
+===================================================== */
+
+.start {
+
+    left: 10%;
+
+    top: 13%;
+
+}
+
+
+.switch1 {
+
+    left: 28%;
+
+    top: 13%;
+
+}
+
+
+.door1 {
+
+    left: 28%;
+
+    top: 28%;
+
+}
+
+
+.laser1 {
+
+    left: 48%;
+
+    top: 18%;
+
+}
+
+
+.door2 {
+
+    left: 49%;
+
+    top: 34%;
+
+}
+
+
+.door3 {
+
+    left: 49%;
+
+    top: 53%;
+
+}
+
+
+.laser2 {
+
+    left: 76%;
+
+    top: 28%;
+
+}
+
+
+.door4 {
+
+    left: 72%;
+
+    top: 43%;
+
+}
+
+
+.switch2 {
+
+    left: 27%;
+
+    top: 67%;
+
+}
+
+
+.door5 {
+
+    left: 60%;
+
+    top: 67%;
+
+}
+
+
+.end {
+
+    left: 84%;
+
+    top: 67%;
+
+}
+
+
+/* =====================================================
+   NODE LABEL
+===================================================== */
+
+.node-label {
+
+    position: absolute;
+
+    transform: translateX(-50%);
+
+    text-align: center;
+
+    z-index: 6;
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    color: #374151;
+
+    white-space: nowrap;
+
+}
+
+
+.node-label small {
+
+    display: block;
+
+    color: #9ca3af;
+
+    font-weight: normal;
+
+    margin-top: 2px;
+
+}
+
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
+.sidebar {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 16px;
+
+}
+
+
+/* =====================================================
+   CARD
+===================================================== */
+
+.card {
+
+    background: white;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 16px;
+
+    padding: 18px;
+
+}
+
+
+.card-title {
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    margin-bottom: 14px;
+
+}
+
+
+/* =====================================================
+   SUMMARY
+===================================================== */
+
+.summary {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 10px;
+
+}
+
+
+.summary-box {
+
+    padding: 13px;
+
+    background: #f9fafb;
+
+    border-radius: 10px;
+
+}
+
+
+.summary-number {
+
+    font-size: 24px;
+
+    font-weight: bold;
+
+}
+
+
+.summary-text {
+
+    font-size: 11px;
+
+    color: #6b7280;
+
+}
+
+
+/* =====================================================
+   DEVICE LIST
+===================================================== */
+
+.device {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 11px 0;
+
+    border-bottom: 1px solid #f1f5f9;
+
+}
+
+
+.device:last-child {
+
+    border-bottom: none;
+
+}
+
+
+.device-left {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+}
+
+
+.device-icon {
+
+    width: 34px;
+
+    height: 34px;
+
+    border-radius: 9px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: #f3f4f6;
+
+}
+
+
+.device-name {
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+}
+
+
+.device-type {
+
+    font-size: 10px;
+
+    color: #9ca3af;
+
+}
+
+
+.badge {
+
+    padding: 4px 8px;
+
+    border-radius: 20px;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+}
+
+
+.badge-open {
+
+    background: #dcfce7;
+
+    color: #15803d;
+
+}
+
+
+.badge-closed {
+
+    background: #fee2e2;
+
+    color: #b91c1c;
+
+}
+
+
+.badge-detected {
+
+    background: #cffafe;
+
+    color: #0e7490;
+
+}
+
+
+.badge-off {
+
+    background: #f3f4f6;
+
+    color: #6b7280;
+
+}
+
+
+/* =====================================================
+   LOG
+===================================================== */
+
+.log {
+
+    height: 190px;
+
+    overflow-y: auto;
+
+    background: #111827;
+
+    border-radius: 10px;
+
+    padding: 10px;
+
+    font-family: Consolas, monospace;
+
+    font-size: 11px;
+
+}
+
+
+.log-line {
+
+    color: #d1d5db;
+
+    padding: 3px 0;
+
+}
+
+
+.log-line:last-child {
+
+    color: #4ade80;
+
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 1000px) {
+
+    .content {
+
+        grid-template-columns: 1fr;
+
+    }
+
+    .sidebar {
+
+        display: grid;
+
+        grid-template-columns:
+            1fr 1fr;
+
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .header {
+
+        padding: 0 15px;
+
+    }
+
+    .legend {
+
+        display: none;
+
+    }
+
+    .content {
+
+        padding: 10px;
+
+    }
+
+    .sidebar {
+
+        display: flex;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="header">
+
+
+    <div class="logo">
+
+        <div class="logo-icon">
+
+            🤖
+
+        </div>
+
+
+        <div class="logo-text">
+
+            <h1>Robot Field</h1>
+
+            <span>
+                Digital Logic & Embedded System
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="connection">
+
+        <div class="connection-dot"></div>
+
+        <span id="connectionText">
+
+            ARDUINO ONLINE
+
+        </span>
+
+    </div>
+
+
+</header>
+
+
+
+<!-- =====================================================
+     CONTENT
+===================================================== -->
+
+<main class="content">
+
+
+<!-- =====================================================
+     FIELD
+===================================================== -->
+
+<section class="field-panel">
+
+
+    <div class="panel-header">
+
+        <div>
+
+            <div class="panel-title">
+
+                Field Map
+
+            </div>
+
+            <div class="panel-subtitle">
+
+                Real-time robot monitoring
+
+            </div>
+
+        </div>
+
+
+        <div class="legend">
+
+            <div class="legend-item">
+
+                <div class="legend-dot legend-green"></div>
+
+                OPEN
+
+            </div>
+
+
+            <div class="legend-item">
+
+                <div class="legend-dot legend-red"></div>
+
+                CLOSED
+
+            </div>
+
+
+            <div class="legend-item">
+
+                <div class="legend-dot legend-blue"></div>
+
+                DETECTED
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="field">
+
+
+        <div class="field-border"></div>
+
+
+        <!-- PATH -->
+
+        <div class="path path1"></div>
+
+        <div class="path path2"></div>
+
+        <div class="path path3"></div>
+
+        <div class="path path4"></div>
+
+        <div class="path path5"></div>
+
+        <div class="path path6"></div>
+
+
+
+        <!-- START -->
+
+        <div id="start"
+             class="field-node start node-open">
+
+            ▶
+
+        </div>
+
+        <div class="node-label"
+             style="left: 12%; top: 22%;">
+
+            START
+
+        </div>
+
+
+
+        <!-- SWITCH 1 -->
+
+        <div id="switch1"
+             class="field-node switch1 node-off">
+
+            S
+
+        </div>
+
+        <div class="node-label"
+             style="left: 30%; top: 22%;">
+
+            SWITCH 1
+
+            <small>Door 1</small>
+
+        </div>
+
+
+
+        <!-- DOOR 1 -->
+
+        <div id="door1"
+             class="field-node door1 node-closed">
+
+            🔒
+
+        </div>
+
+        <div class="node-label"
+             style="left: 30%; top: 38%;">
+
+            DOOR 1
+
+            <small>PIN 2</small>
+
+        </div>
+
+
+
+        <!-- LASER 1 -->
+
+        <div id="laser1"
+             class="field-node laser1 node-off">
+
+            L1
+
+        </div>
+
+        <div class="node-label"
+             style="left: 51%; top: 13%;">
+
+            LASER 1
+
+            <small>Sensor</small>
+
+        </div>
+
+
+
+        <!-- DOOR 2 -->
+
+        <div id="door2"
+             class="field-node door2 node-closed">
+
+            🔒
+
+        </div>
+
+        <div class="node-label"
+             style="left: 52%; top: 44%;">
+
+            DOOR 2
+
+            <small>PIN 3</small>
+
+        </div>
+
+
+
+        <!-- DOOR 3 -->
+
+        <div id="door3"
+             class="field-node door3 node-closed">
+
+            🔒
+
+        </div>
+
+        <div class="node-label"
+             style="left: 52%; top: 63%;">
+
+            DOOR 3
+
+            <small>PIN 4</small>
+
+        </div>
+
+
+
+        <!-- LASER 2 -->
+
+        <div id="laser2"
+             class="field-node laser2 node-off">
+
+            L2
+
+        </div>
+
+        <div class="node-label"
+             style="left: 78%; top: 23%;">
+
+            LASER 2
+
+            <small>Sensor</small>
+
+        </div>
+
+
+
+        <!-- DOOR 4 -->
+
+        <div id="door4"
+             class="field-node door4 node-closed">
+
+            🔒
+
+        </div>
+
+        <div class="node-label"
+             style="left: 75%; top: 54%;">
+
+            DOOR 4
+
+            <small>PIN 5</small>
+
+        </div>
+
+
+
+        <!-- SWITCH 2 -->
+
+        <div id="switch2"
+             class="field-node switch2 node-off">
+
+            S
+
+        </div>
+
+        <div class="node-label"
+             style="left: 29%; top: 76%;">
+
+            SWITCH 2
+
+            <small>Door 4</small>
+
+        </div>
+
+
+
+        <!-- DOOR 5 -->
+
+        <div id="door5"
+             class="field-node door5 node-closed">
+
+            🔒
+
+        </div>
+
+        <div class="node-label"
+             style="left: 62%; top: 76%;">
+
+            DOOR 5
+
+            <small>Auto</small>
+
+        </div>
+
+
+
+        <!-- END -->
+
+        <div id="end"
+             class="field-node end node-open">
+
+            ✓
+
+        </div>
+
+        <div class="node-label"
+             style="left: 86%; top: 76%;">
+
+            END
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside class="sidebar">
+
+
+    <!-- SUMMARY -->
+
+    <div class="card">
+
+        <div class="card-title">
+
+            Field Status
+
+        </div>
+
+
+        <div class="summary">
+
+
+            <div class="summary-box">
+
+                <div id="openCount"
+                     class="summary-number">
+
+                    0
+
+                </div>
+
+                <div class="summary-text">
+
+                    Doors Open
+
+                </div>
+
+            </div>
+
+
+            <div class="summary-box">
+
+                <div id="laserCount"
+                     class="summary-number">
+
+                    0
+
+                </div>
+
+                <div class="summary-text">
+
+                    Laser Active
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- DEVICES -->
+
+    <div class="card">
+
+        <div class="card-title">
+
+            Devices
+
+        </div>
+
+
+
+        <!-- DOOR 1 -->
+
+        <div class="device">
+
+            <div class="device-left">
+
+                <div class="device-icon">
+
+                    🚪
+
+                </div>
+
+                <div>
+
+                    <div class="device-name">
+
+                        Door 1
+
+                    </div>
+
+                    <div class="device-type">
+
+                        Digital Output
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div id="door1Status"
+                 class="badge badge-closed">
+
+                CLOSED
+
+            </div>
+
+        </div>
+
+
+
+        <!-- DOOR 2 -->
+
+        <div class="device">
+
+            <div class="device-left">
+
+                <div class="device-icon">
+
+                    🚪
+
+                </div>
+
+                <div>
+
+                    <div class="device-name">
+
+                        Door 2
+
+                    </div>
+
+                    <div class="device-type">
+
+                        Laser Trigger
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div id="door2Status"
+                 class="badge badge-closed">
+
+                CLOSED
+
+            </div>
+
+        </div>
+
+
+
+        <!-- DOOR 3 -->
+
+        <div class="device">
+
+            <div class="device-left">
+
+                <div class="device-icon">
+
+                    🚪
+
+                </div>
+
+                <div>
+
+                    <div class="device-name">
+
+                        Door 3
+
+                    </div>
+
+                    <div class="device-type">
+
+                        Laser Trigger
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div id="door3Status"
+                 class="badge badge-closed">
+
+                CLOSED
+
+            </div>
+
+        </div>
+
+
+
+        <!-- DOOR 4 -->
+
+        <div class="device">
+
+            <div class="device-left">
+
+                <div class="device-icon">
+
+                    🚪
+
+                </div>
+
+                <div>
+
+                    <div class="device-name">
+
+                        Door 4
+
+                    </div>
+
+                    <div class="device-type">
+
+                        Switch
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div id="door4Status"
+                 class="badge badge-closed">
+
+                CLOSED
+
+            </div>
+
+        </div>
+
+
+
+        <!-- DOOR 5 -->
+
+        <div class="device">
+
+            <div class="device-left">
+
+                <div class="device-icon">
+
+                    🚪
+
+                </div>
+
+                <div>
+
+                    <div class="device-name">
+
+                        Door 5
+
+                    </div>
+
+                    <div class="device-type">
+
+                        Automatic
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div id="door5Status"
+                 class="badge badge-closed">
+
+                CLOSED
+
+            </div>
+
+        </div>
+
+
+
+        <!-- LASER -->
+
+        <div class="device">
+
+            <div class="device-left">
+
+                <div class="device-icon">
+
+                    ⚡
+
+                </div>
+
+                <div>
+
+                    <div class="device-name">
+
+                        Laser 1
+
+                    </div>
+
+                    <div class="device-type">
+
+                        Sensor
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div id="laser1Status"
+                 class="badge badge-off">
+
+                OFF
+
+            </div>
+
+        </div>
+
+
+
+        <div class="device">
+
+            <div class="device-left">
+
+                <div class="device-icon">
+
+                    ⚡
+
+                </div>
+
+                <div>
+
+                    <div class="device-name">
+
+                        Laser 2
+
+                    </div>
+
+                    <div class="device-type">
+
+                        Sensor
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div id="laser2Status"
+                 class="badge badge-off">
+
+                OFF
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- LOG -->
+
+    <div class="card">
+
+        <div class="card-title">
+
+            Recent Events
+
+        </div>
+
+
+        <div id="log"
+             class="log">
+
+            Waiting for Arduino...
+
+        </div>
+
+    </div>
+
+
+</aside>
+
+
+</main>
+
+
+</div>
+
+
+
+<script>
+
+
+// =====================================================
+// DOOR
+// =====================================================
+
+function updateDoor(id, status) {
+
+    const node =
+        document.getElementById(id);
+
+    const badge =
+        document.getElementById(
+            id + "Status"
+        );
+
+
+    if (!node) return;
+
+
+    node.classList.remove(
+        "node-open",
+        "node-closed"
+    );
+
+
+    if (status === "OPEN") {
+
+        node.classList.add(
+            "node-open"
+        );
+
+        node.innerHTML = "🔓";
+
+
+        if (badge) {
+
+            badge.className =
+                "badge badge-open";
+
+            badge.innerHTML =
+                "OPEN";
+
+        }
+
+    }
+
+    else {
+
+        node.classList.add(
+            "node-closed"
+        );
+
+        node.innerHTML = "🔒";
+
+
+        if (badge) {
+
+            badge.className =
+                "badge badge-closed";
+
+            badge.innerHTML =
+                "CLOSED";
+
+        }
+
+    }
+
+}
+
+
+// =====================================================
+// LASER
+// =====================================================
+
+function updateLaser(id, status) {
+
+    const node =
+        document.getElementById(id);
+
+    const badge =
+        document.getElementById(
+            id + "Status"
+        );
+
+
+    if (!node) return;
+
+
+    node.classList.remove(
+        "node-detected",
+        "node-off"
+    );
+
+
+    if (status === "DETECTED") {
+
+        node.classList.add(
+            "node-detected"
+        );
+
+        node.innerHTML = "⚡";
+
+
+        if (badge) {
+
+            badge.className =
+                "badge badge-detected";
+
+            badge.innerHTML =
+                "DETECTED";
+
+        }
+
+    }
+
+    else {
+
+        node.classList.add(
+            "node-off"
+        );
+
+        node.innerHTML =
+            id === "laser1"
+                ? "L1"
+                : "L2";
+
+
+        if (badge) {
+
+            badge.className =
+                "badge badge-off";
+
+            badge.innerHTML =
+                "OFF";
+
+        }
+
+    }
+
+}
+
+
+// =====================================================
+// SWITCH
+// =====================================================
+
+function updateSwitch(id, status) {
+
+    const node =
+        document.getElementById(id);
+
+
+    if (!node) return;
+
+
+    node.classList.remove(
+        "node-open",
+        "node-off"
+    );
+
+
+    if (status === "ON") {
+
+        node.classList.add(
+            "node-open"
+        );
+
+        node.innerHTML = "S";
+
+    }
+
+    else {
+
+        node.classList.add(
+            "node-off"
+        );
+
+        node.innerHTML = "S";
+
+    }
+
+}
+
+
+// =====================================================
+// DASHBOARD
+// =====================================================
+
+async function updateDashboard() {
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/state"
+            );
+
+
+        const data =
+            await response.json();
+
+
+        const state =
+            data.state;
+
+
+        // =============================================
+        // CONNECTION
+        // =============================================
+
+        document
+            .getElementById(
+                "connectionText"
+            )
+            .innerText =
+            "ARDUINO ONLINE";
+
+
+        // =============================================
+        // DOORS
+        // =============================================
+
+        updateDoor(
+            "door1",
+            state.door1
+        );
+
+
+        updateDoor(
+            "door2",
+            state.door2
+        );
+
+
+        updateDoor(
+            "door3",
+            state.door3
+        );
+
+
+        updateDoor(
+            "door4",
+            state.door4
+        );
+
+
+        updateDoor(
+            "door5",
+            state.door5
+        );
+
+
+        // =============================================
+        // LASERS
+        // =============================================
+
+        updateLaser(
+            "laser1",
+            state.laser1
+        );
+
+
+        updateLaser(
+            "laser2",
+            state.laser2
+        );
+
+
+        // =============================================
+        // SWITCHES
+        // =============================================
+
+        updateSwitch(
+            "switch1",
+            state.switch1
+        );
+
+
+        updateSwitch(
+            "switch2",
+            state.switch2
+        );
+
+
+        // =============================================
+        // SUMMARY
+        // =============================================
+
+        const doors = [
+
+            state.door1,
+
+            state.door2,
+
+            state.door3,
+
+            state.door4,
+
+            state.door5
+
+        ];
+
+
+        const openDoors =
+            doors.filter(
+                door =>
+                    door === "OPEN"
+            ).length;
+
+
+        const lasers = [
+
+            state.laser1,
+
+            state.laser2
+
+        ];
+
+
+        const activeLasers =
+            lasers.filter(
+                laser =>
+                    laser === "DETECTED"
+            ).length;
+
+
+        document
+            .getElementById(
+                "openCount"
+            )
+            .innerText =
+            openDoors;
+
+
+        document
+            .getElementById(
+                "laserCount"
+            )
+            .innerText =
+            activeLasers;
+
+
+        // =============================================
+        // LOG
+        // =============================================
+
+        const log =
+            document.getElementById(
+                "log"
+            );
+
+
+        if (
+            data.messages &&
+            data.messages.length > 0
+        ) {
+
+            log.innerHTML =
+                data.messages
+                    .slice(-15)
+                    .map(
+                        message =>
+                            `<div class="log-line">${message}</div>`
+                    )
+                    .join("");
+
+            log.scrollTop =
+                log.scrollHeight;
+
+        }
+
+    }
+
+
+    catch (error) {
+
+        console.error(
+            "Dashboard Error:",
+            error
+        );
+
+
+        document
+            .getElementById(
+                "connectionText"
+            )
+            .innerText =
+            "SERVER DISCONNECTED";
+
+    }
+
+}
+
+
+// =====================================================
+// UPDATE EVERY 500ms
+// =====================================================
+
+setInterval(
+    updateDashboard,
+    500
+);
+
+
+updateDashboard();
+
+
+</script>
+
+
+</body>
+
+</html>
