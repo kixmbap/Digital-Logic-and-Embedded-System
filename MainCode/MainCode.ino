@@ -227,6 +227,12 @@ void loop() {
   //=============================
   // Led Traffic
   //=============================
+  if(door5Locked == true){
+    door5.write(CLOSED);
+    digitalWrite(yellow, LOW);
+    digitalWrite(green, LOW);
+    digitalWrite(red, HIGH);
+  }
   nowmillis = millis();
   mil = 5000;
   if(nowmillis - light >= mil){
