@@ -227,6 +227,11 @@ void loop() {
   //=============================
   // Led Traffic
   //=============================
+  if(door5Locked == true){
+    digitalWrite(yellow, LOW);
+    digitalWrite(green, LOW);
+    digitalWrite(red, HIGH);
+  }
   nowmillis = millis();
   mil = 5000;
   if(nowmillis - light >= mil){
@@ -241,11 +246,6 @@ void loop() {
       digitalWrite(green, LOW);
     }
   }
-  if(door5Locked = true){
-      digitalWrite(yellow, LOW);
-      digitalWrite(green, LOW);
-      digitalWrite(red, HIGH);
-    }
 
 
   // ===================================================
