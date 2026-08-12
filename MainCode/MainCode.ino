@@ -16,9 +16,9 @@ const int SERVO_DOOR5 = 6;
 // ----------------
 // Led Traffic
 // ----------------
-const int yellow = 13;
-const int green = 14;
-const int red = 15;
+const int yellow = 14;
+const int green = 15;
+const int red = 16;
 unsigned long light = 0;
 unsigned long mil;
 unsigned long nowmillis;
