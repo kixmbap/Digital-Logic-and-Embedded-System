@@ -28,12 +28,8 @@ body {
     background: #eef1f5;
 
     color: #1f2937;
+
 }
-
-
-/* =====================================================
-   MAIN LAYOUT
-===================================================== */
 
 .app {
 
@@ -44,7 +40,6 @@ body {
     flex-direction: column;
 
 }
-
 
 /* =====================================================
    HEADER
@@ -68,7 +63,6 @@ body {
 
 }
 
-
 .logo {
 
     display: flex;
@@ -78,7 +72,6 @@ body {
     gap: 14px;
 
 }
-
 
 .logo-icon {
 
@@ -98,12 +91,9 @@ body {
 
     justify-content: center;
 
-    font-size: 16px;
-
-    font-weight: bold;
+    font-size: 23px;
 
 }
-
 
 .logo-text h1 {
 
@@ -113,7 +103,6 @@ body {
 
 }
 
-
 .logo-text span {
 
     font-size: 12px;
@@ -122,6 +111,55 @@ body {
 
 }
 
+.header-right {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+}
+
+/* =====================================================
+   SOUND BUTTON
+===================================================== */
+
+.sound-button {
+
+    border: none;
+
+    background: #f3f4f6;
+
+    color: #374151;
+
+    padding: 9px 14px;
+
+    border-radius: 20px;
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: .2s;
+
+}
+
+.sound-button:hover {
+
+    background: #e5e7eb;
+
+}
+
+.sound-button.enabled {
+
+    background: #dcfce7;
+
+    color: #15803d;
+
+}
 
 /* =====================================================
    CONNECTION
@@ -149,7 +187,6 @@ body {
 
 }
 
-
 .connection-dot {
 
     width: 9px;
@@ -164,7 +201,6 @@ body {
         0 0 0 4px #dcfce7;
 
 }
-
 
 /* =====================================================
    CONTENT
@@ -186,7 +222,6 @@ body {
 
 }
 
-
 /* =====================================================
    FIELD PANEL
 ===================================================== */
@@ -207,7 +242,6 @@ body {
 
 }
 
-
 .panel-header {
 
     height: 62px;
@@ -224,7 +258,6 @@ body {
 
 }
 
-
 .panel-title {
 
     font-size: 16px;
@@ -232,7 +265,6 @@ body {
     font-weight: bold;
 
 }
-
 
 .panel-subtitle {
 
@@ -243,7 +275,6 @@ body {
     margin-top: 3px;
 
 }
-
 
 .legend {
 
@@ -257,7 +288,6 @@ body {
 
 }
 
-
 .legend-item {
 
     display: flex;
@@ -267,7 +297,6 @@ body {
     gap: 5px;
 
 }
-
 
 .legend-dot {
 
@@ -279,21 +308,17 @@ body {
 
 }
 
-
 .legend-green {
     background: #22c55e;
 }
-
 
 .legend-red {
     background: #ef4444;
 }
 
-
 .legend-blue {
     background: #06b6d4;
 }
-
 
 /* =====================================================
    FIELD
@@ -309,12 +334,12 @@ body {
 
     background:
         linear-gradient(
-            rgba(229,231,235,.25) 1px,
+            rgba(229,231,235,.45) 1px,
             transparent 1px
         ),
         linear-gradient(
             90deg,
-            rgba(229,231,235,.25) 1px,
+            rgba(229,231,235,.45) 1px,
             transparent 1px
         );
 
@@ -324,16 +349,123 @@ body {
 
 }
 
-
 /* =====================================================
-   ไม่มี FIELD BORDER
+   TIMER
 ===================================================== */
 
+.race-timer {
+
+    position: absolute;
+
+    left: 20px;
+
+    top: 20px;
+
+    z-index: 30;
+
+    min-width: 170px;
+
+    padding: 12px 16px;
+
+    background: rgba(255,255,255,.96);
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 5px 18px rgba(0,0,0,.12);
+
+}
+
+.timer-title {
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    color: #6b7280;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 3px;
+
+}
+
+.timer-value {
+
+    font-family: Consolas, monospace;
+
+    font-size: 26px;
+
+    font-weight: bold;
+
+    color: #374151;
+
+    letter-spacing: 1px;
+
+}
+
+.timer-status {
+
+    margin-top: 3px;
+
+    font-size: 10px;
+
+    color: #9ca3af;
+
+}
+
+.race-timer.running {
+
+    border-color: #22c55e;
+
+    box-shadow:
+        0 0 0 3px rgba(34,197,94,.10),
+        0 5px 18px rgba(0,0,0,.12);
+
+}
+
+.race-timer.running .timer-value {
+
+    color: #15803d;
+
+}
+
+.race-timer.running .timer-status {
+
+    color: #15803d;
+
+}
 
 /* =====================================================
-   ไม่มี PATH / WALL
+   PATH
 ===================================================== */
 
+.path {
+
+    position: absolute;
+
+    height: 6px;
+
+    background: #d1d5db;
+
+    border-radius: 10px;
+
+    transform-origin: left center;
+
+    z-index: 1;
+
+}
+
+.path.active {
+
+    background: #60a5fa;
+
+    box-shadow:
+        0 0 8px rgba(59,130,246,.45);
+
+}
 
 /* =====================================================
    FIELD NODE
@@ -355,7 +487,7 @@ body {
 
     justify-content: center;
 
-    font-size: 14px;
+    font-size: 20px;
 
     font-weight: bold;
 
@@ -368,17 +500,11 @@ body {
 
 }
 
-
 .field-node:hover {
 
     transform: scale(1.12);
 
 }
-
-
-/* =====================================================
-   NODE STATUS
-===================================================== */
 
 .node-open {
 
@@ -390,7 +516,6 @@ body {
 
 }
 
-
 .node-closed {
 
     background: #fee2e2;
@@ -400,7 +525,6 @@ body {
     color: #b91c1c;
 
 }
-
 
 .node-detected {
 
@@ -412,7 +536,6 @@ body {
 
 }
 
-
 .node-off {
 
     background: #f3f4f6;
@@ -423,112 +546,67 @@ body {
 
 }
 
-
 /* =====================================================
    NODE POSITIONS
 ===================================================== */
 
 .start {
-
     left: 10%;
-
     top: 13%;
-
 }
-
 
 .switch1 {
-
     left: 28%;
-
     top: 13%;
-
 }
-
 
 .door1 {
-
     left: 28%;
-
     top: 28%;
-
 }
-
 
 .laser1 {
-
     left: 48%;
-
     top: 18%;
-
 }
-
 
 .door2 {
-
     left: 49%;
-
     top: 34%;
-
 }
-
 
 .door3 {
-
     left: 49%;
-
     top: 53%;
-
 }
-
 
 .laser2 {
-
     left: 76%;
-
     top: 28%;
-
 }
-
 
 .door4 {
-
     left: 72%;
-
     top: 43%;
-
 }
-
 
 .switch2 {
-
     left: 27%;
-
     top: 67%;
-
 }
-
 
 .door5 {
-
     left: 60%;
-
     top: 67%;
-
 }
-
 
 .end {
-
     left: 84%;
-
     top: 67%;
-
 }
 
-
 /* =====================================================
-   NODE LABEL
+   LABEL
 ===================================================== */
 
 .node-label {
@@ -551,7 +629,6 @@ body {
 
 }
 
-
 .node-label small {
 
     display: block;
@@ -564,6 +641,71 @@ body {
 
 }
 
+/* =====================================================
+   START ANIMATION
+===================================================== */
+
+.start.race-active {
+
+    animation:
+        startPulse 1s infinite;
+
+}
+
+@keyframes startPulse {
+
+    0% {
+
+        box-shadow:
+            0 0 0 0 rgba(34,197,94,.55),
+            0 4px 12px rgba(0,0,0,.12);
+
+    }
+
+    70% {
+
+        box-shadow:
+            0 0 0 12px rgba(34,197,94,0),
+            0 4px 12px rgba(0,0,0,.12);
+
+    }
+
+    100% {
+
+        box-shadow:
+            0 0 0 0 rgba(34,197,94,0),
+            0 4px 12px rgba(0,0,0,.12);
+
+    }
+
+}
+
+/* =====================================================
+   END ANIMATION
+===================================================== */
+
+.end.finish-active {
+
+    animation:
+        finishPulse .8s infinite;
+
+}
+
+@keyframes finishPulse {
+
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.18);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+
+}
 
 /* =====================================================
    SIDEBAR
@@ -579,11 +721,6 @@ body {
 
 }
 
-
-/* =====================================================
-   CARD
-===================================================== */
-
 .card {
 
     background: white;
@@ -596,7 +733,6 @@ body {
 
 }
 
-
 .card-title {
 
     font-size: 14px;
@@ -606,11 +742,6 @@ body {
     margin-bottom: 14px;
 
 }
-
-
-/* =====================================================
-   SUMMARY
-===================================================== */
 
 .summary {
 
@@ -623,7 +754,6 @@ body {
 
 }
 
-
 .summary-box {
 
     padding: 13px;
@@ -634,7 +764,6 @@ body {
 
 }
 
-
 .summary-number {
 
     font-size: 24px;
@@ -642,7 +771,6 @@ body {
     font-weight: bold;
 
 }
-
 
 .summary-text {
 
@@ -652,9 +780,8 @@ body {
 
 }
 
-
 /* =====================================================
-   DEVICE LIST
+   DEVICE
 ===================================================== */
 
 .device {
@@ -671,13 +798,11 @@ body {
 
 }
 
-
 .device:last-child {
 
     border-bottom: none;
 
 }
-
 
 .device-left {
 
@@ -688,7 +813,6 @@ body {
     gap: 10px;
 
 }
-
 
 .device-icon {
 
@@ -706,12 +830,7 @@ body {
 
     background: #f3f4f6;
 
-    font-size: 12px;
-
-    font-weight: bold;
-
 }
-
 
 .device-name {
 
@@ -721,7 +840,6 @@ body {
 
 }
 
-
 .device-type {
 
     font-size: 10px;
@@ -729,7 +847,6 @@ body {
     color: #9ca3af;
 
 }
-
 
 .badge {
 
@@ -743,7 +860,6 @@ body {
 
 }
 
-
 .badge-open {
 
     background: #dcfce7;
@@ -751,7 +867,6 @@ body {
     color: #15803d;
 
 }
-
 
 .badge-closed {
 
@@ -761,7 +876,6 @@ body {
 
 }
 
-
 .badge-detected {
 
     background: #cffafe;
@@ -770,7 +884,6 @@ body {
 
 }
 
-
 .badge-off {
 
     background: #f3f4f6;
@@ -778,7 +891,6 @@ body {
     color: #6b7280;
 
 }
-
 
 /* =====================================================
    LOG
@@ -802,7 +914,6 @@ body {
 
 }
 
-
 .log-line {
 
     color: #d1d5db;
@@ -811,13 +922,159 @@ body {
 
 }
 
-
 .log-line:last-child {
 
     color: #4ade80;
 
 }
 
+/* =====================================================
+   FINISH POPUP
+===================================================== */
+
+.finish-overlay {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 100;
+
+    background:
+        rgba(17,24,39,.55);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transition:
+        opacity .3s ease,
+        visibility .3s ease;
+
+}
+
+.finish-overlay.show {
+
+    opacity: 1;
+
+    visibility: visible;
+
+}
+
+.finish-popup {
+
+    width: min(420px, 90vw);
+
+    background: white;
+
+    border-radius: 20px;
+
+    padding: 34px;
+
+    text-align: center;
+
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.25);
+
+    transform:
+        translateY(20px)
+        scale(.95);
+
+    transition:
+        transform .35s ease;
+
+}
+
+.finish-overlay.show
+.finish-popup {
+
+    transform:
+        translateY(0)
+        scale(1);
+
+}
+
+.finish-title {
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    letter-spacing: 2px;
+
+    color: #6b7280;
+
+}
+
+.finish-heading {
+
+    margin-top: 8px;
+
+    font-size: 28px;
+
+    font-weight: bold;
+
+    color: #111827;
+
+}
+
+.finish-time {
+
+    margin-top: 15px;
+
+    font-family: Consolas, monospace;
+
+    font-size: 48px;
+
+    font-weight: bold;
+
+    color: #15803d;
+
+}
+
+.finish-line {
+
+    width: 60px;
+
+    height: 4px;
+
+    background: #22c55e;
+
+    border-radius: 10px;
+
+    margin: 18px auto;
+
+}
+
+.finish-button {
+
+    border: none;
+
+    background: #111827;
+
+    color: white;
+
+    padding: 10px 25px;
+
+    border-radius: 9px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+}
+
+.finish-button:hover {
+
+    background: #374151;
+
+}
 
 /* =====================================================
    RESPONSIVE
@@ -841,7 +1098,6 @@ body {
     }
 
 }
-
 
 @media (max-width: 700px) {
 
@@ -869,18 +1125,31 @@ body {
 
     }
 
+    .race-timer {
+
+        left: 10px;
+
+        top: 10px;
+
+        min-width: 130px;
+
+    }
+
+    .timer-value {
+
+        font-size: 22px;
+
+    }
+
 }
 
 </style>
 
 </head>
 
-
 <body>
 
-
 <div class="app">
-
 
 <!-- =====================================================
      HEADER
@@ -888,20 +1157,15 @@ body {
 
 <header class="header">
 
-
     <div class="logo">
 
-
         <div class="logo-icon">
-            RF
+            R
         </div>
-
 
         <div class="logo-text">
 
-            <h1>
-                Robot Field
-            </h1>
+            <h1>Robot Field</h1>
 
             <span>
                 Digital Logic & Embedded System
@@ -911,39 +1175,35 @@ body {
 
     </div>
 
+    <div class="header-right">
 
-    <div class="connection">
+        <button
+            id="soundButton"
+            class="sound-button">
 
-        <div class="connection-dot"></div>
+            🔇 เปิดเสียง
 
-        <span id="connectionText">
-            ARDUINO ONLINE
-        </span>
+        </button>
+
+        <div class="connection">
+
+            <div class="connection-dot"></div>
+
+            <span id="connectionText">
+                ARDUINO ONLINE
+            </span>
+
+        </div>
 
     </div>
 
-
 </header>
-
-
-
-<!-- =====================================================
-     CONTENT
-===================================================== -->
 
 <main class="content">
 
-
-
-<!-- =====================================================
-     FIELD
-===================================================== -->
-
 <section class="field-panel">
 
-
     <div class="panel-header">
-
 
         <div>
 
@@ -957,55 +1217,62 @@ body {
 
         </div>
 
-
         <div class="legend">
 
-
             <div class="legend-item">
-
                 <div class="legend-dot legend-green"></div>
-
                 OPEN
-
             </div>
 
-
             <div class="legend-item">
-
                 <div class="legend-dot legend-red"></div>
-
                 CLOSED
-
             </div>
-
 
             <div class="legend-item">
-
                 <div class="legend-dot legend-blue"></div>
-
                 DETECTED
-
             </div>
-
 
         </div>
 
     </div>
 
-
-
     <div class="field">
 
+        <!-- TIMER -->
+
+        <div id="raceTimer"
+             class="race-timer">
+
+            <div class="timer-title">
+                RACE TIME
+            </div>
+
+            <div id="timerValue"
+                 class="timer-value">
+
+                00:00
+
+            </div>
+
+            <div id="timerStatus"
+                 class="timer-status">
+
+                WAITING FOR START
+
+            </div>
+
+        </div>
 
         <!-- START -->
 
         <div id="start"
              class="field-node start node-open">
 
-            START
+            >
 
         </div>
-
 
         <div class="node-label"
              style="left: 12%; top: 22%;">
@@ -1013,8 +1280,6 @@ body {
             START
 
         </div>
-
-
 
         <!-- SWITCH 1 -->
 
@@ -1025,19 +1290,14 @@ body {
 
         </div>
 
-
         <div class="node-label"
              style="left: 30%; top: 22%;">
 
             SWITCH 1
 
-            <small>
-                Door 1
-            </small>
+            <small>Door 1</small>
 
         </div>
-
-
 
         <!-- DOOR 1 -->
 
@@ -1048,19 +1308,14 @@ body {
 
         </div>
 
-
         <div class="node-label"
              style="left: 30%; top: 38%;">
 
             DOOR 1
 
-            <small>
-                PIN 2
-            </small>
+            <small>PIN 2</small>
 
         </div>
-
-
 
         <!-- LASER 1 -->
 
@@ -1071,19 +1326,14 @@ body {
 
         </div>
 
-
         <div class="node-label"
              style="left: 51%; top: 13%;">
 
             LASER 1
 
-            <small>
-                Sensor
-            </small>
+            <small>Sensor</small>
 
         </div>
-
-
 
         <!-- DOOR 2 -->
 
@@ -1094,19 +1344,14 @@ body {
 
         </div>
 
-
         <div class="node-label"
              style="left: 52%; top: 44%;">
 
             DOOR 2
 
-            <small>
-                PIN 3
-            </small>
+            <small>PIN 3</small>
 
         </div>
-
-
 
         <!-- DOOR 3 -->
 
@@ -1117,19 +1362,14 @@ body {
 
         </div>
 
-
         <div class="node-label"
              style="left: 52%; top: 63%;">
 
             DOOR 3
 
-            <small>
-                PIN 4
-            </small>
+            <small>PIN 4</small>
 
         </div>
-
-
 
         <!-- LASER 2 -->
 
@@ -1140,19 +1380,14 @@ body {
 
         </div>
 
-
         <div class="node-label"
              style="left: 78%; top: 23%;">
 
             LASER 2
 
-            <small>
-                Sensor
-            </small>
+            <small>Sensor</small>
 
         </div>
-
-
 
         <!-- DOOR 4 -->
 
@@ -1163,19 +1398,14 @@ body {
 
         </div>
 
-
         <div class="node-label"
              style="left: 75%; top: 54%;">
 
             DOOR 4
 
-            <small>
-                PIN 7
-            </small>
+            <small>PIN 5</small>
 
         </div>
-
-
 
         <!-- SWITCH 2 -->
 
@@ -1186,19 +1416,14 @@ body {
 
         </div>
 
-
         <div class="node-label"
              style="left: 29%; top: 76%;">
 
             SWITCH 2
 
-            <small>
-                Door 4
-            </small>
+            <small>Door 4</small>
 
         </div>
-
-
 
         <!-- DOOR 5 -->
 
@@ -1209,44 +1434,34 @@ body {
 
         </div>
 
-
         <div class="node-label"
              style="left: 62%; top: 76%;">
 
             DOOR 5
 
-            <small>
-                Auto
-            </small>
+            <small>Auto</small>
 
         </div>
-
-
 
         <!-- END -->
 
         <div id="end"
              class="field-node end node-open">
 
-            END
+            ✓
 
         </div>
-
 
         <div class="node-label"
              style="left: 86%; top: 76%;">
 
-            FINISH
+            END
 
         </div>
 
-
     </div>
 
-
 </section>
-
-
 
 <!-- =====================================================
      SIDEBAR
@@ -1254,20 +1469,13 @@ body {
 
 <aside class="sidebar">
 
-
-
-    <!-- SUMMARY -->
-
     <div class="card">
-
 
         <div class="card-title">
             Field Status
         </div>
 
-
         <div class="summary">
-
 
             <div class="summary-box">
 
@@ -1279,13 +1487,10 @@ body {
                 </div>
 
                 <div class="summary-text">
-
                     Doors Open
-
                 </div>
 
             </div>
-
 
             <div class="summary-box">
 
@@ -1297,41 +1502,26 @@ body {
                 </div>
 
                 <div class="summary-text">
-
                     Laser Active
-
                 </div>
 
             </div>
 
-
         </div>
-
 
     </div>
 
-
-
-    <!-- DEVICES -->
-
     <div class="card">
-
 
         <div class="card-title">
             Devices
         </div>
 
-
-
-        <!-- DOOR 1 -->
-
         <div class="device">
 
             <div class="device-left">
 
-                <div class="device-icon">
-                    D1
-                </div>
+                <div class="device-icon">D1</div>
 
                 <div>
 
@@ -1347,7 +1537,6 @@ body {
 
             </div>
 
-
             <div id="door1Status"
                  class="badge badge-closed">
 
@@ -1357,17 +1546,11 @@ body {
 
         </div>
 
-
-
-        <!-- DOOR 2 -->
-
         <div class="device">
 
             <div class="device-left">
 
-                <div class="device-icon">
-                    D2
-                </div>
+                <div class="device-icon">D2</div>
 
                 <div>
 
@@ -1383,7 +1566,6 @@ body {
 
             </div>
 
-
             <div id="door2Status"
                  class="badge badge-closed">
 
@@ -1393,17 +1575,11 @@ body {
 
         </div>
 
-
-
-        <!-- DOOR 3 -->
-
         <div class="device">
 
             <div class="device-left">
 
-                <div class="device-icon">
-                    D3
-                </div>
+                <div class="device-icon">D3</div>
 
                 <div>
 
@@ -1419,7 +1595,6 @@ body {
 
             </div>
 
-
             <div id="door3Status"
                  class="badge badge-closed">
 
@@ -1429,17 +1604,11 @@ body {
 
         </div>
 
-
-
-        <!-- DOOR 4 -->
-
         <div class="device">
 
             <div class="device-left">
 
-                <div class="device-icon">
-                    D4
-                </div>
+                <div class="device-icon">D4</div>
 
                 <div>
 
@@ -1455,7 +1624,6 @@ body {
 
             </div>
 
-
             <div id="door4Status"
                  class="badge badge-closed">
 
@@ -1465,17 +1633,11 @@ body {
 
         </div>
 
-
-
-        <!-- DOOR 5 -->
-
         <div class="device">
 
             <div class="device-left">
 
-                <div class="device-icon">
-                    D5
-                </div>
+                <div class="device-icon">D5</div>
 
                 <div>
 
@@ -1491,7 +1653,6 @@ body {
 
             </div>
 
-
             <div id="door5Status"
                  class="badge badge-closed">
 
@@ -1501,17 +1662,11 @@ body {
 
         </div>
 
-
-
-        <!-- LASER 1 -->
-
         <div class="device">
 
             <div class="device-left">
 
-                <div class="device-icon">
-                    L1
-                </div>
+                <div class="device-icon">L1</div>
 
                 <div>
 
@@ -1527,7 +1682,6 @@ body {
 
             </div>
 
-
             <div id="laser1Status"
                  class="badge badge-off">
 
@@ -1537,17 +1691,11 @@ body {
 
         </div>
 
-
-
-        <!-- LASER 2 -->
-
         <div class="device">
 
             <div class="device-left">
 
-                <div class="device-icon">
-                    L2
-                </div>
+                <div class="device-icon">L2</div>
 
                 <div>
 
@@ -1563,7 +1711,6 @@ body {
 
             </div>
 
-
             <div id="laser2Status"
                  class="badge badge-off">
 
@@ -1573,21 +1720,13 @@ body {
 
         </div>
 
-
-
     </div>
 
-
-
-    <!-- LOG -->
-
     <div class="card">
-
 
         <div class="card-title">
             Recent Events
         </div>
-
 
         <div id="log"
              class="log">
@@ -1596,42 +1735,707 @@ body {
 
         </div>
 
-
     </div>
-
-
 
 </aside>
 
-
 </main>
-
 
 </div>
 
+<!-- =====================================================
+     FINISH POPUP
+===================================================== -->
+
+<div id="finishOverlay"
+     class="finish-overlay">
+
+    <div class="finish-popup">
+
+        <div class="finish-title">
+            ROBOT FIELD
+        </div>
+
+        <div class="finish-heading">
+            RACE FINISHED
+        </div>
+
+        <div id="finishTime"
+             class="finish-time">
+
+            00:00
+
+        </div>
+
+        <div class="finish-line"></div>
+
+        <button id="closeFinish"
+                class="finish-button">
+
+            CLOSE
+
+        </button>
+
+    </div>
+
+</div>
+
+<!-- =====================================================
+     AUDIO
+===================================================== -->
+
+<audio id="startSound"
+       src="sounds/start.mp3"
+       preload="auto"></audio>
+
+<audio id="doorSound"
+       src="sounds/door.mp3"
+       preload="auto"></audio>
+
+<audio id="runningSound"
+       src="sounds/running.mp3"
+       preload="auto"
+       loop></audio>
+
+<audio id="finishSound"
+       src="sounds/finish.mp3"
+       preload="auto"></audio>
 
 
 <script>
 
+/* =====================================================
+   AUDIO SYSTEM
+===================================================== */
 
-// =====================================================
-// DOOR
-// =====================================================
+let soundEnabled = false;
+
+const startSound =
+    document.getElementById("startSound");
+
+const doorSound =
+    document.getElementById("doorSound");
+
+const runningSound =
+    document.getElementById("runningSound");
+
+const finishSound =
+    document.getElementById("finishSound");
+
+const soundButton =
+    document.getElementById("soundButton");
+
+
+/*
+    Browser ส่วนใหญ่จะไม่ยอมให้
+    autoplay เสียงจนกว่าผู้ใช้จะกดหน้าเว็บ
+
+    ให้กดปุ่มนี้ครั้งแรก
+*/
+
+soundButton.addEventListener(
+    "click",
+    async function () {
+
+        soundEnabled = true;
+
+        soundButton.innerHTML =
+            "🔊 เสียงเปิดอยู่";
+
+        soundButton.classList.add(
+            "enabled"
+        );
+
+        /*
+            เล่น/หยุดทันทีเพื่อ unlock audio
+        */
+
+        try {
+
+            runningSound.volume = 0;
+
+            await runningSound.play();
+
+            runningSound.pause();
+
+            runningSound.currentTime = 0;
+
+            runningSound.volume = 1;
+
+        }
+
+        catch (error) {
+
+            console.log(
+                "Audio unlock:",
+                error
+            );
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   PLAY SOUND
+===================================================== */
+
+function playSound(audio) {
+
+    if (!soundEnabled) {
+
+        console.log(
+            "Sound blocked - press เปิดเสียง"
+        );
+
+        return;
+
+    }
+
+    try {
+
+        audio.currentTime = 0;
+
+        audio.play().catch(
+            function (error) {
+
+                console.log(
+                    "Audio error:",
+                    error
+                );
+
+            }
+        );
+
+    }
+
+    catch (error) {
+
+        console.log(
+            "Audio error:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   START RUNNING SOUND
+===================================================== */
+
+function startRunningSound() {
+
+    if (!soundEnabled) {
+        return;
+    }
+
+    runningSound.volume = 0.5;
+
+    runningSound.play().catch(
+        function (error) {
+
+            console.log(
+                "Running sound:",
+                error
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   STOP RUNNING SOUND
+===================================================== */
+
+function stopRunningSound() {
+
+    runningSound.pause();
+
+    runningSound.currentTime = 0;
+
+}
+
+
+/* =====================================================
+   RACE STATE
+===================================================== */
+
+let raceRunning = false;
+
+let raceFinished = false;
+
+let lastArduinoTime = "00:00";
+
+let lastProcessedMessage = "";
+
+
+/* =====================================================
+   START DETECTION
+===================================================== */
+
+function isStartMessage(text) {
+
+    const upper =
+        String(text).toUpperCase();
+
+    return (
+
+        upper.includes(
+            "TIME START NOW"
+        )
+
+        ||
+
+        upper.includes(
+            "ROBOT FIELD START"
+        )
+
+        ||
+
+        upper.includes(
+            "RACE START"
+        )
+
+    );
+
+}
+
+
+/* =====================================================
+   FINISH DETECTION
+===================================================== */
+
+function isFinishMessage(text) {
+
+    const upper =
+        String(text).toUpperCase();
+
+    return (
+
+        upper.includes(
+            "TIME END"
+        )
+
+        ||
+
+        upper.includes(
+            "RACE FINISHED"
+        )
+
+        ||
+
+        upper.includes(
+            "REACHED END"
+        )
+
+    );
+
+}
+
+
+/* =====================================================
+   EXTRACT ARDUINO TIME
+===================================================== */
+
+function extractArduinoTime(text) {
+
+    const value =
+        String(text);
+
+    /*
+       รูปแบบ:
+
+       Time : 35 seconds
+
+       หรือ
+
+       Time : 1:05 minutes
+    */
+
+    let match =
+        value.match(
+            /Time\s*:\s*([0-9]+(?::[0-9]{2})?)\s*(seconds|minutes)?/i
+        );
+
+    if (match) {
+
+        return match[1];
+
+    }
+
+
+    /*
+       รูปแบบ:
+
+       Time end. using 1:14 minutes
+    */
+
+    match =
+        value.match(
+            /using\s+([0-9]+(?::[0-9]{2})?)/i
+        );
+
+    if (match) {
+
+        return match[1];
+
+    }
+
+
+    return null;
+
+}
+
+
+/* =====================================================
+   START RACE
+===================================================== */
+
+function startRace() {
+
+    if (raceRunning) {
+        return;
+    }
+
+    raceRunning = true;
+
+    raceFinished = false;
+
+    lastArduinoTime = "00:00";
+
+
+    document
+        .getElementById("raceTimer")
+        .classList.add("running");
+
+
+    document
+        .getElementById("timerStatus")
+        .innerText =
+        "RACE RUNNING";
+
+
+    document
+        .getElementById("timerValue")
+        .innerText =
+        "00:00";
+
+
+    document
+        .getElementById("start")
+        .classList.add("race-active");
+
+
+    document
+        .getElementById("end")
+        .classList.remove("finish-active");
+
+
+    /*
+       เสียงออกตัว
+    */
+
+    playSound(startSound);
+
+
+    /*
+       เสียงขณะหุ่นกำลังวิ่ง
+    */
+
+    startRunningSound();
+
+}
+
+
+/* =====================================================
+   FINISH RACE
+===================================================== */
+
+function finishRace(finalTime) {
+
+    if (!raceRunning) {
+        return;
+    }
+
+    raceRunning = false;
+
+    raceFinished = true;
+
+
+    if (finalTime) {
+
+        lastArduinoTime =
+            finalTime;
+
+    }
+
+
+    /*
+       แสดงเวลาที่ Arduino ส่งมา
+    */
+
+    document
+        .getElementById("timerValue")
+        .innerText =
+        lastArduinoTime;
+
+
+    document
+        .getElementById("timerStatus")
+        .innerText =
+        "FINISHED";
+
+
+    document
+        .getElementById("raceTimer")
+        .classList.remove("running");
+
+
+    document
+        .getElementById("start")
+        .classList.remove("race-active");
+
+
+    document
+        .getElementById("end")
+        .classList.add("finish-active");
+
+
+    /*
+       หยุดเสียงวิ่ง
+    */
+
+    stopRunningSound();
+
+
+    /*
+       เล่นเสียงเข้าเส้นชัย
+    */
+
+    playSound(finishSound);
+
+
+    /*
+       Popup
+    */
+
+    document
+        .getElementById("finishTime")
+        .innerText =
+        lastArduinoTime;
+
+
+    document
+        .getElementById("finishOverlay")
+        .classList.add("show");
+
+}
+
+
+/* =====================================================
+   PROCESS ONE ARDUINO MESSAGE
+===================================================== */
+
+function processRaceMessage(message) {
+
+    const text =
+        String(message).trim();
+
+
+    if (!text) {
+        return;
+    }
+
+
+    /*
+       START
+
+       สำคัญ:
+       ใช้ "Time start now."
+       จาก Arduino จริง
+    */
+
+    if (isStartMessage(text)) {
+
+        startRace();
+
+        return;
+
+    }
+
+
+    /*
+       FINISH
+
+       เช่น:
+
+       Time end. using 1:14 minutes
+    */
+
+    if (isFinishMessage(text)) {
+
+        const finalTime =
+            extractArduinoTime(text);
+
+
+        finishRace(
+            finalTime
+        );
+
+        return;
+
+    }
+
+
+    /*
+       ระหว่างวิ่ง
+
+       เช่น:
+
+       Time : 1:05 minutes
+       Time : 1:06 minutes
+    */
+
+    const arduinoTime =
+        extractArduinoTime(text);
+
+
+    if (
+        arduinoTime &&
+        raceRunning
+    ) {
+
+        lastArduinoTime =
+            arduinoTime;
+
+
+        document
+            .getElementById("timerValue")
+            .innerText =
+            arduinoTime;
+
+    }
+
+
+    /*
+       DOOR OPEN
+
+       เช่น:
+
+       DOOR 5 -> OPEN
+       DOOR 2 -> OPEN
+    */
+
+    if (
+        text.toUpperCase()
+            .includes("-> OPEN")
+    ) {
+
+        playSound(doorSound);
+
+    }
+
+}
+
+
+/* =====================================================
+   CHECK RACE MESSAGES
+===================================================== */
+
+function checkRaceMessages(messages) {
+
+    if (
+        !messages ||
+        messages.length === 0
+    ) {
+
+        return;
+
+    }
+
+
+    /*
+       เอา message ล่าสุดจาก Arduino
+
+       ไม่ใช้ lastMessageCount
+       เพราะถ้า server ตัดจำนวน log
+       อาจทำให้ index เพี้ยนได้
+    */
+
+    const latestMessage =
+        String(
+            messages[messages.length - 1]
+        ).trim();
+
+
+    /*
+       ถ้าเป็น message เดิม
+       ไม่ต้อง process ซ้ำ
+    */
+
+    if (
+        latestMessage ===
+        lastProcessedMessage
+    ) {
+
+        return;
+
+    }
+
+
+    lastProcessedMessage =
+        latestMessage;
+
+
+    processRaceMessage(
+        latestMessage
+    );
+
+}
+
+
+/* =====================================================
+   CLOSE POPUP
+===================================================== */
+
+document
+    .getElementById("closeFinish")
+    .addEventListener(
+        "click",
+        function () {
+
+            document
+                .getElementById(
+                    "finishOverlay"
+                )
+                .classList.remove("show");
+
+        }
+    );
+
+
+/* =====================================================
+   DOOR
+===================================================== */
 
 function updateDoor(id, status) {
 
-
     const node =
         document.getElementById(id);
-
 
     const badge =
         document.getElementById(
             id + "Status"
         );
 
-
-    if (!node) return;
+    if (!node) {
+        return;
+    }
 
 
     node.classList.remove(
@@ -1642,13 +2446,12 @@ function updateDoor(id, status) {
 
     if (status === "OPEN") {
 
-
         node.classList.add(
             "node-open"
         );
 
-
-        node.innerHTML = "D";
+        node.innerHTML =
+            "OPEN";
 
 
         if (badge) {
@@ -1661,18 +2464,19 @@ function updateDoor(id, status) {
 
         }
 
-
     }
 
     else {
-
 
         node.classList.add(
             "node-closed"
         );
 
-
-        node.innerHTML = "D";
+        node.innerHTML =
+            id.replace(
+                "door",
+                "D"
+            );
 
 
         if (badge) {
@@ -1690,25 +2494,23 @@ function updateDoor(id, status) {
 }
 
 
-
-// =====================================================
-// LASER
-// =====================================================
+/* =====================================================
+   LASER
+===================================================== */
 
 function updateLaser(id, status) {
 
-
     const node =
         document.getElementById(id);
-
 
     const badge =
         document.getElementById(
             id + "Status"
         );
 
-
-    if (!node) return;
+    if (!node) {
+        return;
+    }
 
 
     node.classList.remove(
@@ -1719,13 +2521,12 @@ function updateLaser(id, status) {
 
     if (status === "DETECTED") {
 
-
         node.classList.add(
             "node-detected"
         );
 
-
-        node.innerHTML = "ON";
+        node.innerHTML =
+            "DETECT";
 
 
         if (badge) {
@@ -1738,16 +2539,13 @@ function updateLaser(id, status) {
 
         }
 
-
     }
 
     else {
 
-
         node.classList.add(
             "node-off"
         );
-
 
         node.innerHTML =
             id === "laser1"
@@ -1770,19 +2568,18 @@ function updateLaser(id, status) {
 }
 
 
-
-// =====================================================
-// SWITCH
-// =====================================================
+/* =====================================================
+   SWITCH
+===================================================== */
 
 function updateSwitch(id, status) {
-
 
     const node =
         document.getElementById(id);
 
-
-    if (!node) return;
+    if (!node) {
+        return;
+    }
 
 
     node.classList.remove(
@@ -1793,42 +2590,36 @@ function updateSwitch(id, status) {
 
     if (status === "ON") {
 
-
         node.classList.add(
             "node-open"
         );
 
-
-        node.innerHTML = "S";
-
+        node.innerHTML =
+            "ON";
 
     }
 
     else {
 
-
         node.classList.add(
             "node-off"
         );
 
-
-        node.innerHTML = "S";
+        node.innerHTML =
+            "S";
 
     }
 
 }
 
 
-
-// =====================================================
-// DASHBOARD
-// =====================================================
+/* =====================================================
+   DASHBOARD
+===================================================== */
 
 async function updateDashboard() {
 
-
     try {
-
 
         const response =
             await fetch(
@@ -1844,10 +2635,9 @@ async function updateDashboard() {
             data.state;
 
 
-
-        // =============================================
-        // CONNECTION
-        // =============================================
+        /*
+           CONNECTION
+        */
 
         document
             .getElementById(
@@ -1857,34 +2647,40 @@ async function updateDashboard() {
             "ARDUINO ONLINE";
 
 
+        /*
+           RACE MESSAGE
 
-        // =============================================
-        // DOORS
-        // =============================================
+           อ่านจาก Arduino
+        */
+
+        checkRaceMessages(
+            data.messages
+        );
+
+
+        /*
+           DOORS
+        */
 
         updateDoor(
             "door1",
             state.door1
         );
 
-
         updateDoor(
             "door2",
             state.door2
         );
-
 
         updateDoor(
             "door3",
             state.door3
         );
 
-
         updateDoor(
             "door4",
             state.door4
         );
-
 
         updateDoor(
             "door5",
@@ -1892,16 +2688,14 @@ async function updateDashboard() {
         );
 
 
-
-        // =============================================
-        // LASERS
-        // =============================================
+        /*
+           LASERS
+        */
 
         updateLaser(
             "laser1",
             state.laser1
         );
-
 
         updateLaser(
             "laser2",
@@ -1909,16 +2703,14 @@ async function updateDashboard() {
         );
 
 
-
-        // =============================================
-        // SWITCHES
-        // =============================================
+        /*
+           SWITCHES
+        */
 
         updateSwitch(
             "switch1",
             state.switch1
         );
-
 
         updateSwitch(
             "switch2",
@@ -1926,10 +2718,9 @@ async function updateDashboard() {
         );
 
 
-
-        // =============================================
-        // SUMMARY
-        // =============================================
+        /*
+           SUMMARY
+        */
 
         const doors = [
 
@@ -1944,8 +2735,11 @@ async function updateDashboard() {
 
         const openDoors =
             doors.filter(
-                door =>
-                    door === "OPEN"
+                function (door) {
+
+                    return door === "OPEN";
+
+                }
             ).length;
 
 
@@ -1959,8 +2753,11 @@ async function updateDashboard() {
 
         const activeLasers =
             lasers.filter(
-                laser =>
-                    laser === "DETECTED"
+                function (laser) {
+
+                    return laser === "DETECTED";
+
+                }
             ).length;
 
 
@@ -1980,10 +2777,9 @@ async function updateDashboard() {
             activeLasers;
 
 
-
-        // =============================================
-        // LOG
-        // =============================================
+        /*
+           LOG
+        */
 
         const log =
             document.getElementById(
@@ -1996,13 +2792,19 @@ async function updateDashboard() {
             data.messages.length > 0
         ) {
 
-
             log.innerHTML =
                 data.messages
                     .slice(-15)
                     .map(
-                        message =>
-                            `<div class="log-line">${message}</div>`
+                        function (message) {
+
+                            return `
+                                <div class="log-line">
+                                    ${escapeHtml(message)}
+                                </div>
+                            `;
+
+                        }
                     )
                     .join("");
 
@@ -2012,12 +2814,9 @@ async function updateDashboard() {
 
         }
 
-
     }
 
-
     catch (error) {
-
 
         console.error(
             "Dashboard Error:",
@@ -2032,16 +2831,50 @@ async function updateDashboard() {
             .innerText =
             "SERVER DISCONNECTED";
 
-
     }
 
 }
 
 
+/* =====================================================
+   HTML ESCAPE
+===================================================== */
 
-// =====================================================
-// UPDATE EVERY 500ms
-// =====================================================
+function escapeHtml(text) {
+
+    return String(text)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+/* =====================================================
+   UPDATE EVERY 500ms
+===================================================== */
 
 setInterval(
     updateDashboard,
@@ -2051,9 +2884,7 @@ setInterval(
 
 updateDashboard();
 
-
 </script>
-
 
 </body>
 
