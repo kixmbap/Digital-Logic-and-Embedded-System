@@ -16,17 +16,42 @@
     box-sizing: border-box;
 }
 
+html,
 body {
     margin: 0;
+    padding: 0;
+
+    width: 100%;
+    height: 100%;
+
     font-family: Arial, "Noto Sans Thai", sans-serif;
+
     background: #eef1f5;
+
     color: #1f2937;
+
+    overflow: hidden;
 }
 
-.app {
+body {
     min-height: 100vh;
+}
+
+/* =====================================================
+   APP
+===================================================== */
+
+.app {
+    width: 100vw;
+    height: 100vh;
+
+    min-height: 100vh;
+
     display: flex;
+
     flex-direction: column;
+
+    overflow: hidden;
 }
 
 /* =====================================================
@@ -34,12 +59,20 @@ body {
 ===================================================== */
 
 .header {
+    width: 100%;
+
     height: 76px;
+
+    flex-shrink: 0;
+
     background: #ffffff;
+
     border-bottom: 1px solid #e5e7eb;
 
     display: flex;
+
     align-items: center;
+
     justify-content: space-between;
 
     padding: 0 28px;
@@ -47,32 +80,49 @@ body {
 
 .logo {
     display: flex;
+
     align-items: center;
+
     gap: 14px;
 }
 
 .logo-icon {
     width: 44px;
+
     height: 44px;
+
     border-radius: 12px;
 
     background: #111827;
+
     color: white;
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
     font-size: 23px;
+
+    overflow: hidden;
+}
+
+.logo-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .logo-text h1 {
     margin: 0;
+
     font-size: 21px;
 }
 
 .logo-text span {
     font-size: 12px;
+
     color: #6b7280;
 }
 
@@ -82,7 +132,9 @@ body {
 
 .connection {
     display: flex;
+
     align-items: center;
+
     gap: 9px;
 
     padding: 9px 15px;
@@ -90,14 +142,17 @@ body {
     border-radius: 20px;
 
     background: #ecfdf3;
+
     color: #15803d;
 
     font-size: 13px;
+
     font-weight: bold;
 }
 
 .connection-dot {
     width: 9px;
+
     height: 9px;
 
     border-radius: 50%;
@@ -113,9 +168,15 @@ body {
 ===================================================== */
 
 .content {
+    width: 100%;
+
+    height: calc(100vh - 76px);
+
     flex: 1;
 
-    padding: 22px;
+    min-height: 0;
+
+    padding: 16px;
 
     display: grid;
 
@@ -123,7 +184,11 @@ body {
         minmax(0, 1fr)
         320px;
 
-    gap: 20px;
+    gap: 16px;
+
+    overflow: hidden;
+
+    align-items: stretch;
 }
 
 /* =====================================================
@@ -131,6 +196,14 @@ body {
 ===================================================== */
 
 .field-panel {
+    width: 100%;
+
+    height: 100%;
+
+    min-width: 0;
+
+    min-height: 0;
+
     background: white;
 
     border-radius: 16px;
@@ -140,14 +213,56 @@ body {
     overflow: hidden;
 
     display: flex;
+
     flex-direction: column;
+
+    position: relative;
 }
+
+/* =====================================================
+   FIELD BACKGROUND
+===================================================== */
+
+.field-panel::before {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background-image:
+        url("/images/logo.png");
+
+    background-size: 50% auto;
+
+    background-position: center;
+
+    background-repeat: no-repeat;
+
+    opacity: 0.08;
+
+    z-index: 0;
+}
+
+.field-panel > * {
+    position: relative;
+
+    z-index: 1;
+}
+
+/* =====================================================
+   PANEL HEADER
+===================================================== */
 
 .panel-header {
     height: 62px;
 
+    flex-shrink: 0;
+
     display: flex;
+
     align-items: center;
+
     justify-content: space-between;
 
     padding: 0 20px;
@@ -157,32 +272,41 @@ body {
 
 .panel-title {
     font-size: 16px;
+
     font-weight: bold;
 }
 
 .panel-subtitle {
     font-size: 12px;
+
     color: #9ca3af;
+
     margin-top: 3px;
 }
 
 .legend {
     display: flex;
+
     gap: 15px;
 
     font-size: 11px;
+
     color: #6b7280;
 }
 
 .legend-item {
     display: flex;
+
     align-items: center;
+
     gap: 5px;
 }
 
 .legend-dot {
     width: 8px;
+
     height: 8px;
+
     border-radius: 50%;
 }
 
@@ -207,7 +331,11 @@ body {
 
     flex: 1;
 
-    min-height: 600px;
+    width: 100%;
+
+    height: 100%;
+
+    min-height: 0;
 
     background:
         linear-gradient(
@@ -233,6 +361,7 @@ body {
     position: absolute;
 
     left: 20px;
+
     top: 20px;
 
     z-index: 30;
@@ -253,6 +382,7 @@ body {
 
 .timer-title {
     font-size: 10px;
+
     font-weight: bold;
 
     color: #6b7280;
@@ -266,6 +396,7 @@ body {
     font-family: Consolas, monospace;
 
     font-size: 26px;
+
     font-weight: bold;
 
     color: #374151;
@@ -305,15 +436,19 @@ body {
     position: absolute;
 
     width: 48px;
+
     height: 48px;
 
     border-radius: 50%;
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
     font-size: 20px;
+
     font-weight: bold;
 
     z-index: 5;
@@ -334,25 +469,33 @@ body {
 
 .node-open {
     background: #dcfce7;
+
     border: 3px solid #22c55e;
+
     color: #15803d;
 }
 
 .node-closed {
     background: #fee2e2;
+
     border: 3px solid #ef4444;
+
     color: #b91c1c;
 }
 
 .node-detected {
     background: #cffafe;
+
     border: 3px solid #06b6d4;
+
     color: #0891b2;
 }
 
 .node-off {
     background: #f3f4f6;
+
     border: 3px solid #9ca3af;
+
     color: #6b7280;
 }
 
@@ -362,56 +505,67 @@ body {
 
 .start {
     left: 10%;
+
     top: 13%;
 }
 
 .switch1 {
     left: 28%;
+
     top: 13%;
 }
 
 .door1 {
     left: 28%;
+
     top: 28%;
 }
 
 .laser1 {
     left: 48%;
+
     top: 18%;
 }
 
 .door2 {
     left: 49%;
+
     top: 34%;
 }
 
 .door3 {
     left: 49%;
+
     top: 53%;
 }
 
 .laser2 {
     left: 76%;
+
     top: 28%;
 }
 
 .door4 {
     left: 72%;
+
     top: 43%;
 }
 
 .switch2 {
     left: 27%;
+
     top: 67%;
 }
 
 .door5 {
     left: 60%;
+
     top: 67%;
 }
 
 .end {
     left: 84%;
+
     top: 67%;
 }
 
@@ -429,6 +583,7 @@ body {
     z-index: 6;
 
     font-size: 11px;
+
     font-weight: bold;
 
     color: #374151;
@@ -507,10 +662,21 @@ body {
 ===================================================== */
 
 .sidebar {
+    width: 320px;
+
+    height: 100%;
+
+    min-height: 0;
+
     display: flex;
+
     flex-direction: column;
 
-    gap: 16px;
+    gap: 10px;
+
+    overflow: hidden;
+
+    align-self: stretch;
 }
 
 /* =====================================================
@@ -518,13 +684,19 @@ body {
 ===================================================== */
 
 .card {
+    width: 100%;
+
     background: white;
 
     border: 1px solid #e5e7eb;
 
     border-radius: 16px;
 
-    padding: 18px;
+    padding: 12px 14px;
+
+    flex-shrink: 0;
+
+    overflow: visible;
 }
 
 .card-title {
@@ -532,7 +704,7 @@ body {
 
     font-weight: bold;
 
-    margin-bottom: 14px;
+    margin-bottom: 8px;
 }
 
 /* =====================================================
@@ -545,11 +717,11 @@ body {
     grid-template-columns:
         1fr 1fr;
 
-    gap: 10px;
+    gap: 8px;
 }
 
 .summary-box {
-    padding: 13px;
+    padding: 9px;
 
     background: #f9fafb;
 
@@ -557,13 +729,13 @@ body {
 }
 
 .summary-number {
-    font-size: 24px;
+    font-size: 21px;
 
     font-weight: bold;
 }
 
 .summary-text {
-    font-size: 11px;
+    font-size: 10px;
 
     color: #6b7280;
 }
@@ -576,9 +748,10 @@ body {
     display: flex;
 
     align-items: center;
+
     justify-content: space-between;
 
-    padding: 11px 0;
+    padding: 6px 0;
 
     border-bottom: 1px solid #f1f5f9;
 }
@@ -592,61 +765,72 @@ body {
 
     align-items: center;
 
-    gap: 10px;
+    gap: 8px;
 }
 
 .device-icon {
-    width: 34px;
-    height: 34px;
+    width: 30px;
 
-    border-radius: 9px;
+    height: 30px;
+
+    flex-shrink: 0;
+
+    border-radius: 8px;
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
     background: #f3f4f6;
 }
 
 .device-name {
-    font-size: 13px;
+    font-size: 12px;
 
     font-weight: bold;
 }
 
 .device-type {
-    font-size: 10px;
+    font-size: 9px;
 
     color: #9ca3af;
 }
 
 .badge {
-    padding: 4px 8px;
+    padding: 3px 7px;
 
     border-radius: 20px;
 
-    font-size: 10px;
+    font-size: 9px;
 
     font-weight: bold;
+
+    flex-shrink: 0;
 }
 
 .badge-open {
     background: #dcfce7;
+
     color: #15803d;
 }
 
 .badge-closed {
     background: #fee2e2;
+
     color: #b91c1c;
 }
 
 .badge-detected {
     background: #cffafe;
+
     color: #0e7490;
 }
 
 .badge-off {
     background: #f3f4f6;
+
     color: #6b7280;
 }
 
@@ -655,7 +839,7 @@ body {
 ===================================================== */
 
 .log {
-    height: 190px;
+    height: 120px;
 
     overflow-y: auto;
 
@@ -663,17 +847,17 @@ body {
 
     border-radius: 10px;
 
-    padding: 10px;
+    padding: 8px;
 
     font-family: Consolas, monospace;
 
-    font-size: 11px;
+    font-size: 10px;
 }
 
 .log-line {
     color: #d1d5db;
 
-    padding: 3px 0;
+    padding: 2px 0;
 }
 
 .log-line:last-child {
@@ -685,30 +869,18 @@ body {
 ===================================================== */
 
 .audio-status {
-    margin-top: 10px;
+    margin-top: 6px;
 
     font-size: 10px;
 
     color: #9ca3af;
 }
 
-.logo-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.logo-icon img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
 .sound-button-container {
     position: fixed;
 
     top: 90px;
+
     right: 25px;
 
     z-index: 200;
@@ -762,6 +934,7 @@ body {
     display: flex;
 
     align-items: center;
+
     justify-content: center;
 
     opacity: 0;
@@ -841,6 +1014,7 @@ body {
 
 .finish-line {
     width: 60px;
+
     height: 4px;
 
     background: #22c55e;
@@ -871,28 +1045,497 @@ body {
 }
 
 /* =====================================================
+   DESKTOP FULL SCREEN
+===================================================== */
+
+@media (min-width: 1001px) {
+
+    html,
+    body {
+        width: 100%;
+        height: 100%;
+
+        overflow: hidden;
+    }
+
+    .app {
+        width: 100vw;
+        height: 100vh;
+
+        min-height: 0;
+
+        overflow: hidden;
+    }
+
+    .header {
+        height: 70px;
+
+        min-height: 70px;
+
+        flex-shrink: 0;
+    }
+
+    .content {
+        height: calc(100vh - 70px);
+
+        min-height: 0;
+
+        padding: 12px;
+
+        gap: 12px;
+
+        grid-template-columns:
+            minmax(0, 1fr)
+            320px;
+
+        overflow: hidden;
+
+        align-items: stretch;
+    }
+
+    .field-panel {
+        width: 100%;
+        height: 100%;
+
+        min-width: 0;
+        min-height: 0;
+
+        overflow: hidden;
+    }
+
+    .panel-header {
+        height: 54px;
+
+        flex-shrink: 0;
+    }
+
+    .field {
+        width: 100%;
+        height: 100%;
+
+        min-height: 0;
+
+        overflow: hidden;
+    }
+
+    .sidebar {
+        width: 320px;
+
+        height: 100%;
+
+        min-height: 0;
+
+        gap: 8px;
+
+        overflow: hidden;
+    }
+
+    /*
+       SUMMARY
+    */
+
+    .sidebar .card:nth-child(1) {
+        flex: 0 0 145px;
+
+        height: 145px;
+    }
+
+    /*
+       DEVICES
+
+       ใช้พื้นที่ที่เหลือ
+       เพื่อให้รายการ Device ทั้งหมดแสดง
+    */
+
+    .sidebar .card:nth-child(2) {
+        flex: 1 1 auto;
+
+        height: auto;
+
+        min-height: 0;
+
+        overflow: hidden;
+    }
+
+    /*
+       LOG
+    */
+
+    .sidebar .card:nth-child(3) {
+        flex: 0 0 200px;
+
+        height: 200px;
+
+        min-height: 0;
+
+        overflow: hidden;
+    }
+
+    .sidebar .card:nth-child(2) .device {
+        padding: 5px 0;
+    }
+
+    .log {
+        height: calc(100% - 46px);
+
+        min-height: 0;
+
+        overflow-y: auto;
+
+        overflow-x: hidden;
+    }
+
+}
+
+
+/* =====================================================
+   LARGE SCREEN
+===================================================== */
+
+@media (min-width: 1400px) {
+
+    .content {
+        grid-template-columns:
+            minmax(0, 1fr)
+            340px;
+
+        gap: 14px;
+    }
+
+    .sidebar {
+        width: 340px;
+    }
+
+    .sidebar .card:nth-child(1) {
+        flex-basis: 150px;
+
+        height: 150px;
+    }
+
+    .sidebar .card:nth-child(3) {
+        flex-basis: 220px;
+
+        height: 220px;
+    }
+
+    .sidebar .card:nth-child(2) .device {
+        padding: 6px 0;
+    }
+
+}
+
+
+/* =====================================================
+   SHORT SCREEN
+===================================================== */
+
+@media (min-width: 1001px) and (max-height: 800px) {
+
+    .header {
+        height: 62px;
+
+        min-height: 62px;
+    }
+
+    .content {
+        height: calc(100vh - 62px);
+
+        padding: 8px;
+
+        gap: 8px;
+    }
+
+    .panel-header {
+        height: 48px;
+    }
+
+    .sidebar {
+        gap: 6px;
+    }
+
+    .sidebar .card:nth-child(1) {
+        flex: 0 0 112px;
+
+        height: 112px;
+
+        padding: 8px 10px;
+    }
+
+    .sidebar .card:nth-child(2) {
+        flex: 1 1 auto;
+
+        height: auto;
+
+        padding: 8px 10px;
+
+        min-height: 0;
+    }
+
+    .sidebar .card:nth-child(3) {
+        flex: 0 0 165px;
+
+        height: 165px;
+
+        padding: 8px 10px;
+    }
+
+    .card-title {
+        margin-bottom: 5px;
+
+        font-size: 12px;
+    }
+
+    .summary {
+        gap: 5px;
+    }
+
+    .summary-box {
+        padding: 6px;
+    }
+
+    .summary-number {
+        font-size: 18px;
+    }
+
+    .summary-text {
+        font-size: 9px;
+    }
+
+    .device {
+        padding: 3px 0 !important;
+    }
+
+    .device-icon {
+        width: 26px;
+
+        height: 26px;
+    }
+
+    .device-name {
+        font-size: 11px;
+    }
+
+    .device-type {
+        font-size: 8px;
+    }
+
+    .badge {
+        font-size: 8px;
+
+        padding: 2px 5px;
+    }
+
+    .log {
+        height: calc(100% - 42px);
+
+        font-size: 8px;
+    }
+
+}
+
+
+/* =====================================================
+   VERY SHORT SCREEN
+===================================================== */
+
+@media (min-width: 1001px) and (max-height: 650px) {
+
+    .header {
+        height: 55px;
+
+        min-height: 55px;
+    }
+
+    .content {
+        height: calc(100vh - 55px);
+
+        padding: 6px;
+
+        gap: 6px;
+    }
+
+    .panel-header {
+        height: 42px;
+    }
+
+    .sidebar {
+        gap: 5px;
+    }
+
+    .sidebar .card:nth-child(1) {
+        flex: 0 0 92px;
+
+        height: 92px;
+
+        padding: 6px 8px;
+    }
+
+    .sidebar .card:nth-child(2) {
+        flex: 1 1 auto;
+
+        height: auto;
+
+        padding: 6px 8px;
+
+        min-height: 0;
+    }
+
+    .sidebar .card:nth-child(3) {
+        flex: 0 0 135px;
+
+        height: 135px;
+
+        padding: 6px 8px;
+    }
+
+    .card-title {
+        font-size: 11px;
+
+        margin-bottom: 3px;
+    }
+
+    .summary {
+        gap: 4px;
+    }
+
+    .summary-box {
+        padding: 4px;
+    }
+
+    .summary-number {
+        font-size: 16px;
+    }
+
+    .summary-text {
+        font-size: 8px;
+    }
+
+    .device {
+        padding: 2px 0 !important;
+    }
+
+    .device-icon {
+        width: 22px;
+
+        height: 22px;
+
+        font-size: 9px;
+    }
+
+    .device-name {
+        font-size: 9px;
+    }
+
+    .device-type {
+        font-size: 7px;
+    }
+
+    .badge {
+        font-size: 7px;
+
+        padding: 2px 4px;
+    }
+
+    .log {
+        height: calc(100% - 38px);
+
+        font-size: 7px;
+
+        padding: 5px;
+    }
+
+}
+
+
+/* =====================================================
    RESPONSIVE
 ===================================================== */
 
 @media (max-width: 1000px) {
 
+    html,
+    body {
+        overflow: auto;
+    }
+
+    .app {
+        height: auto;
+
+        min-height: 100vh;
+
+        overflow: visible;
+    }
+
     .content {
+        height: auto;
+
+        min-height: calc(100vh - 76px);
+
         grid-template-columns: 1fr;
+
+        overflow: visible;
+    }
+
+    .field-panel {
+        height: 650px;
+
+        min-height: 650px;
     }
 
     .sidebar {
+        width: 100%;
+
+        height: auto;
+
         display: grid;
 
         grid-template-columns:
             1fr 1fr;
+
+        overflow: visible;
+    }
+
+    .sidebar .card {
+        height: auto !important;
+
+        flex: none;
+
+        min-height: auto;
     }
 
 }
 
 @media (max-width: 700px) {
 
+    html,
+    body {
+        overflow: auto;
+    }
+
     .header {
+        height: 65px;
+
         padding: 0 15px;
+    }
+
+    .logo-text h1 {
+        font-size: 17px;
+    }
+
+    .logo-text span {
+        font-size: 10px;
+    }
+
+    .logo-icon {
+        width: 38px;
+
+        height: 38px;
+    }
+
+    .connection {
+        padding: 7px 10px;
+
+        font-size: 11px;
     }
 
     .legend {
@@ -900,15 +1543,36 @@ body {
     }
 
     .content {
+        height: auto;
+
         padding: 10px;
+
+        gap: 10px;
+    }
+
+    .field-panel {
+        height: 600px;
+
+        min-height: 600px;
+
+        border-radius: 12px;
     }
 
     .sidebar {
         display: flex;
+
+        width: 100%;
+
+        height: auto;
+    }
+
+    .sidebar .card {
+        height: auto !important;
     }
 
     .race-timer {
         left: 10px;
+
         top: 10px;
 
         min-width: 130px;
@@ -918,8 +1582,315 @@ body {
         font-size: 22px;
     }
 
+    .sound-button-container {
+        top: 75px;
+
+        right: 10px;
+    }
+
 }
 
+/* =====================================================
+   FIX FIELD NOT CUT OFF
+===================================================== */
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.app {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.content {
+    width: 100%;
+    max-width: 100vw;
+    height: calc(100vh - 70px);
+
+    padding: 12px;
+    gap: 12px;
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        320px;
+
+    overflow: hidden;
+}
+
+.field-panel {
+    width: 100%;
+    min-width: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+.field {
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    min-height: 0;
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+/* =====================================================
+   FIX TIMER
+===================================================== */
+
+.race-timer {
+    left: 20px;
+    top: 450px;
+
+    max-width: calc(100% - 40px);
+}
+
+/* =====================================================
+   FIX NODE SIZE
+===================================================== */
+
+.field-node {
+    width: 48px;
+    height: 48px;
+
+    font-size: 18px;
+
+    transform-origin: center;
+}
+
+/* OPEN / DETECT ไม่ให้ล้นวงกลม */
+#door1,
+#door2,
+#door3,
+#door4,
+#door5 {
+    font-size: 18px;
+}
+
+#laser1,
+#laser2 {
+    font-size: 11px;
+}
+
+/* =====================================================
+   KEEP EVERYTHING INSIDE FIELD
+===================================================== */
+
+.start {
+    left: 10%;
+}
+
+.switch1 {
+    left: 28%;
+}
+
+.door1 {
+    left: 28%;
+}
+
+.laser1 {
+    left: 48%;
+}
+
+.door2 {
+    left: 49%;
+}
+
+.door3 {
+    left: 49%;
+}
+
+.laser2 {
+    left: 76%;
+}
+
+.door4 {
+    left: 72%;
+}
+
+.switch2 {
+    left: 27%;
+}
+
+.door5 {
+    left: 60%;
+}
+
+.end {
+    left: 84%;
+}
+
+/* =====================================================
+   FIX RIGHT SIDEBAR OVERFLOW
+===================================================== */
+
+.main-content {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.dashboard {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 380px;
+    gap: 14px;
+}
+
+/* Field Map */
+.field-map {
+    min-width: 0;
+    width: 100%;
+    overflow: hidden;
+}
+
+/* ฝั่งขวา */
+.sidebar,
+.right-sidebar {
+    width: 100%;
+    max-width: 380px;
+    min-width: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* การ์ดทุกใบในฝั่งขวา */
+.sidebar > *,
+.right-sidebar > * {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+/* =====================================================
+   FIELD STATUS
+===================================================== */
+
+.field-status {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* =====================================================
+   DEVICES
+===================================================== */
+
+.devices {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* แต่ละรายการ Device */
+.device-item {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* ชื่ออุปกรณ์ */
+.device-info {
+    min-width: 0;
+    overflow: hidden;
+}
+
+.device-info strong,
+.device-info span {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* สถานะ OPEN / CLOSED / DETECTED */
+.device-status {
+    flex-shrink: 0;
+    max-width: 90px;
+}
+
+/* =====================================================
+   RECENT EVENTS
+===================================================== */
+
+.recent-events {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.events-list {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* =====================================================
+   SOUND BUTTON
+===================================================== */
+
+.sound-card {
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.sound-card button {
+    max-width: 100%;
+    box-sizing: border-box;
+    white-space: nowrap;
+}
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 1200px) {
+    .dashboard {
+        grid-template-columns: minmax(0, 1fr) 330px;
+    }
+
+    .sidebar,
+    .right-sidebar {
+        max-width: 330px;
+    }
+}
+
+@media (max-width: 900px) {
+    .dashboard {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar,
+    .right-sidebar {
+        max-width: 100%;
+    }
+}
 </style>
 
 </head>
@@ -959,7 +1930,11 @@ body {
     <div class="logo">
 
         <div class="logo-icon">
-            <img src="images/logo.png" alt="Logo">
+
+            <img
+                src="images/logo.png"
+                alt="Logo">
+
         </div>
 
         <div class="logo-text">
@@ -1715,10 +2690,6 @@ let arduinoRaceMilliseconds = 0;
 
 /*
    เก็บข้อความที่เคยประมวลผลแล้ว
-
-   สำคัญมาก:
-   server ส่ง messages ทั้งชุดซ้ำทุก 500ms
-   เราจึงต้องจำข้อความที่เล่นเสียงไปแล้ว
 */
 let processedMessageKeys = new Set();
 
@@ -1996,11 +2967,6 @@ async function playDoorSound(
 
     try {
 
-        /*
-           หยุดเสียงเดิมก่อน
-           เพื่อให้ทุกประตูเล่นเสียงใหม่ได้ทันที
-        */
-
         doorSound.pause();
 
         doorSound.currentTime = 0;
@@ -2146,12 +3112,6 @@ function parseArduinoTime(
         String(message).trim();
 
 
-    /*
-       ตัวอย่าง:
-
-       Time end. using 36 seconds (49839)
-    */
-
     let finishSecondsMatch =
         text.match(
             /Time\s+end\.\s+using\s+(\d+)\s+seconds/i
@@ -2178,12 +3138,6 @@ function parseArduinoTime(
 
     }
 
-
-    /*
-       ตัวอย่าง:
-
-       Time end. using 1:14 minutes
-    */
 
     let finishMinuteMatch =
         text.match(
@@ -2222,12 +3176,6 @@ function parseArduinoTime(
     }
 
 
-    /*
-       ตัวอย่าง:
-
-       Time : 36 seconds
-    */
-
     let secondsMatch =
         text.match(
             /Time\s*:\s*(\d+)\s+seconds/i
@@ -2254,12 +3202,6 @@ function parseArduinoTime(
 
     }
 
-
-    /*
-       ตัวอย่าง:
-
-       Time : 1:05 minutes
-    */
 
     let minuteMatch =
         text.match(
@@ -2298,12 +3240,6 @@ function parseArduinoTime(
     }
 
 
-    /*
-       ตัวอย่าง:
-
-       Time : 49839 ms
-    */
-
     let msMatch =
         text.match(
             /Time\s*:\s*(\d+)\s*ms/i
@@ -2337,11 +3273,6 @@ function parseArduinoTime(
 ===================================================== */
 
 function startRace() {
-
-    /*
-       ถ้า race กำลังวิ่งอยู่
-       ไม่ต้อง start ซ้ำ
-    */
 
     if (raceRunning) {
 
@@ -2383,16 +3314,8 @@ function startRace() {
         .classList.remove("finish-active");
 
 
-    /*
-       เสียงออกตัว
-    */
-
     playStartSound();
 
-
-    /*
-       เสียงระหว่างวิ่ง
-    */
 
     startRunningSound();
 
@@ -2412,10 +3335,6 @@ function finishRace(
     finalMilliseconds
 ) {
 
-    /*
-       ป้องกัน finish ซ้ำ
-    */
-
     if (finishHandled) {
 
         console.log(
@@ -2433,11 +3352,6 @@ function finishRace(
 
     raceFinished = true;
 
-
-    /*
-       ถ้ามีเวลาจาก Arduino
-       ใช้เวลานั้น
-    */
 
     if (
         Number.isFinite(
@@ -2458,10 +3372,6 @@ function finishRace(
     updateTimerDisplay();
 
 
-    /*
-       Timer
-    */
-
     document
         .getElementById("raceTimer")
         .classList.remove("running");
@@ -2473,41 +3383,21 @@ function finishRace(
         "FINISHED";
 
 
-    /*
-       Start animation OFF
-    */
-
     document
         .getElementById("start")
         .classList.remove("race-active");
 
-
-    /*
-       End animation ON
-    */
 
     document
         .getElementById("end")
         .classList.add("finish-active");
 
 
-    /*
-       หยุดเสียงวิ่ง
-    */
-
     stopRunningSound();
 
 
-    /*
-       เล่นเสียง Finish
-    */
-
     playFinishSound();
 
-
-    /*
-       Popup กลางจอ
-    */
 
     showFinishPopup(
         arduinoRaceMilliseconds
@@ -2658,18 +3548,6 @@ function processRaceMessage(
        PIN 18 = FINISH
     ================================================= */
 
-    /*
-       รองรับ:
-
-       PIN 18
-       PIN18
-       Pin 18
-       Pin18
-       PIN 18 -> DETECTED
-       PIN 18 -> FINISH
-       SENSOR PIN 18
-    */
-
     const pin18Detected =
         /\bPIN\s*18\b/i.test(
             text
@@ -2698,15 +3576,6 @@ function processRaceMessage(
         );
 
 
-        /*
-           Finish ได้ทั้งกรณี raceRunning
-           และกรณี Arduino ส่ง PIN18
-           หลัง Time end แล้ว
-
-           แต่ถ้า finish ไปแล้ว
-           finishHandled จะกัน popup ซ้ำ
-        */
-
         if (!finishHandled) {
 
             finishRace(
@@ -2733,21 +3602,9 @@ function processRaceMessage(
 
     if (parsed) {
 
-        /*
-           Arduino ส่ง Time end
-        */
-
         if (
             parsed.type === "finish"
         ) {
-
-            /*
-               ถ้า Arduino ส่ง Time end
-               ให้บันทึกเวลาไว้
-
-               แต่จะ Finish เฉพาะตอน
-               ยังไม่ finish
-            */
 
             arduinoRaceMilliseconds =
                 parsed.milliseconds;
@@ -2755,11 +3612,6 @@ function processRaceMessage(
 
             updateTimerDisplay();
 
-
-            /*
-               ถ้า race กำลังวิ่ง
-               ให้ถือว่า finish
-            */
 
             if (
                 raceRunning
@@ -2779,19 +3631,9 @@ function processRaceMessage(
         }
 
 
-        /*
-           Time ปกติ
-        */
-
         arduinoRaceMilliseconds =
             parsed.milliseconds;
 
-
-        /*
-           แสดงเวลาต่อให้ raceRunning
-           เป็น false เพื่อให้เวลาสุดท้าย
-           ยังคงอยู่บนจอ
-        */
 
         updateTimerDisplay();
 
@@ -2832,20 +3674,6 @@ function processRaceMessage(
        EVERY DOOR OPEN
     ================================================= */
 
-    /*
-       สำคัญ:
-
-       ไม่ได้ตรวจเฉพาะ Door 5
-
-       รองรับ:
-
-       DOOR 1 -> OPEN
-       DOOR 2 -> OPEN
-       DOOR 3 -> OPEN
-       DOOR 4 -> OPEN
-       DOOR 5 -> OPEN
-    */
-
     const doorOpenMatch =
         text.match(
             /DOOR\s*(\d+)\s*->\s*OPEN/i
@@ -2868,10 +3696,6 @@ function processRaceMessage(
             doorNumber
         );
 
-
-        /*
-           เล่นเสียงทุกประตู
-        */
 
         if (
             doorNumber >= 1
@@ -2912,11 +3736,6 @@ function checkRaceMessages(
     }
 
 
-    /*
-       ถ้า server restart
-       หรือ messages ถูก reset
-    */
-
     if (
         messages.length <
         lastMessageCount
@@ -2926,13 +3745,6 @@ function checkRaceMessages(
 
     }
 
-
-    /*
-       ตรวจทุกข้อความ
-
-       ใช้ข้อความ + index
-       เพื่อไม่ให้เล่นเสียงซ้ำ
-    */
 
     messages.forEach(
         function (
@@ -2970,17 +3782,9 @@ function checkRaceMessages(
     );
 
 
-    /*
-       จำจำนวน message
-    */
-
     lastMessageCount =
         messages.length;
 
-
-    /*
-       ป้องกัน Set โตไม่หยุด
-    */
 
     if (
         processedMessageKeys.size >
