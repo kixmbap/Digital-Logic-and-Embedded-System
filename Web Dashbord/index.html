@@ -17,28 +17,16 @@
 }
 
 body {
-
     margin: 0;
-
-    font-family:
-        Arial,
-        "Noto Sans Thai",
-        sans-serif;
-
+    font-family: Arial, "Noto Sans Thai", sans-serif;
     background: #eef1f5;
-
     color: #1f2937;
-
 }
 
 .app {
-
     min-height: 100vh;
-
     display: flex;
-
     flex-direction: column;
-
 }
 
 /* =====================================================
@@ -46,119 +34,46 @@ body {
 ===================================================== */
 
 .header {
-
     height: 76px;
-
     background: #ffffff;
-
     border-bottom: 1px solid #e5e7eb;
 
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
 
     padding: 0 28px;
-
 }
 
 .logo {
-
     display: flex;
-
     align-items: center;
-
     gap: 14px;
-
 }
 
 .logo-icon {
-
     width: 44px;
-
     height: 44px;
-
     border-radius: 12px;
 
     background: #111827;
-
     color: white;
 
     display: flex;
-
     align-items: center;
-
     justify-content: center;
 
     font-size: 23px;
-
 }
 
 .logo-text h1 {
-
     margin: 0;
-
     font-size: 21px;
-
 }
 
 .logo-text span {
-
     font-size: 12px;
-
     color: #6b7280;
-
-}
-
-.header-right {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 12px;
-
-}
-
-/* =====================================================
-   SOUND BUTTON
-===================================================== */
-
-.sound-button {
-
-    border: none;
-
-    background: #f3f4f6;
-
-    color: #374151;
-
-    padding: 9px 14px;
-
-    border-radius: 20px;
-
-    font-size: 12px;
-
-    font-weight: bold;
-
-    cursor: pointer;
-
-    transition: .2s;
-
-}
-
-.sound-button:hover {
-
-    background: #e5e7eb;
-
-}
-
-.sound-button.enabled {
-
-    background: #dcfce7;
-
-    color: #15803d;
-
 }
 
 /* =====================================================
@@ -166,11 +81,8 @@ body {
 ===================================================== */
 
 .connection {
-
     display: flex;
-
     align-items: center;
-
     gap: 9px;
 
     padding: 9px 15px;
@@ -178,19 +90,14 @@ body {
     border-radius: 20px;
 
     background: #ecfdf3;
-
     color: #15803d;
 
     font-size: 13px;
-
     font-weight: bold;
-
 }
 
 .connection-dot {
-
     width: 9px;
-
     height: 9px;
 
     border-radius: 50%;
@@ -199,7 +106,6 @@ body {
 
     box-shadow:
         0 0 0 4px #dcfce7;
-
 }
 
 /* =====================================================
@@ -207,7 +113,6 @@ body {
 ===================================================== */
 
 .content {
-
     flex: 1;
 
     padding: 22px;
@@ -219,7 +124,6 @@ body {
         320px;
 
     gap: 20px;
-
 }
 
 /* =====================================================
@@ -227,7 +131,6 @@ body {
 ===================================================== */
 
 .field-panel {
-
     background: white;
 
     border-radius: 16px;
@@ -237,75 +140,50 @@ body {
     overflow: hidden;
 
     display: flex;
-
     flex-direction: column;
-
 }
 
 .panel-header {
-
     height: 62px;
 
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
 
     padding: 0 20px;
 
     border-bottom: 1px solid #e5e7eb;
-
 }
 
 .panel-title {
-
     font-size: 16px;
-
     font-weight: bold;
-
 }
 
 .panel-subtitle {
-
     font-size: 12px;
-
     color: #9ca3af;
-
     margin-top: 3px;
-
 }
 
 .legend {
-
     display: flex;
-
     gap: 15px;
 
     font-size: 11px;
-
     color: #6b7280;
-
 }
 
 .legend-item {
-
     display: flex;
-
     align-items: center;
-
     gap: 5px;
-
 }
 
 .legend-dot {
-
     width: 8px;
-
     height: 8px;
-
     border-radius: 50%;
-
 }
 
 .legend-green {
@@ -325,7 +203,6 @@ body {
 ===================================================== */
 
 .field {
-
     position: relative;
 
     flex: 1;
@@ -346,7 +223,6 @@ body {
     background-size: 35px 35px;
 
     overflow: hidden;
-
 }
 
 /* =====================================================
@@ -354,16 +230,14 @@ body {
 ===================================================== */
 
 .race-timer {
-
     position: absolute;
 
     left: 20px;
-
     top: 20px;
 
     z-index: 30;
 
-    min-width: 170px;
+    min-width: 150px;
 
     padding: 12px 16px;
 
@@ -375,13 +249,10 @@ body {
 
     box-shadow:
         0 5px 18px rgba(0,0,0,.12);
-
 }
 
 .timer-title {
-
     font-size: 10px;
-
     font-weight: bold;
 
     color: #6b7280;
@@ -389,82 +260,41 @@ body {
     letter-spacing: 1px;
 
     margin-bottom: 3px;
-
 }
 
 .timer-value {
-
     font-family: Consolas, monospace;
 
     font-size: 26px;
-
     font-weight: bold;
 
     color: #374151;
 
     letter-spacing: 1px;
-
 }
 
 .timer-status {
-
     margin-top: 3px;
 
     font-size: 10px;
 
     color: #9ca3af;
-
 }
 
 .race-timer.running {
-
     border-color: #22c55e;
 
     box-shadow:
         0 0 0 3px rgba(34,197,94,.10),
         0 5px 18px rgba(0,0,0,.12);
-
 }
 
 .race-timer.running .timer-value {
-
     color: #15803d;
-
 }
 
 .race-timer.running .timer-status {
-
     color: #15803d;
-
-}
-
-/* =====================================================
-   PATH
-===================================================== */
-
-.path {
-
-    position: absolute;
-
-    height: 6px;
-
-    background: #d1d5db;
-
-    border-radius: 10px;
-
-    transform-origin: left center;
-
-    z-index: 1;
-
-}
-
-.path.active {
-
-    background: #60a5fa;
-
-    box-shadow:
-        0 0 8px rgba(59,130,246,.45);
-
 }
 
 /* =====================================================
@@ -472,23 +302,18 @@ body {
 ===================================================== */
 
 .field-node {
-
     position: absolute;
 
     width: 48px;
-
     height: 48px;
 
     border-radius: 50%;
 
     display: flex;
-
     align-items: center;
-
     justify-content: center;
 
     font-size: 20px;
-
     font-weight: bold;
 
     z-index: 5;
@@ -497,53 +322,38 @@ body {
 
     box-shadow:
         0 4px 12px rgba(0,0,0,.12);
-
 }
 
 .field-node:hover {
-
     transform: scale(1.12);
-
 }
 
+/* =====================================================
+   NODE STATUS
+===================================================== */
+
 .node-open {
-
     background: #dcfce7;
-
     border: 3px solid #22c55e;
-
     color: #15803d;
-
 }
 
 .node-closed {
-
     background: #fee2e2;
-
     border: 3px solid #ef4444;
-
     color: #b91c1c;
-
 }
 
 .node-detected {
-
     background: #cffafe;
-
     border: 3px solid #06b6d4;
-
     color: #0891b2;
-
 }
 
 .node-off {
-
     background: #f3f4f6;
-
     border: 3px solid #9ca3af;
-
     color: #6b7280;
-
 }
 
 /* =====================================================
@@ -610,7 +420,6 @@ body {
 ===================================================== */
 
 .node-label {
-
     position: absolute;
 
     transform: translateX(-50%);
@@ -620,17 +429,14 @@ body {
     z-index: 6;
 
     font-size: 11px;
-
     font-weight: bold;
 
     color: #374151;
 
     white-space: nowrap;
-
 }
 
 .node-label small {
-
     display: block;
 
     color: #9ca3af;
@@ -638,7 +444,6 @@ body {
     font-weight: normal;
 
     margin-top: 2px;
-
 }
 
 /* =====================================================
@@ -646,49 +451,39 @@ body {
 ===================================================== */
 
 .start.race-active {
-
     animation:
         startPulse 1s infinite;
-
 }
 
 @keyframes startPulse {
 
     0% {
-
         box-shadow:
             0 0 0 0 rgba(34,197,94,.55),
             0 4px 12px rgba(0,0,0,.12);
-
     }
 
     70% {
-
         box-shadow:
             0 0 0 12px rgba(34,197,94,0),
             0 4px 12px rgba(0,0,0,.12);
-
     }
 
     100% {
-
         box-shadow:
             0 0 0 0 rgba(34,197,94,0),
             0 4px 12px rgba(0,0,0,.12);
-
     }
 
 }
 
 /* =====================================================
-   END ANIMATION
+   FINISH ANIMATION
 ===================================================== */
 
 .end.finish-active {
-
     animation:
         finishPulse .8s infinite;
-
 }
 
 @keyframes finishPulse {
@@ -712,17 +507,17 @@ body {
 ===================================================== */
 
 .sidebar {
-
     display: flex;
-
     flex-direction: column;
 
     gap: 16px;
-
 }
 
-.card {
+/* =====================================================
+   CARD
+===================================================== */
 
+.card {
     background: white;
 
     border: 1px solid #e5e7eb;
@@ -730,54 +525,47 @@ body {
     border-radius: 16px;
 
     padding: 18px;
-
 }
 
 .card-title {
-
     font-size: 14px;
 
     font-weight: bold;
 
     margin-bottom: 14px;
-
 }
 
-.summary {
+/* =====================================================
+   SUMMARY
+===================================================== */
 
+.summary {
     display: grid;
 
     grid-template-columns:
         1fr 1fr;
 
     gap: 10px;
-
 }
 
 .summary-box {
-
     padding: 13px;
 
     background: #f9fafb;
 
     border-radius: 10px;
-
 }
 
 .summary-number {
-
     font-size: 24px;
 
     font-weight: bold;
-
 }
 
 .summary-text {
-
     font-size: 11px;
 
     color: #6b7280;
-
 }
 
 /* =====================================================
@@ -785,71 +573,54 @@ body {
 ===================================================== */
 
 .device {
-
     display: flex;
 
     align-items: center;
-
     justify-content: space-between;
 
     padding: 11px 0;
 
     border-bottom: 1px solid #f1f5f9;
-
 }
 
 .device:last-child {
-
     border-bottom: none;
-
 }
 
 .device-left {
-
     display: flex;
 
     align-items: center;
 
     gap: 10px;
-
 }
 
 .device-icon {
-
     width: 34px;
-
     height: 34px;
 
     border-radius: 9px;
 
     display: flex;
-
     align-items: center;
-
     justify-content: center;
 
     background: #f3f4f6;
-
 }
 
 .device-name {
-
     font-size: 13px;
 
     font-weight: bold;
-
 }
 
 .device-type {
-
     font-size: 10px;
 
     color: #9ca3af;
-
 }
 
 .badge {
-
     padding: 4px 8px;
 
     border-radius: 20px;
@@ -857,39 +628,26 @@ body {
     font-size: 10px;
 
     font-weight: bold;
-
 }
 
 .badge-open {
-
     background: #dcfce7;
-
     color: #15803d;
-
 }
 
 .badge-closed {
-
     background: #fee2e2;
-
     color: #b91c1c;
-
 }
 
 .badge-detected {
-
     background: #cffafe;
-
     color: #0e7490;
-
 }
 
 .badge-off {
-
     background: #f3f4f6;
-
     color: #6b7280;
-
 }
 
 /* =====================================================
@@ -897,7 +655,6 @@ body {
 ===================================================== */
 
 .log {
-
     height: 190px;
 
     overflow-y: auto;
@@ -911,21 +668,68 @@ body {
     font-family: Consolas, monospace;
 
     font-size: 11px;
-
 }
 
 .log-line {
-
     color: #d1d5db;
 
     padding: 3px 0;
-
 }
 
 .log-line:last-child {
-
     color: #4ade80;
+}
 
+/* =====================================================
+   AUDIO
+===================================================== */
+
+.audio-status {
+    margin-top: 10px;
+
+    font-size: 10px;
+
+    color: #9ca3af;
+}
+
+.sound-button-container {
+    position: fixed;
+
+    top: 90px;
+    right: 25px;
+
+    z-index: 200;
+
+    background: white;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 12px;
+
+    padding: 10px 15px;
+
+    box-shadow:
+        0 5px 20px rgba(0,0,0,.15);
+}
+
+.sound-button {
+    border: none;
+
+    background: #111827;
+
+    color: white;
+
+    padding: 10px 16px;
+
+    border-radius: 8px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.sound-button:hover {
+    background: #374151;
 }
 
 /* =====================================================
@@ -933,20 +737,18 @@ body {
 ===================================================== */
 
 .finish-overlay {
-
     position: fixed;
 
     inset: 0;
 
-    z-index: 100;
+    z-index: 1000;
 
     background:
-        rgba(17,24,39,.55);
+        rgba(17,24,39,.65);
 
     display: flex;
 
     align-items: center;
-
     justify-content: center;
 
     opacity: 0;
@@ -956,19 +758,15 @@ body {
     transition:
         opacity .3s ease,
         visibility .3s ease;
-
 }
 
 .finish-overlay.show {
-
     opacity: 1;
 
     visibility: visible;
-
 }
 
 .finish-popup {
-
     width: min(420px, 90vw);
 
     background: white;
@@ -988,20 +786,15 @@ body {
 
     transition:
         transform .35s ease;
-
 }
 
-.finish-overlay.show
-.finish-popup {
-
+.finish-overlay.show .finish-popup {
     transform:
         translateY(0)
         scale(1);
-
 }
 
 .finish-title {
-
     font-size: 13px;
 
     font-weight: bold;
@@ -1009,11 +802,9 @@ body {
     letter-spacing: 2px;
 
     color: #6b7280;
-
 }
 
 .finish-heading {
-
     margin-top: 8px;
 
     font-size: 28px;
@@ -1021,11 +812,9 @@ body {
     font-weight: bold;
 
     color: #111827;
-
 }
 
 .finish-time {
-
     margin-top: 15px;
 
     font-family: Consolas, monospace;
@@ -1035,13 +824,10 @@ body {
     font-weight: bold;
 
     color: #15803d;
-
 }
 
 .finish-line {
-
     width: 60px;
-
     height: 4px;
 
     background: #22c55e;
@@ -1049,11 +835,9 @@ body {
     border-radius: 10px;
 
     margin: 18px auto;
-
 }
 
 .finish-button {
-
     border: none;
 
     background: #111827;
@@ -1067,13 +851,10 @@ body {
     font-weight: bold;
 
     cursor: pointer;
-
 }
 
 .finish-button:hover {
-
     background: #374151;
-
 }
 
 /* =====================================================
@@ -1083,18 +864,14 @@ body {
 @media (max-width: 1000px) {
 
     .content {
-
         grid-template-columns: 1fr;
-
     }
 
     .sidebar {
-
         display: grid;
 
         grid-template-columns:
             1fr 1fr;
-
     }
 
 }
@@ -1102,43 +879,30 @@ body {
 @media (max-width: 700px) {
 
     .header {
-
         padding: 0 15px;
-
     }
 
     .legend {
-
         display: none;
-
     }
 
     .content {
-
         padding: 10px;
-
     }
 
     .sidebar {
-
         display: flex;
-
     }
 
     .race-timer {
-
         left: 10px;
-
         top: 10px;
 
         min-width: 130px;
-
     }
 
     .timer-value {
-
         font-size: 22px;
-
     }
 
 }
@@ -1147,9 +911,31 @@ body {
 
 </head>
 
+
 <body>
 
+
+<!-- =====================================================
+     SOUND UNLOCK
+===================================================== -->
+
+<div id="soundUnlock"
+     class="sound-button-container">
+
+    <button
+        id="soundButton"
+        class="sound-button"
+        onclick="enableSound()">
+
+        🔊 เปิดเสียง
+
+    </button>
+
+</div>
+
+
 <div class="app">
+
 
 <!-- =====================================================
      HEADER
@@ -1165,7 +951,9 @@ body {
 
         <div class="logo-text">
 
-            <h1>Robot Field</h1>
+            <h1>
+                Robot Field
+            </h1>
 
             <span>
                 Digital Logic & Embedded System
@@ -1175,33 +963,33 @@ body {
 
     </div>
 
-    <div class="header-right">
 
-        <button
-            id="soundButton"
-            class="sound-button">
+    <div class="connection">
 
-            🔇 เปิดเสียง
+        <div class="connection-dot"></div>
 
-        </button>
-
-        <div class="connection">
-
-            <div class="connection-dot"></div>
-
-            <span id="connectionText">
-                ARDUINO ONLINE
-            </span>
-
-        </div>
+        <span id="connectionText">
+            ARDUINO ONLINE
+        </span>
 
     </div>
 
 </header>
 
+
+<!-- =====================================================
+     CONTENT
+===================================================== -->
+
 <main class="content">
 
+
+<!-- =====================================================
+     FIELD
+===================================================== -->
+
 <section class="field-panel">
+
 
     <div class="panel-header">
 
@@ -1216,6 +1004,7 @@ body {
             </div>
 
         </div>
+
 
         <div class="legend">
 
@@ -1238,7 +1027,9 @@ body {
 
     </div>
 
+
     <div class="field">
+
 
         <!-- TIMER -->
 
@@ -1265,6 +1056,7 @@ body {
 
         </div>
 
+
         <!-- START -->
 
         <div id="start"
@@ -1281,6 +1073,7 @@ body {
 
         </div>
 
+
         <!-- SWITCH 1 -->
 
         <div id="switch1"
@@ -1295,9 +1088,12 @@ body {
 
             SWITCH 1
 
-            <small>Door 1</small>
+            <small>
+                Door 1
+            </small>
 
         </div>
+
 
         <!-- DOOR 1 -->
 
@@ -1313,9 +1109,12 @@ body {
 
             DOOR 1
 
-            <small>PIN 2</small>
+            <small>
+                PIN 2
+            </small>
 
         </div>
+
 
         <!-- LASER 1 -->
 
@@ -1331,9 +1130,12 @@ body {
 
             LASER 1
 
-            <small>Sensor</small>
+            <small>
+                Sensor
+            </small>
 
         </div>
+
 
         <!-- DOOR 2 -->
 
@@ -1349,9 +1151,12 @@ body {
 
             DOOR 2
 
-            <small>PIN 3</small>
+            <small>
+                PIN 3
+            </small>
 
         </div>
+
 
         <!-- DOOR 3 -->
 
@@ -1367,9 +1172,12 @@ body {
 
             DOOR 3
 
-            <small>PIN 4</small>
+            <small>
+                PIN 4
+            </small>
 
         </div>
+
 
         <!-- LASER 2 -->
 
@@ -1385,9 +1193,12 @@ body {
 
             LASER 2
 
-            <small>Sensor</small>
+            <small>
+                Sensor
+            </small>
 
         </div>
+
 
         <!-- DOOR 4 -->
 
@@ -1403,9 +1214,12 @@ body {
 
             DOOR 4
 
-            <small>PIN 5</small>
+            <small>
+                PIN 5
+            </small>
 
         </div>
+
 
         <!-- SWITCH 2 -->
 
@@ -1421,9 +1235,12 @@ body {
 
             SWITCH 2
 
-            <small>Door 4</small>
+            <small>
+                Door 4
+            </small>
 
         </div>
+
 
         <!-- DOOR 5 -->
 
@@ -1439,9 +1256,12 @@ body {
 
             DOOR 5
 
-            <small>Auto</small>
+            <small>
+                Auto
+            </small>
 
         </div>
+
 
         <!-- END -->
 
@@ -1459,15 +1279,20 @@ body {
 
         </div>
 
+
     </div>
 
 </section>
+
 
 <!-- =====================================================
      SIDEBAR
 ===================================================== -->
 
 <aside class="sidebar">
+
+
+    <!-- SUMMARY -->
 
     <div class="card">
 
@@ -1492,6 +1317,7 @@ body {
 
             </div>
 
+
             <div class="summary-box">
 
                 <div id="laserCount"
@@ -1511,17 +1337,25 @@ body {
 
     </div>
 
+
+    <!-- DEVICES -->
+
     <div class="card">
 
         <div class="card-title">
             Devices
         </div>
 
+
+        <!-- DOOR 1 -->
+
         <div class="device">
 
             <div class="device-left">
 
-                <div class="device-icon">D1</div>
+                <div class="device-icon">
+                    D1
+                </div>
 
                 <div>
 
@@ -1546,11 +1380,16 @@ body {
 
         </div>
 
+
+        <!-- DOOR 2 -->
+
         <div class="device">
 
             <div class="device-left">
 
-                <div class="device-icon">D2</div>
+                <div class="device-icon">
+                    D2
+                </div>
 
                 <div>
 
@@ -1575,11 +1414,16 @@ body {
 
         </div>
 
+
+        <!-- DOOR 3 -->
+
         <div class="device">
 
             <div class="device-left">
 
-                <div class="device-icon">D3</div>
+                <div class="device-icon">
+                    D3
+                </div>
 
                 <div>
 
@@ -1604,11 +1448,16 @@ body {
 
         </div>
 
+
+        <!-- DOOR 4 -->
+
         <div class="device">
 
             <div class="device-left">
 
-                <div class="device-icon">D4</div>
+                <div class="device-icon">
+                    D4
+                </div>
 
                 <div>
 
@@ -1633,11 +1482,16 @@ body {
 
         </div>
 
+
+        <!-- DOOR 5 -->
+
         <div class="device">
 
             <div class="device-left">
 
-                <div class="device-icon">D5</div>
+                <div class="device-icon">
+                    D5
+                </div>
 
                 <div>
 
@@ -1662,11 +1516,16 @@ body {
 
         </div>
 
+
+        <!-- LASER 1 -->
+
         <div class="device">
 
             <div class="device-left">
 
-                <div class="device-icon">L1</div>
+                <div class="device-icon">
+                    L1
+                </div>
 
                 <div>
 
@@ -1691,11 +1550,16 @@ body {
 
         </div>
 
+
+        <!-- LASER 2 -->
+
         <div class="device">
 
             <div class="device-left">
 
-                <div class="device-icon">L2</div>
+                <div class="device-icon">
+                    L2
+                </div>
 
                 <div>
 
@@ -1720,7 +1584,11 @@ body {
 
         </div>
 
+
     </div>
+
+
+    <!-- LOG -->
 
     <div class="card">
 
@@ -1735,13 +1603,23 @@ body {
 
         </div>
 
+        <div id="audioStatus"
+             class="audio-status">
+
+            🔇 กรุณากด "เปิดเสียง" ก่อนเริ่มการแข่งขัน
+
+        </div>
+
     </div>
 
+
 </aside>
+
 
 </main>
 
 </div>
+
 
 <!-- =====================================================
      FINISH POPUP
@@ -1780,140 +1658,189 @@ body {
 
 </div>
 
+
 <!-- =====================================================
      AUDIO
 ===================================================== -->
 
 <audio id="startSound"
        src="sounds/start.mp3"
-       preload="auto"></audio>
-
-<audio id="doorSound"
-       src="sounds/door.mp3"
-       preload="auto"></audio>
+       preload="auto">
+</audio>
 
 <audio id="runningSound"
        src="sounds/running.mp3"
        preload="auto"
-       loop></audio>
+       loop>
+</audio>
+
+<audio id="doorSound"
+       src="sounds/door.mp3"
+       preload="auto">
+</audio>
 
 <audio id="finishSound"
        src="sounds/finish.mp3"
-       preload="auto"></audio>
+       preload="auto">
+</audio>
 
 
 <script>
 
 /* =====================================================
-   AUDIO SYSTEM
+   RACE STATE
 ===================================================== */
 
-let soundEnabled = false;
+let raceRunning = false;
+
+let raceFinished = false;
+
+let finishHandled = false;
+
+let arduinoRaceMilliseconds = 0;
+
+
+/*
+   เก็บข้อความที่เคยประมวลผลแล้ว
+
+   สำคัญมาก:
+   server ส่ง messages ทั้งชุดซ้ำทุก 500ms
+   เราจึงต้องจำข้อความที่เล่นเสียงไปแล้ว
+*/
+let processedMessageKeys = new Set();
+
+
+/*
+   เก็บ index ของ message ล่าสุด
+*/
+let lastMessageCount = 0;
+
+
+/* =====================================================
+   AUDIO
+===================================================== */
 
 const startSound =
     document.getElementById("startSound");
 
-const doorSound =
-    document.getElementById("doorSound");
-
 const runningSound =
     document.getElementById("runningSound");
+
+const doorSound =
+    document.getElementById("doorSound");
 
 const finishSound =
     document.getElementById("finishSound");
 
-const soundButton =
-    document.getElementById("soundButton");
 
-
-/*
-    Browser ส่วนใหญ่จะไม่ยอมให้
-    autoplay เสียงจนกว่าผู้ใช้จะกดหน้าเว็บ
-
-    ให้กดปุ่มนี้ครั้งแรก
-*/
-
-soundButton.addEventListener(
-    "click",
-    async function () {
-
-        soundEnabled = true;
-
-        soundButton.innerHTML =
-            "🔊 เสียงเปิดอยู่";
-
-        soundButton.classList.add(
-            "enabled"
-        );
-
-        /*
-            เล่น/หยุดทันทีเพื่อ unlock audio
-        */
-
-        try {
-
-            runningSound.volume = 0;
-
-            await runningSound.play();
-
-            runningSound.pause();
-
-            runningSound.currentTime = 0;
-
-            runningSound.volume = 1;
-
-        }
-
-        catch (error) {
-
-            console.log(
-                "Audio unlock:",
-                error
-            );
-
-        }
-
-    }
-);
+let audioUnlocked = false;
 
 
 /* =====================================================
-   PLAY SOUND
+   ENABLE SOUND
 ===================================================== */
 
-function playSound(audio) {
-
-    if (!soundEnabled) {
-
-        console.log(
-            "Sound blocked - press เปิดเสียง"
-        );
-
-        return;
-
-    }
+async function enableSound() {
 
     try {
 
-        audio.currentTime = 0;
+        const sounds = [
+            startSound,
+            runningSound,
+            doorSound,
+            finishSound
+        ];
 
-        audio.play().catch(
-            function (error) {
+        for (const audio of sounds) {
+
+            try {
+
+                audio.muted = true;
+
+                await audio.play();
+
+                audio.pause();
+
+                audio.currentTime = 0;
+
+                audio.muted = false;
+
+            }
+            catch (error) {
 
                 console.log(
-                    "Audio error:",
+                    "Audio prepare error:",
                     error
                 );
 
             }
+
+        }
+
+
+        audioUnlocked = true;
+
+
+        const button =
+            document.getElementById(
+                "soundButton"
+            );
+
+
+        button.innerHTML =
+            "🔊 เสียงเปิดแล้ว";
+
+
+        button.style.background =
+            "#15803d";
+
+
+        const status =
+            document.getElementById(
+                "audioStatus"
+            );
+
+
+        if (status) {
+
+            status.innerText =
+                "🔊 SOUND ENABLED";
+
+            status.style.color =
+                "#15803d";
+
+        }
+
+
+        setTimeout(
+            function () {
+
+                const box =
+                    document.getElementById(
+                        "soundUnlock"
+                    );
+
+                if (box) {
+
+                    box.style.display =
+                        "none";
+
+                }
+
+            },
+            1000
+        );
+
+
+        console.log(
+            "AUDIO UNLOCKED"
         );
 
     }
-
     catch (error) {
 
         console.log(
-            "Audio error:",
+            "ENABLE AUDIO ERROR:",
             error
         );
 
@@ -1923,27 +1850,87 @@ function playSound(audio) {
 
 
 /* =====================================================
-   START RUNNING SOUND
+   START SOUND
 ===================================================== */
 
-function startRunningSound() {
+async function playStartSound() {
 
-    if (!soundEnabled) {
+    if (!audioUnlocked) {
+
+        console.log(
+            "START SOUND BLOCKED - AUDIO NOT UNLOCKED"
+        );
+
         return;
+
     }
 
-    runningSound.volume = 0.5;
 
-    runningSound.play().catch(
-        function (error) {
+    try {
 
-            console.log(
-                "Running sound:",
-                error
-            );
+        startSound.pause();
 
-        }
-    );
+        startSound.currentTime = 0;
+
+        startSound.volume = 1;
+
+        await startSound.play();
+
+        console.log(
+            "START SOUND PLAY"
+        );
+
+    }
+    catch (error) {
+
+        console.log(
+            "START SOUND ERROR:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   RUNNING SOUND
+===================================================== */
+
+async function startRunningSound() {
+
+    if (!audioUnlocked) {
+
+        return;
+
+    }
+
+
+    try {
+
+        runningSound.pause();
+
+        runningSound.currentTime = 0;
+
+        runningSound.loop = true;
+
+        runningSound.volume = 1;
+
+        await runningSound.play();
+
+        console.log(
+            "RUNNING SOUND PLAY"
+        );
+
+    }
+    catch (error) {
+
+        console.log(
+            "RUNNING SOUND ERROR:",
+            error
+        );
+
+    }
 
 }
 
@@ -1954,135 +1941,375 @@ function startRunningSound() {
 
 function stopRunningSound() {
 
-    runningSound.pause();
+    try {
 
-    runningSound.currentTime = 0;
+        runningSound.pause();
 
-}
+        runningSound.currentTime = 0;
 
+    }
+    catch (error) {
 
-/* =====================================================
-   RACE STATE
-===================================================== */
-
-let raceRunning = false;
-
-let raceFinished = false;
-
-let lastArduinoTime = "00:00";
-
-let lastProcessedMessage = "";
-
-
-/* =====================================================
-   START DETECTION
-===================================================== */
-
-function isStartMessage(text) {
-
-    const upper =
-        String(text).toUpperCase();
-
-    return (
-
-        upper.includes(
-            "TIME START NOW"
-        )
-
-        ||
-
-        upper.includes(
-            "ROBOT FIELD START"
-        )
-
-        ||
-
-        upper.includes(
-            "RACE START"
-        )
-
-    );
-
-}
-
-
-/* =====================================================
-   FINISH DETECTION
-===================================================== */
-
-function isFinishMessage(text) {
-
-    const upper =
-        String(text).toUpperCase();
-
-    return (
-
-        upper.includes(
-            "TIME END"
-        )
-
-        ||
-
-        upper.includes(
-            "RACE FINISHED"
-        )
-
-        ||
-
-        upper.includes(
-            "REACHED END"
-        )
-
-    );
-
-}
-
-
-/* =====================================================
-   EXTRACT ARDUINO TIME
-===================================================== */
-
-function extractArduinoTime(text) {
-
-    const value =
-        String(text);
-
-    /*
-       รูปแบบ:
-
-       Time : 35 seconds
-
-       หรือ
-
-       Time : 1:05 minutes
-    */
-
-    let match =
-        value.match(
-            /Time\s*:\s*([0-9]+(?::[0-9]{2})?)\s*(seconds|minutes)?/i
+        console.log(
+            "STOP RUNNING ERROR:",
+            error
         );
 
-    if (match) {
+    }
 
-        return match[1];
+}
+
+
+/* =====================================================
+   DOOR SOUND
+===================================================== */
+
+async function playDoorSound(
+    doorNumber
+) {
+
+    if (!audioUnlocked) {
+
+        console.log(
+            "DOOR " +
+            doorNumber +
+            " SOUND BLOCKED - AUDIO NOT UNLOCKED"
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+        /*
+           หยุดเสียงเดิมก่อน
+           เพื่อให้ทุกประตูเล่นเสียงใหม่ได้ทันที
+        */
+
+        doorSound.pause();
+
+        doorSound.currentTime = 0;
+
+        doorSound.volume = 1;
+
+
+        await doorSound.play();
+
+
+        console.log(
+            "DOOR " +
+            doorNumber +
+            " SOUND PLAY"
+        );
+
+    }
+    catch (error) {
+
+        console.log(
+            "DOOR SOUND ERROR:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   FINISH SOUND
+===================================================== */
+
+async function playFinishSound() {
+
+    if (!audioUnlocked) {
+
+        console.log(
+            "FINISH SOUND BLOCKED - AUDIO NOT UNLOCKED"
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+        finishSound.pause();
+
+        finishSound.currentTime = 0;
+
+        finishSound.volume = 1;
+
+
+        await finishSound.play();
+
+
+        console.log(
+            "FINISH SOUND PLAY"
+        );
+
+    }
+    catch (error) {
+
+        console.log(
+            "FINISH SOUND ERROR:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   FORMAT TIME
+===================================================== */
+
+function formatTime(
+    milliseconds
+) {
+
+    milliseconds =
+        Math.max(
+            0,
+            Number(milliseconds) || 0
+        );
+
+
+    const totalSeconds =
+        Math.floor(
+            milliseconds / 1000
+        );
+
+
+    const minutes =
+        Math.floor(
+            totalSeconds / 60
+        );
+
+
+    const seconds =
+        totalSeconds % 60;
+
+
+    return (
+        String(minutes).padStart(2, "0")
+        +
+        ":"
+        +
+        String(seconds).padStart(2, "0")
+    );
+
+}
+
+
+/* =====================================================
+   TIMER
+===================================================== */
+
+function updateTimerDisplay() {
+
+    document
+        .getElementById("timerValue")
+        .innerText =
+        formatTime(
+            arduinoRaceMilliseconds
+        );
+
+}
+
+
+/* =====================================================
+   PARSE ARDUINO TIME
+===================================================== */
+
+function parseArduinoTime(
+    message
+) {
+
+    const text =
+        String(message).trim();
+
+
+    /*
+       ตัวอย่าง:
+
+       Time end. using 36 seconds (49839)
+    */
+
+    let finishSecondsMatch =
+        text.match(
+            /Time\s+end\.\s+using\s+(\d+)\s+seconds/i
+        );
+
+
+    if (finishSecondsMatch) {
+
+        const seconds =
+            parseInt(
+                finishSecondsMatch[1],
+                10
+            );
+
+
+        return {
+
+            type: "finish",
+
+            milliseconds:
+                seconds * 1000
+
+        };
 
     }
 
 
     /*
-       รูปแบบ:
+       ตัวอย่าง:
 
        Time end. using 1:14 minutes
     */
 
-    match =
-        value.match(
-            /using\s+([0-9]+(?::[0-9]{2})?)/i
+    let finishMinuteMatch =
+        text.match(
+            /Time\s+end\.\s+using\s+(\d+):(\d+)\s+minutes/i
         );
 
-    if (match) {
 
-        return match[1];
+    if (finishMinuteMatch) {
+
+        const minutes =
+            parseInt(
+                finishMinuteMatch[1],
+                10
+            );
+
+
+        const seconds =
+            parseInt(
+                finishMinuteMatch[2],
+                10
+            );
+
+
+        return {
+
+            type: "finish",
+
+            milliseconds:
+                (
+                    minutes * 60 +
+                    seconds
+                ) * 1000
+
+        };
+
+    }
+
+
+    /*
+       ตัวอย่าง:
+
+       Time : 36 seconds
+    */
+
+    let secondsMatch =
+        text.match(
+            /Time\s*:\s*(\d+)\s+seconds/i
+        );
+
+
+    if (secondsMatch) {
+
+        const seconds =
+            parseInt(
+                secondsMatch[1],
+                10
+            );
+
+
+        return {
+
+            type: "time",
+
+            milliseconds:
+                seconds * 1000
+
+        };
+
+    }
+
+
+    /*
+       ตัวอย่าง:
+
+       Time : 1:05 minutes
+    */
+
+    let minuteMatch =
+        text.match(
+            /Time\s*:\s*(\d+):(\d+)\s+minutes/i
+        );
+
+
+    if (minuteMatch) {
+
+        const minutes =
+            parseInt(
+                minuteMatch[1],
+                10
+            );
+
+
+        const seconds =
+            parseInt(
+                minuteMatch[2],
+                10
+            );
+
+
+        return {
+
+            type: "time",
+
+            milliseconds:
+                (
+                    minutes * 60 +
+                    seconds
+                ) * 1000
+
+        };
+
+    }
+
+
+    /*
+       ตัวอย่าง:
+
+       Time : 49839 ms
+    */
+
+    let msMatch =
+        text.match(
+            /Time\s*:\s*(\d+)\s*ms/i
+        );
+
+
+    if (msMatch) {
+
+        return {
+
+            type: "time",
+
+            milliseconds:
+                parseInt(
+                    msMatch[1],
+                    10
+                )
+
+        };
 
     }
 
@@ -2098,15 +2325,28 @@ function extractArduinoTime(text) {
 
 function startRace() {
 
+    /*
+       ถ้า race กำลังวิ่งอยู่
+       ไม่ต้อง start ซ้ำ
+    */
+
     if (raceRunning) {
+
         return;
+
     }
+
 
     raceRunning = true;
 
     raceFinished = false;
 
-    lastArduinoTime = "00:00";
+    finishHandled = false;
+
+
+    arduinoRaceMilliseconds = 0;
+
+    updateTimerDisplay();
 
 
     document
@@ -2118,12 +2358,6 @@ function startRace() {
         .getElementById("timerStatus")
         .innerText =
         "RACE RUNNING";
-
-
-    document
-        .getElementById("timerValue")
-        .innerText =
-        "00:00";
 
 
     document
@@ -2140,14 +2374,19 @@ function startRace() {
        เสียงออกตัว
     */
 
-    playSound(startSound);
+    playStartSound();
 
 
     /*
-       เสียงขณะหุ่นกำลังวิ่ง
+       เสียงระหว่างวิ่ง
     */
 
     startRunningSound();
+
+
+    console.log(
+        "RACE STARTED"
+    );
 
 }
 
@@ -2156,33 +2395,63 @@ function startRace() {
    FINISH RACE
 ===================================================== */
 
-function finishRace(finalTime) {
+function finishRace(
+    finalMilliseconds
+) {
 
-    if (!raceRunning) {
+    /*
+       ป้องกัน finish ซ้ำ
+    */
+
+    if (finishHandled) {
+
+        console.log(
+            "FINISH ALREADY HANDLED"
+        );
+
         return;
+
     }
+
+
+    finishHandled = true;
 
     raceRunning = false;
 
     raceFinished = true;
 
 
-    if (finalTime) {
+    /*
+       ถ้ามีเวลาจาก Arduino
+       ใช้เวลานั้น
+    */
 
-        lastArduinoTime =
-            finalTime;
+    if (
+        Number.isFinite(
+            Number(finalMilliseconds)
+        )
+        &&
+        Number(finalMilliseconds) > 0
+    ) {
+
+        arduinoRaceMilliseconds =
+            Number(
+                finalMilliseconds
+            );
 
     }
 
 
+    updateTimerDisplay();
+
+
     /*
-       แสดงเวลาที่ Arduino ส่งมา
+       Timer
     */
 
     document
-        .getElementById("timerValue")
-        .innerText =
-        lastArduinoTime;
+        .getElementById("raceTimer")
+        .classList.remove("running");
 
 
     document
@@ -2191,15 +2460,18 @@ function finishRace(finalTime) {
         "FINISHED";
 
 
-    document
-        .getElementById("raceTimer")
-        .classList.remove("running");
-
+    /*
+       Start animation OFF
+    */
 
     document
         .getElementById("start")
         .classList.remove("race-active");
 
+
+    /*
+       End animation ON
+    */
 
     document
         .getElementById("end")
@@ -2214,186 +2486,71 @@ function finishRace(finalTime) {
 
 
     /*
-       เล่นเสียงเข้าเส้นชัย
+       เล่นเสียง Finish
     */
 
-    playSound(finishSound);
+    playFinishSound();
 
 
     /*
-       Popup
+       Popup กลางจอ
     */
+
+    showFinishPopup(
+        arduinoRaceMilliseconds
+    );
+
+
+    console.log(
+        "================================"
+    );
+
+    console.log(
+        "RACE FINISHED"
+    );
+
+    console.log(
+        "TIME:",
+        formatTime(
+            arduinoRaceMilliseconds
+        )
+    );
+
+    console.log(
+        "================================"
+    );
+
+}
+
+
+/* =====================================================
+   SHOW FINISH POPUP
+===================================================== */
+
+function showFinishPopup(
+    milliseconds
+) {
+
+    const time =
+        formatTime(
+            milliseconds
+        );
+
 
     document
         .getElementById("finishTime")
         .innerText =
-        lastArduinoTime;
+        time;
 
 
     document
         .getElementById("finishOverlay")
         .classList.add("show");
 
-}
 
-
-/* =====================================================
-   PROCESS ONE ARDUINO MESSAGE
-===================================================== */
-
-function processRaceMessage(message) {
-
-    const text =
-        String(message).trim();
-
-
-    if (!text) {
-        return;
-    }
-
-
-    /*
-       START
-
-       สำคัญ:
-       ใช้ "Time start now."
-       จาก Arduino จริง
-    */
-
-    if (isStartMessage(text)) {
-
-        startRace();
-
-        return;
-
-    }
-
-
-    /*
-       FINISH
-
-       เช่น:
-
-       Time end. using 1:14 minutes
-    */
-
-    if (isFinishMessage(text)) {
-
-        const finalTime =
-            extractArduinoTime(text);
-
-
-        finishRace(
-            finalTime
-        );
-
-        return;
-
-    }
-
-
-    /*
-       ระหว่างวิ่ง
-
-       เช่น:
-
-       Time : 1:05 minutes
-       Time : 1:06 minutes
-    */
-
-    const arduinoTime =
-        extractArduinoTime(text);
-
-
-    if (
-        arduinoTime &&
-        raceRunning
-    ) {
-
-        lastArduinoTime =
-            arduinoTime;
-
-
-        document
-            .getElementById("timerValue")
-            .innerText =
-            arduinoTime;
-
-    }
-
-
-    /*
-       DOOR OPEN
-
-       เช่น:
-
-       DOOR 5 -> OPEN
-       DOOR 2 -> OPEN
-    */
-
-    if (
-        text.toUpperCase()
-            .includes("-> OPEN")
-    ) {
-
-        playSound(doorSound);
-
-    }
-
-}
-
-
-/* =====================================================
-   CHECK RACE MESSAGES
-===================================================== */
-
-function checkRaceMessages(messages) {
-
-    if (
-        !messages ||
-        messages.length === 0
-    ) {
-
-        return;
-
-    }
-
-
-    /*
-       เอา message ล่าสุดจาก Arduino
-
-       ไม่ใช้ lastMessageCount
-       เพราะถ้า server ตัดจำนวน log
-       อาจทำให้ index เพี้ยนได้
-    */
-
-    const latestMessage =
-        String(
-            messages[messages.length - 1]
-        ).trim();
-
-
-    /*
-       ถ้าเป็น message เดิม
-       ไม่ต้อง process ซ้ำ
-    */
-
-    if (
-        latestMessage ===
-        lastProcessedMessage
-    ) {
-
-        return;
-
-    }
-
-
-    lastProcessedMessage =
-        latestMessage;
-
-
-    processRaceMessage(
-        latestMessage
+    console.log(
+        "FINISH POPUP SHOW:",
+        time
     );
 
 }
@@ -2410,9 +2567,7 @@ document
         function () {
 
             document
-                .getElementById(
-                    "finishOverlay"
-                )
+                .getElementById("finishOverlay")
                 .classList.remove("show");
 
         }
@@ -2420,21 +2575,446 @@ document
 
 
 /* =====================================================
-   DOOR
+   PROCESS ARDUINO MESSAGE
 ===================================================== */
 
-function updateDoor(id, status) {
+function processRaceMessage(
+    message
+) {
+
+    const text =
+        String(message).trim();
+
+
+    const upperText =
+        text.toUpperCase();
+
+
+    console.log(
+        "Arduino message:",
+        text
+    );
+
+
+    /* =================================================
+       IGNORE SCORE
+    ================================================= */
+
+    if (
+        upperText.includes("SCORE:")
+        ||
+        upperText.includes("POINTS")
+    ) {
+
+        console.log(
+            "SCORE MESSAGE IGNORED:",
+            text
+        );
+
+        return;
+
+    }
+
+
+    /* =================================================
+       START
+    ================================================= */
+
+    if (
+        upperText.includes(
+            "TIME START NOW"
+        )
+        ||
+        upperText.includes(
+            "START NOW"
+        )
+        ||
+        upperText.includes(
+            "RACE START"
+        )
+    ) {
+
+        startRace();
+
+        return;
+
+    }
+
+
+    /* =================================================
+       PIN 18 = FINISH
+    ================================================= */
+
+    /*
+       รองรับ:
+
+       PIN 18
+       PIN18
+       Pin 18
+       Pin18
+       PIN 18 -> DETECTED
+       PIN 18 -> FINISH
+       SENSOR PIN 18
+    */
+
+    const pin18Detected =
+        /\bPIN\s*18\b/i.test(
+            text
+        );
+
+
+    if (pin18Detected) {
+
+        console.log(
+            "================================"
+        );
+
+        console.log(
+            "PIN 18 DETECTED = FINISH"
+        );
+
+        console.log(
+            "CURRENT TIME:",
+            formatTime(
+                arduinoRaceMilliseconds
+            )
+        );
+
+        console.log(
+            "================================"
+        );
+
+
+        /*
+           Finish ได้ทั้งกรณี raceRunning
+           และกรณี Arduino ส่ง PIN18
+           หลัง Time end แล้ว
+
+           แต่ถ้า finish ไปแล้ว
+           finishHandled จะกัน popup ซ้ำ
+        */
+
+        if (!finishHandled) {
+
+            finishRace(
+                arduinoRaceMilliseconds
+            );
+
+        }
+
+
+        return;
+
+    }
+
+
+    /* =================================================
+       TIME
+    ================================================= */
+
+    const parsed =
+        parseArduinoTime(
+            text
+        );
+
+
+    if (parsed) {
+
+        /*
+           Arduino ส่ง Time end
+        */
+
+        if (
+            parsed.type === "finish"
+        ) {
+
+            /*
+               ถ้า Arduino ส่ง Time end
+               ให้บันทึกเวลาไว้
+
+               แต่จะ Finish เฉพาะตอน
+               ยังไม่ finish
+            */
+
+            arduinoRaceMilliseconds =
+                parsed.milliseconds;
+
+
+            updateTimerDisplay();
+
+
+            /*
+               ถ้า race กำลังวิ่ง
+               ให้ถือว่า finish
+            */
+
+            if (
+                raceRunning
+                &&
+                !finishHandled
+            ) {
+
+                finishRace(
+                    parsed.milliseconds
+                );
+
+            }
+
+
+            return;
+
+        }
+
+
+        /*
+           Time ปกติ
+        */
+
+        arduinoRaceMilliseconds =
+            parsed.milliseconds;
+
+
+        /*
+           แสดงเวลาต่อให้ raceRunning
+           เป็น false เพื่อให้เวลาสุดท้าย
+           ยังคงอยู่บนจอ
+        */
+
+        updateTimerDisplay();
+
+
+        return;
+
+    }
+
+
+    /* =================================================
+       OTHER FINISH
+    ================================================= */
+
+    if (
+        upperText.includes("FINISH")
+        ||
+        upperText.includes("GOAL")
+        ||
+        upperText.includes("RACE END")
+        ||
+        upperText.includes("REACH END")
+    ) {
+
+        if (!finishHandled) {
+
+            finishRace(
+                arduinoRaceMilliseconds
+            );
+
+        }
+
+        return;
+
+    }
+
+
+    /* =================================================
+       EVERY DOOR OPEN
+    ================================================= */
+
+    /*
+       สำคัญ:
+
+       ไม่ได้ตรวจเฉพาะ Door 5
+
+       รองรับ:
+
+       DOOR 1 -> OPEN
+       DOOR 2 -> OPEN
+       DOOR 3 -> OPEN
+       DOOR 4 -> OPEN
+       DOOR 5 -> OPEN
+    */
+
+    const doorOpenMatch =
+        text.match(
+            /DOOR\s*(\d+)\s*->\s*OPEN/i
+        );
+
+
+    if (
+        doorOpenMatch
+    ) {
+
+        const doorNumber =
+            parseInt(
+                doorOpenMatch[1],
+                10
+            );
+
+
+        console.log(
+            "DOOR OPEN:",
+            doorNumber
+        );
+
+
+        /*
+           เล่นเสียงทุกประตู
+        */
+
+        if (
+            doorNumber >= 1
+            &&
+            doorNumber <= 5
+        ) {
+
+            playDoorSound(
+                doorNumber
+            );
+
+        }
+
+
+        return;
+
+    }
+
+}
+
+
+/* =====================================================
+   PROCESS ALL MESSAGES
+===================================================== */
+
+function checkRaceMessages(
+    messages
+) {
+
+    if (
+        !Array.isArray(messages)
+        ||
+        messages.length === 0
+    ) {
+
+        return;
+
+    }
+
+
+    /*
+       ถ้า server restart
+       หรือ messages ถูก reset
+    */
+
+    if (
+        messages.length <
+        lastMessageCount
+    ) {
+
+        processedMessageKeys.clear();
+
+    }
+
+
+    /*
+       ตรวจทุกข้อความ
+
+       ใช้ข้อความ + index
+       เพื่อไม่ให้เล่นเสียงซ้ำ
+    */
+
+    messages.forEach(
+        function (
+            message,
+            index
+        ) {
+
+            const key =
+                index +
+                "|" +
+                String(message);
+
+
+            if (
+                processedMessageKeys.has(
+                    key
+                )
+            ) {
+
+                return;
+
+            }
+
+
+            processedMessageKeys.add(
+                key
+            );
+
+
+            processRaceMessage(
+                message
+            );
+
+        }
+    );
+
+
+    /*
+       จำจำนวน message
+    */
+
+    lastMessageCount =
+        messages.length;
+
+
+    /*
+       ป้องกัน Set โตไม่หยุด
+    */
+
+    if (
+        processedMessageKeys.size >
+        1000
+    ) {
+
+        const recent =
+            Array.from(
+                processedMessageKeys
+            ).slice(-500);
+
+
+        processedMessageKeys =
+            new Set(
+                recent
+            );
+
+    }
+
+}
+
+
+/* =====================================================
+   DOOR UPDATE
+===================================================== */
+
+function updateDoor(
+    id,
+    status
+) {
 
     const node =
-        document.getElementById(id);
+        document.getElementById(
+            id
+        );
+
 
     const badge =
         document.getElementById(
             id + "Status"
         );
 
+
     if (!node) {
+
         return;
+
     }
 
 
@@ -2444,11 +3024,14 @@ function updateDoor(id, status) {
     );
 
 
-    if (status === "OPEN") {
+    if (
+        status === "OPEN"
+    ) {
 
         node.classList.add(
             "node-open"
         );
+
 
         node.innerHTML =
             "OPEN";
@@ -2465,18 +3048,22 @@ function updateDoor(id, status) {
         }
 
     }
-
     else {
 
         node.classList.add(
             "node-closed"
         );
 
-        node.innerHTML =
+
+        const number =
             id.replace(
                 "door",
-                "D"
+                ""
             );
+
+
+        node.innerHTML =
+            "D" + number;
 
 
         if (badge) {
@@ -2495,21 +3082,30 @@ function updateDoor(id, status) {
 
 
 /* =====================================================
-   LASER
+   LASER UPDATE
 ===================================================== */
 
-function updateLaser(id, status) {
+function updateLaser(
+    id,
+    status
+) {
 
     const node =
-        document.getElementById(id);
+        document.getElementById(
+            id
+        );
+
 
     const badge =
         document.getElementById(
             id + "Status"
         );
 
+
     if (!node) {
+
         return;
+
     }
 
 
@@ -2519,11 +3115,14 @@ function updateLaser(id, status) {
     );
 
 
-    if (status === "DETECTED") {
+    if (
+        status === "DETECTED"
+    ) {
 
         node.classList.add(
             "node-detected"
         );
+
 
         node.innerHTML =
             "DETECT";
@@ -2540,12 +3139,12 @@ function updateLaser(id, status) {
         }
 
     }
-
     else {
 
         node.classList.add(
             "node-off"
         );
+
 
         node.innerHTML =
             id === "laser1"
@@ -2569,16 +3168,24 @@ function updateLaser(id, status) {
 
 
 /* =====================================================
-   SWITCH
+   SWITCH UPDATE
 ===================================================== */
 
-function updateSwitch(id, status) {
+function updateSwitch(
+    id,
+    status
+) {
 
     const node =
-        document.getElementById(id);
+        document.getElementById(
+            id
+        );
+
 
     if (!node) {
+
         return;
+
     }
 
 
@@ -2588,22 +3195,25 @@ function updateSwitch(id, status) {
     );
 
 
-    if (status === "ON") {
+    if (
+        status === "ON"
+    ) {
 
         node.classList.add(
             "node-open"
         );
 
+
         node.innerHTML =
             "ON";
 
     }
-
     else {
 
         node.classList.add(
             "node-off"
         );
+
 
         node.innerHTML =
             "S";
@@ -2623,8 +3233,21 @@ async function updateDashboard() {
 
         const response =
             await fetch(
-                "/api/state"
+                "/api/state",
+                {
+                    cache: "no-store"
+                }
             );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "HTTP " +
+                response.status
+            );
+
+        }
 
 
         const data =
@@ -2632,12 +3255,12 @@ async function updateDashboard() {
 
 
         const state =
-            data.state;
+            data.state || {};
 
 
-        /*
+        /* =============================================
            CONNECTION
-        */
+        ============================================= */
 
         document
             .getElementById(
@@ -2647,20 +3270,18 @@ async function updateDashboard() {
             "ARDUINO ONLINE";
 
 
-        /*
-           RACE MESSAGE
-
-           อ่านจาก Arduino
-        */
+        /* =============================================
+           RACE MESSAGES
+        ============================================= */
 
         checkRaceMessages(
-            data.messages
+            data.messages || []
         );
 
 
-        /*
+        /* =============================================
            DOORS
-        */
+        ============================================= */
 
         updateDoor(
             "door1",
@@ -2688,9 +3309,9 @@ async function updateDashboard() {
         );
 
 
-        /*
+        /* =============================================
            LASERS
-        */
+        ============================================= */
 
         updateLaser(
             "laser1",
@@ -2703,9 +3324,9 @@ async function updateDashboard() {
         );
 
 
-        /*
+        /* =============================================
            SWITCHES
-        */
+        ============================================= */
 
         updateSwitch(
             "switch1",
@@ -2718,9 +3339,9 @@ async function updateDashboard() {
         );
 
 
-        /*
+        /* =============================================
            SUMMARY
-        */
+        ============================================= */
 
         const doors = [
 
@@ -2735,9 +3356,13 @@ async function updateDashboard() {
 
         const openDoors =
             doors.filter(
-                function (door) {
+                function (
+                    door
+                ) {
 
-                    return door === "OPEN";
+                    return (
+                        door === "OPEN"
+                    );
 
                 }
             ).length;
@@ -2753,9 +3378,14 @@ async function updateDashboard() {
 
         const activeLasers =
             lasers.filter(
-                function (laser) {
+                function (
+                    laser
+                ) {
 
-                    return laser === "DETECTED";
+                    return (
+                        laser ===
+                        "DETECTED"
+                    );
 
                 }
             ).length;
@@ -2777,9 +3407,9 @@ async function updateDashboard() {
             activeLasers;
 
 
-        /*
+        /* =============================================
            LOG
-        */
+        ============================================= */
 
         const log =
             document.getElementById(
@@ -2788,15 +3418,18 @@ async function updateDashboard() {
 
 
         if (
-            data.messages &&
-            data.messages.length > 0
+            data.messages
+            &&
+            data.messages.length
         ) {
 
             log.innerHTML =
                 data.messages
                     .slice(-15)
                     .map(
-                        function (message) {
+                        function (
+                            message
+                        ) {
 
                             return `
                                 <div class="log-line">
@@ -2815,7 +3448,6 @@ async function updateDashboard() {
         }
 
     }
-
     catch (error) {
 
         console.error(
@@ -2837,10 +3469,12 @@ async function updateDashboard() {
 
 
 /* =====================================================
-   HTML ESCAPE
+   ESCAPE HTML
 ===================================================== */
 
-function escapeHtml(text) {
+function escapeHtml(
+    text
+) {
 
     return String(text)
 
@@ -2873,7 +3507,7 @@ function escapeHtml(text) {
 
 
 /* =====================================================
-   UPDATE EVERY 500ms
+   START DASHBOARD
 ===================================================== */
 
 setInterval(
