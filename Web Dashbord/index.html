@@ -307,7 +307,6 @@ body {
 
     box-shadow:
         0 5px 18px rgba(0,0,0,.12);
-
 }
 
 .timer-title {
@@ -362,6 +361,95 @@ body {
 .race-timer.running .timer-status {
 
     color: #15803d;
+}
+
+/* =====================================================
+   PATH
+===================================================== */
+
+.path {
+
+    position: absolute;
+
+    height: 6px;
+
+    background: #d1d5db;
+
+    border-radius: 10px;
+
+    transform-origin: left center;
+
+    z-index: 1;
+}
+
+.path.active {
+
+    background: #60a5fa;
+
+    box-shadow:
+        0 0 8px rgba(59,130,246,.45);
+}
+
+.path1 {
+
+    left: 15%;
+
+    top: 20%;
+
+    width: 24%;
+}
+
+.path2 {
+
+    left: 38%;
+
+    top: 20%;
+
+    width: 20%;
+
+    transform: rotate(25deg);
+}
+
+.path3 {
+
+    left: 54%;
+
+    top: 31%;
+
+    width: 19%;
+
+    transform: rotate(-5deg);
+}
+
+.path4 {
+
+    left: 60%;
+
+    top: 30%;
+
+    width: 2px;
+
+    height: 150px;
+
+    transform: rotate(0);
+}
+
+.path5 {
+
+    left: 60%;
+
+    top: 55%;
+
+    width: 23%;
+}
+
+.path6 {
+
+    left: 30%;
+
+    top: 65%;
+
+    width: 53%;
 }
 
 /* =====================================================
@@ -603,14 +691,17 @@ body {
 @keyframes finishPulse {
 
     0% {
+
         transform: scale(1);
     }
 
     50% {
+
         transform: scale(1.18);
     }
 
     100% {
+
         transform: scale(1);
     }
 }
@@ -962,6 +1053,43 @@ body {
 }
 
 /* =====================================================
+   SOUND BUTTON
+===================================================== */
+
+.sound-button {
+
+    position: fixed;
+
+    bottom: 20px;
+
+    right: 20px;
+
+    z-index: 200;
+
+    padding: 10px 16px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #111827;
+
+    color: white;
+
+    cursor: pointer;
+
+    font-weight: bold;
+
+    box-shadow:
+        0 5px 18px rgba(0,0,0,.2);
+}
+
+.sound-button:hover {
+
+    background: #374151;
+}
+
+/* =====================================================
    RESPONSIVE
 ===================================================== */
 
@@ -1152,9 +1280,7 @@ body {
         </div>
 
 
-        <!-- =================================================
-             START
-        ================================================= -->
+        <!-- START -->
 
         <div id="start"
              class="field-node start node-open">
@@ -1358,7 +1484,6 @@ body {
 
         </div>
 
-
     </div>
 
 </section>
@@ -1395,7 +1520,6 @@ body {
                 </div>
 
             </div>
-
 
             <div class="summary-box">
 
@@ -1728,47 +1852,370 @@ body {
 </div>
 
 
+<!-- =====================================================
+     SOUND FILES
+===================================================== -->
+
+<audio id="soundStart"
+       preload="auto">
+
+    <source src="start.mp3"
+            type="audio/mpeg">
+
+</audio>
+
+
+<audio id="soundDoor"
+       preload="auto">
+
+    <source src="door.mp3"
+            type="audio/mpeg">
+
+</audio>
+
+
+<audio id="soundRunning"
+       preload="auto"
+       loop>
+
+    <source src="running.mp3"
+            type="audio/mpeg">
+
+</audio>
+
+
+<audio id="soundFinish"
+       preload="auto">
+
+    <source src="finish.mp3"
+            type="audio/mpeg">
+
+</audio>
+
+
+<!-- =====================================================
+     ENABLE SOUND BUTTON
+===================================================== -->
+
+<button id="soundButton"
+        class="sound-button"
+        onclick="enableSound()">
+
+    🔊 ENABLE SOUND
+
+</button>
+
+
 <script>
 
 /* =====================================================
    RACE TIMER
-   ใช้เวลาจาก Arduino เท่านั้น
 ===================================================== */
 
 let raceRunning = false;
 
 let raceFinished = false;
 
+let raceStartTime = 0;
+
 let raceFinalTime = 0;
+
+let lastMessageCount = 0;
+
+
+/* =====================================================
+   START KEYWORDS
+===================================================== */
+
+const START_KEYWORDS = [
+
+    "START",
+
+    "ROBOT START",
+
+    "START RUN",
+
+    "RACE START",
+
+    "ROBOT FIELD START",
+
+    "TIME START NOW",
+
+    "ออกตัว",
+
+    "เริ่ม"
+
+];
+
+
+/* =====================================================
+   FINISH KEYWORDS
+===================================================== */
+
+const FINISH_KEYWORDS = [
+
+    "FINISH",
+
+    "END",
+
+    "RACE FINISHED",
+
+    "ROBOT FINISH",
+
+    "REACHED END",
+
+    "TIME END",
+
+    "ถึงเส้นชัย",
+
+    "เส้นชัย",
+
+    "จบ"
+
+];
+
+
+/* =====================================================
+   SOUND
+===================================================== */
+
+const soundStart =
+    document.getElementById("soundStart");
+
+const soundDoor =
+    document.getElementById("soundDoor");
+
+const soundRunning =
+    document.getElementById("soundRunning");
+
+const soundFinish =
+    document.getElementById("soundFinish");
 
 
 /*
-    เก็บข้อความล่าสุดที่ประมวลผลแล้ว
+    สถานะประตูครั้งก่อน
 
-    ไม่ใช้จำนวนข้อความ เพราะ API จำกัดข้อความไว้
-    เช่น 15 รายการ ทำให้จำนวนอาจค้างที่ 15
+    ใช้ตรวจว่า
+
+    CLOSED -> OPEN
+
+    เท่านั้นถึงจะเล่นเสียง
 */
 
-let processedMessages = new Set();
+const previousDoorState = {
+
+    door1: "CLOSED",
+
+    door2: "CLOSED",
+
+    door3: "CLOSED",
+
+    door4: "CLOSED",
+
+    door5: "CLOSED"
+
+};
+
+
+/* =====================================================
+   PLAY SOUND
+===================================================== */
+
+function playSound(audio) {
+
+    if (!audio) {
+        return;
+    }
+
+    audio.currentTime = 0;
+
+    audio.play()
+        .catch(function(error) {
+
+            console.log(
+                "Sound blocked:",
+                error
+            );
+
+        });
+
+}
+
+
+/* =====================================================
+   ENABLE SOUND
+===================================================== */
+
+function enableSound() {
+
+    const sounds = [
+
+        soundStart,
+
+        soundDoor,
+
+        soundRunning,
+
+        soundFinish
+
+    ];
+
+
+    sounds.forEach(
+        function(audio) {
+
+            audio.muted = true;
+
+            const promise =
+                audio.play();
+
+            if (promise !== undefined) {
+
+                promise
+                    .then(function() {
+
+                        audio.pause();
+
+                        audio.currentTime = 0;
+
+                        audio.muted = false;
+
+                    })
+                    .catch(function() {
+
+                        audio.muted = false;
+
+                    });
+
+            }
+
+        }
+    );
+
+
+    document
+        .getElementById("soundButton")
+        .innerText =
+        "🔊 SOUND ENABLED";
+
+}
+
+
+/* =====================================================
+   START SOUND
+===================================================== */
+
+function playStartSound() {
+
+    /*
+        เสียงออกตัว
+    */
+
+    playSound(soundStart);
+
+
+    /*
+        เสียงระหว่างวิ่ง
+    */
+
+    soundRunning.currentTime = 0;
+
+    soundRunning.play()
+        .catch(function(error) {
+
+            console.log(
+                "Running sound blocked:",
+                error
+            );
+
+        });
+
+}
+
+
+/* =====================================================
+   FINISH SOUND
+===================================================== */
+
+function playFinishSound() {
+
+    /*
+        หยุดเสียงระหว่างวิ่ง
+    */
+
+    soundRunning.pause();
+
+    soundRunning.currentTime = 0;
+
+
+    /*
+        เสียงเข้าเส้นชัย
+    */
+
+    playSound(soundFinish);
+
+}
+
+
+/* =====================================================
+   DOOR SOUND
+===================================================== */
+
+function checkDoorSound(
+    doorId,
+    currentState
+) {
+
+    const previousState =
+        previousDoorState[doorId];
+
+
+    /*
+        เล่นเฉพาะ
+
+        CLOSED -> OPEN
+    */
+
+    if (
+
+        previousState === "CLOSED"
+
+        &&
+
+        currentState === "OPEN"
+
+    ) {
+
+        playSound(soundDoor);
+
+    }
+
+
+    /*
+        จำสถานะล่าสุด
+    */
+
+    previousDoorState[doorId] =
+        currentState;
+
+}
 
 
 /* =====================================================
    FORMAT TIME
 ===================================================== */
 
-function formatRaceTime(totalSeconds) {
+function formatTime(milliseconds) {
 
-    totalSeconds =
-        Math.max(
-            0,
-            Math.floor(Number(totalSeconds) || 0)
-        );
+    const totalSeconds =
+        Math.floor(milliseconds / 1000);
 
     const minutes =
         Math.floor(totalSeconds / 60);
 
     const seconds =
         totalSeconds % 60;
+
 
     return (
 
@@ -1783,256 +2230,76 @@ function formatRaceTime(totalSeconds) {
         String(seconds).padStart(2, "0")
 
     );
+
 }
 
 
 /* =====================================================
-   PARSE ARDUINO TIME
-===================================================== */
-
-/*
-    รองรับ:
-
-    Time : 1 seconds
-    Time : 2 seconds
-    Time : 59 seconds
-
-    Time : 1:00 minutes
-    Time : 1:05 minutes
-    Time : 1:14 minutes
-
-    Time end. using 1:14 minutes
-*/
-
-
-function parseArduinoTime(message) {
-
-    const text =
-        String(message).trim();
-
-
-    /*
-        รูปแบบ
-
-        Time : 1:14 minutes
-    */
-
-    let match =
-        text.match(
-            /Time\s*:\s*(\d+)\s*:\s*(\d+)\s*minutes?/i
-        );
-
-
-    if (match) {
-
-        const minutes =
-            parseInt(
-                match[1],
-                10
-            );
-
-        const seconds =
-            parseInt(
-                match[2],
-                10
-            );
-
-        return (
-            minutes * 60
-            +
-            seconds
-        );
-    }
-
-
-    /*
-        รูปแบบ
-
-        Time : 35 seconds
-    */
-
-    match =
-        text.match(
-            /Time\s*:\s*(\d+)\s*seconds?/i
-        );
-
-
-    if (match) {
-
-        return parseInt(
-            match[1],
-            10
-        );
-    }
-
-
-    /*
-        รูปแบบ
-
-        Time end. using 1:14 minutes
-    */
-
-    match =
-        text.match(
-            /Time\s+end\.\s*using\s*(\d+)\s*:\s*(\d+)\s*minutes?/i
-        );
-
-
-    if (match) {
-
-        const minutes =
-            parseInt(
-                match[1],
-                10
-            );
-
-        const seconds =
-            parseInt(
-                match[2],
-                10
-            );
-
-        return (
-            minutes * 60
-            +
-            seconds
-        );
-    }
-
-
-    return null;
-}
-
-
-/* =====================================================
-   START RACE
+   START TIMER
 ===================================================== */
 
 function startRaceTimer() {
+
+    if (raceRunning) {
+        return;
+    }
+
 
     raceRunning = true;
 
     raceFinished = false;
 
+    raceStartTime = Date.now();
+
     raceFinalTime = 0;
 
 
-    const timer =
-        document.getElementById(
-            "raceTimer"
-        );
-
-    timer.classList.add(
-        "running"
-    );
+    document
+        .getElementById("raceTimer")
+        .classList.add("running");
 
 
     document
-        .getElementById(
-            "timerStatus"
-        )
+        .getElementById("timerStatus")
         .innerText =
         "RACE RUNNING";
 
 
     document
-        .getElementById(
-            "timerValue"
-        )
+        .getElementById("start")
+        .classList.add("race-active");
+
+
+    document
+        .getElementById("end")
+        .classList.remove("finish-active");
+
+
+    document
+        .getElementById("timerValue")
         .innerText =
         "00:00";
 
 
-    document
-        .getElementById(
-            "start"
-        )
-        .classList.add(
-            "race-active"
-        );
+    /* =============================================
+       SOUND
 
+       START + RUNNING
+    ============================================= */
 
-    document
-        .getElementById(
-            "end"
-        )
-        .classList.remove(
-            "finish-active"
-        );
+    playStartSound();
 
-
-    console.log(
-        "Race started by Arduino"
-    );
 }
 
 
 /* =====================================================
-   UPDATE ARDUINO TIME
+   FINISH TIMER
 ===================================================== */
 
-function updateArduinoTime(seconds) {
+function finishRaceTimer() {
 
-    if (seconds === null) {
+    if (!raceRunning) {
         return;
-    }
-
-
-    /*
-        ถ้ายังไม่ Start
-        ยังไม่แสดงเวลา
-    */
-
-    if (!raceRunning && !raceFinished) {
-        return;
-    }
-
-
-    /*
-        เก็บเวลาล่าสุดจาก Arduino
-    */
-
-    raceFinalTime =
-        seconds;
-
-
-    document
-        .getElementById(
-            "timerValue"
-        )
-        .innerText =
-        formatRaceTime(
-            seconds
-        );
-
-
-    console.log(
-        "Arduino Race Time:",
-        formatRaceTime(seconds)
-    );
-}
-
-
-/* =====================================================
-   FINISH RACE
-===================================================== */
-
-function finishRaceTimer(seconds) {
-
-    if (raceFinished) {
-        return;
-    }
-
-
-    /*
-        ถ้า Arduino ส่งเวลาจบมา
-        ใช้เวลานั้นโดยตรง
-    */
-
-    if (seconds !== null) {
-
-        raceFinalTime =
-            seconds;
     }
 
 
@@ -2041,62 +2308,51 @@ function finishRaceTimer(seconds) {
     raceFinished = true;
 
 
-    document
-        .getElementById(
-            "raceTimer"
-        )
-        .classList.remove(
-            "running"
-        );
+    raceFinalTime =
+        Date.now() - raceStartTime;
 
 
     document
-        .getElementById(
-            "timerStatus"
-        )
+        .getElementById("raceTimer")
+        .classList.remove("running");
+
+
+    document
+        .getElementById("timerStatus")
         .innerText =
         "FINISHED";
 
 
     document
-        .getElementById(
-            "timerValue"
-        )
+        .getElementById("timerValue")
         .innerText =
-        formatRaceTime(
-            raceFinalTime
-        );
+        formatTime(raceFinalTime);
 
 
     document
-        .getElementById(
-            "start"
-        )
-        .classList.remove(
-            "race-active"
-        );
+        .getElementById("start")
+        .classList.remove("race-active");
 
 
     document
-        .getElementById(
-            "end"
-        )
-        .classList.add(
-            "finish-active"
-        );
+        .getElementById("end")
+        .classList.add("finish-active");
+
+
+    /* =============================================
+       SOUND
+
+       STOP RUNNING
+       PLAY FINISH
+    ============================================= */
+
+    playFinishSound();
 
 
     showFinishPopup(
         raceFinalTime
     );
 
-
-    console.log(
-        "Race finished:",
-        formatRaceTime(
-            raceFinalTime
-        )
-    );
 }
 
 
@@ -2104,25 +2360,18 @@ function finishRaceTimer(seconds) {
    SHOW FINISH POPUP
 ===================================================== */
 
-function showFinishPopup(seconds) {
+function showFinishPopup(milliseconds) {
 
     document
-        .getElementById(
-            "finishTime"
-        )
+        .getElementById("finishTime")
         .innerText =
-        formatRaceTime(
-            seconds
-        );
+        formatTime(milliseconds);
 
 
     document
-        .getElementById(
-            "finishOverlay"
-        )
-        .classList.add(
-            "show"
-        );
+        .getElementById("finishOverlay")
+        .classList.add("show");
+
 }
 
 
@@ -2131,214 +2380,173 @@ function showFinishPopup(seconds) {
 ===================================================== */
 
 document
-    .getElementById(
-        "closeFinish"
-    )
+    .getElementById("closeFinish")
     .addEventListener(
         "click",
-        function () {
+        function() {
 
             document
-                .getElementById(
-                    "finishOverlay"
-                )
-                .classList.remove(
-                    "show"
-                );
+                .getElementById("finishOverlay")
+                .classList.remove("show");
 
         }
     );
 
 
 /* =====================================================
-   PROCESS ONE ARDUINO MESSAGE
+   UPDATE TIMER
 ===================================================== */
 
-function processRaceMessage(message) {
+function updateTimerDisplay() {
 
-    const text =
-        String(message)
-            .trim();
-
-
-    const upperText =
-        text.toUpperCase();
-
-
-    console.log(
-        "Processing:",
-        text
-    );
-
-
-    /* =================================================
-       START
-
-       สำคัญ:
-       ไม่ใช้ "ROBOT FIELD START"
-
-       เพราะอันนั้นคือ Arduino boot
-
-       ใช้ข้อความ:
-       Time start now.
-    ================================================= */
-
-    if (
-        /Time\s+start\s+now/i.test(text)
-    ) {
-
-        startRaceTimer();
-
+    if (!raceRunning) {
         return;
     }
 
 
-    /* =================================================
-       FINISH
-
-       ตัวอย่าง:
-
-       Time end. using 1:14 minutes
-    ================================================= */
-
-    if (
-        /Time\s+end\./i.test(text)
-    ) {
-
-        const endTime =
-            parseArduinoTime(
-                text
-            );
+    const elapsed =
+        Date.now() - raceStartTime;
 
 
-        finishRaceTimer(
-            endTime
-        );
+    document
+        .getElementById("timerValue")
+        .innerText =
+        formatTime(elapsed);
 
-        return;
-    }
-
-
-    /* =================================================
-       NORMAL TIME
-
-       ตัวอย่าง:
-
-       Time : 35 seconds
-       Time : 1:05 minutes
-    ================================================= */
-
-    const time =
-        parseArduinoTime(
-            text
-        );
-
-
-    if (
-        time !== null &&
-        raceRunning
-    ) {
-
-        updateArduinoTime(
-            time
-        );
-
-    }
 }
 
 
+setInterval(
+    updateTimerDisplay,
+    100
+);
+
+
 /* =====================================================
-   CHECK RACE MESSAGES
+   CHECK START / FINISH MESSAGE
 ===================================================== */
 
 function checkRaceMessages(messages) {
 
     if (
-        !Array.isArray(messages) ||
+        !messages ||
         messages.length === 0
     ) {
 
         return;
+
     }
 
 
     /*
-        สำคัญมาก
-
-        ไม่ใช้:
-
-            messages.slice(lastMessageCount)
-
-        เพราะ backend อาจเก็บแค่ 15 messages
-
-        ทำให้ length ค้างที่ 15
-        และข้อความใหม่จะไม่ถูกตรวจอีก
+        ตรวจเฉพาะข้อความใหม่
     */
 
+    const newMessages =
+        messages.slice(
+            lastMessageCount
+        );
 
-    messages.forEach(
-        function(message, index) {
 
-            const key =
+    lastMessageCount =
+        messages.length;
+
+
+    newMessages.forEach(
+        function(message) {
+
+
+            const text =
                 String(message)
-                + "|"
-                + index;
+                    .trim()
+                    .toUpperCase();
 
 
-            /*
-                ประมวลผลเฉพาะข้อความที่ยังไม่เคยเจอ
-            */
+            /* =========================================
+               START
+            ========================================= */
+
+            const startDetected =
+                START_KEYWORDS.some(
+                    function(keyword) {
+
+                        return text.includes(
+                            keyword.toUpperCase()
+                        );
+
+                    }
+                );
+
 
             if (
-                processedMessages.has(key)
+
+                startDetected
+
+                &&
+
+                !raceRunning
+
+                &&
+
+                !raceFinished
+
             ) {
 
+                startRaceTimer();
+
                 return;
+
             }
 
 
-            processedMessages.add(
-                key
-            );
+            /* =========================================
+               FINISH
+            ========================================= */
+
+            const finishDetected =
+                FINISH_KEYWORDS.some(
+                    function(keyword) {
+
+                        return text.includes(
+                            keyword.toUpperCase()
+                        );
+
+                    }
+                );
 
 
-            processRaceMessage(
-                message
-            );
+            if (
+
+                finishDetected
+
+                &&
+
+                raceRunning
+
+            ) {
+
+                finishRaceTimer();
+
+            }
 
         }
     );
 
-
-    /*
-        ป้องกัน Set โตไม่หยุด
-
-        เก็บเฉพาะประมาณ 100 รายการล่าสุด
-    */
-
-    if (
-        processedMessages.size > 100
-    ) {
-
-        processedMessages =
-            new Set(
-                Array.from(
-                    processedMessages
-                ).slice(-50)
-            );
-
-    }
 }
 
 
 /* =====================================================
-   DOOR
+   UPDATE DOOR
 ===================================================== */
 
-function updateDoor(id, status) {
+function updateDoor(
+    id,
+    status
+) {
 
     const node =
         document.getElementById(id);
+
 
     const badge =
         document.getElementById(
@@ -2352,12 +2560,16 @@ function updateDoor(id, status) {
 
 
     node.classList.remove(
+
         "node-open",
+
         "node-closed"
+
     );
 
 
     if (status === "OPEN") {
+
 
         node.classList.add(
             "node-open"
@@ -2375,11 +2587,14 @@ function updateDoor(id, status) {
 
             badge.innerHTML =
                 "OPEN";
+
         }
+
 
     }
 
     else {
+
 
         node.classList.add(
             "node-closed"
@@ -2400,19 +2615,26 @@ function updateDoor(id, status) {
 
             badge.innerHTML =
                 "CLOSED";
+
         }
+
     }
+
 }
 
 
 /* =====================================================
-   LASER
+   UPDATE LASER
 ===================================================== */
 
-function updateLaser(id, status) {
+function updateLaser(
+    id,
+    status
+) {
 
     const node =
         document.getElementById(id);
+
 
     const badge =
         document.getElementById(
@@ -2426,12 +2648,18 @@ function updateLaser(id, status) {
 
 
     node.classList.remove(
+
         "node-detected",
+
         "node-off"
+
     );
 
 
-    if (status === "DETECTED") {
+    if (
+        status === "DETECTED"
+    ) {
+
 
         node.classList.add(
             "node-detected"
@@ -2449,11 +2677,14 @@ function updateLaser(id, status) {
 
             badge.innerHTML =
                 "DETECTED";
+
         }
+
 
     }
 
     else {
+
 
         node.classList.add(
             "node-off"
@@ -2473,16 +2704,22 @@ function updateLaser(id, status) {
 
             badge.innerHTML =
                 "OFF";
+
         }
+
     }
+
 }
 
 
 /* =====================================================
-   SWITCH
+   UPDATE SWITCH
 ===================================================== */
 
-function updateSwitch(id, status) {
+function updateSwitch(
+    id,
+    status
+) {
 
     const node =
         document.getElementById(id);
@@ -2494,31 +2731,43 @@ function updateSwitch(id, status) {
 
 
     node.classList.remove(
+
         "node-open",
+
         "node-off"
+
     );
 
 
-    if (status === "ON") {
+    if (
+        status === "ON"
+    ) {
+
 
         node.classList.add(
             "node-open"
         );
 
+
         node.innerHTML =
             "ON";
+
 
     }
 
     else {
 
+
         node.classList.add(
             "node-off"
         );
 
+
         node.innerHTML =
             "S";
+
     }
+
 }
 
 
@@ -2529,6 +2778,7 @@ function updateSwitch(id, status) {
 async function updateDashboard() {
 
     try {
+
 
         const response =
             await fetch(
@@ -2566,7 +2816,7 @@ async function updateDashboard() {
 
 
         /* =============================================
-           DOORS
+           DOOR 1
         ============================================= */
 
         updateDoor(
@@ -2574,22 +2824,67 @@ async function updateDashboard() {
             state.door1
         );
 
+        checkDoorSound(
+            "door1",
+            state.door1
+        );
+
+
+        /* =============================================
+           DOOR 2
+        ============================================= */
+
         updateDoor(
             "door2",
             state.door2
         );
+
+        checkDoorSound(
+            "door2",
+            state.door2
+        );
+
+
+        /* =============================================
+           DOOR 3
+        ============================================= */
 
         updateDoor(
             "door3",
             state.door3
         );
 
+        checkDoorSound(
+            "door3",
+            state.door3
+        );
+
+
+        /* =============================================
+           DOOR 4
+        ============================================= */
+
         updateDoor(
             "door4",
             state.door4
         );
 
+        checkDoorSound(
+            "door4",
+            state.door4
+        );
+
+
+        /* =============================================
+           DOOR 5
+        ============================================= */
+
         updateDoor(
+            "door5",
+            state.door5
+        );
+
+        checkDoorSound(
             "door5",
             state.door5
         );
@@ -2603,6 +2898,7 @@ async function updateDashboard() {
             "laser1",
             state.laser1
         );
+
 
         updateLaser(
             "laser2",
@@ -2618,6 +2914,7 @@ async function updateDashboard() {
             "switch1",
             state.switch1
         );
+
 
         updateSwitch(
             "switch2",
@@ -2700,9 +2997,15 @@ async function updateDashboard() {
 
 
         if (
-            data.messages &&
+
+            data.messages
+
+            &&
+
             data.messages.length > 0
+
         ) {
+
 
             log.innerHTML =
                 data.messages
@@ -2711,9 +3014,13 @@ async function updateDashboard() {
                         function(message) {
 
                             return `
+
                                 <div class="log-line">
+
                                     ${escapeHtml(message)}
+
                                 </div>
+
                             `;
 
                         }
@@ -2723,11 +3030,13 @@ async function updateDashboard() {
 
             log.scrollTop =
                 log.scrollHeight;
+
         }
 
     }
 
-    catch (error) {
+    catch(error) {
+
 
         console.error(
             "Dashboard Error:",
@@ -2741,7 +3050,9 @@ async function updateDashboard() {
             )
             .innerText =
             "SERVER DISCONNECTED";
+
     }
+
 }
 
 
@@ -2777,6 +3088,7 @@ function escapeHtml(text) {
             /'/g,
             "&#039;"
         );
+
 }
 
 
