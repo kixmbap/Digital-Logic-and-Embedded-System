@@ -28,7 +28,6 @@ body {
     background: #eef1f5;
 
     color: #1f2937;
-
 }
 
 
@@ -99,7 +98,9 @@ body {
 
     justify-content: center;
 
-    font-size: 23px;
+    font-size: 16px;
+
+    font-weight: bold;
 
 }
 
@@ -308,12 +309,12 @@ body {
 
     background:
         linear-gradient(
-            rgba(229,231,235,.45) 1px,
+            rgba(229,231,235,.25) 1px,
             transparent 1px
         ),
         linear-gradient(
             90deg,
-            rgba(229,231,235,.45) 1px,
+            rgba(229,231,235,.25) 1px,
             transparent 1px
         );
 
@@ -325,143 +326,13 @@ body {
 
 
 /* =====================================================
-   FIELD BORDER
+   ไม่มี FIELD BORDER
 ===================================================== */
-
-.field-border {
-
-    position: absolute;
-
-    left: 5%;
-
-    right: 5%;
-
-    top: 7%;
-
-    bottom: 7%;
-
-    border: 3px solid #374151;
-
-    border-radius: 14px;
-
-}
 
 
 /* =====================================================
-   PATH
+   ไม่มี PATH / WALL
 ===================================================== */
-
-.path {
-
-    position: absolute;
-
-    height: 6px;
-
-    background: #d1d5db;
-
-    border-radius: 10px;
-
-    transform-origin: left center;
-
-    z-index: 1;
-
-}
-
-
-.path.active {
-
-    background: #60a5fa;
-
-    box-shadow:
-        0 0 8px rgba(59,130,246,.45);
-
-}
-
-
-/* PATH 1 */
-
-.path1 {
-
-    left: 15%;
-
-    top: 20%;
-
-    width: 24%;
-
-}
-
-
-/* PATH 2 */
-
-.path2 {
-
-    left: 38%;
-
-    top: 20%;
-
-    width: 20%;
-
-    transform: rotate(25deg);
-
-}
-
-
-/* PATH 3 */
-
-.path3 {
-
-    left: 54%;
-
-    top: 31%;
-
-    width: 19%;
-
-    transform: rotate(-5deg);
-
-}
-
-
-/* PATH 4 */
-
-.path4 {
-
-    left: 60%;
-
-    top: 30%;
-
-    width: 2px;
-
-    height: 150px;
-
-    transform: rotate(0);
-
-}
-
-
-/* PATH 5 */
-
-.path5 {
-
-    left: 60%;
-
-    top: 55%;
-
-    width: 23%;
-
-}
-
-
-/* PATH 6 */
-
-.path6 {
-
-    left: 30%;
-
-    top: 65%;
-
-    width: 53%;
-
-}
 
 
 /* =====================================================
@@ -484,7 +355,7 @@ body {
 
     justify-content: center;
 
-    font-size: 20px;
+    font-size: 14px;
 
     font-weight: bold;
 
@@ -835,6 +706,10 @@ body {
 
     background: #f3f4f6;
 
+    font-size: 12px;
+
+    font-weight: bold;
+
 }
 
 
@@ -1016,16 +891,17 @@ body {
 
     <div class="logo">
 
+
         <div class="logo-icon">
-
-            🤖
-
+            RF
         </div>
 
 
         <div class="logo-text">
 
-            <h1>Robot Field</h1>
+            <h1>
+                Robot Field
+            </h1>
 
             <span>
                 Digital Logic & Embedded System
@@ -1041,9 +917,7 @@ body {
         <div class="connection-dot"></div>
 
         <span id="connectionText">
-
             ARDUINO ONLINE
-
         </span>
 
     </div>
@@ -1060,6 +934,7 @@ body {
 <main class="content">
 
 
+
 <!-- =====================================================
      FIELD
 ===================================================== -->
@@ -1069,24 +944,22 @@ body {
 
     <div class="panel-header">
 
+
         <div>
 
             <div class="panel-title">
-
                 Field Map
-
             </div>
 
             <div class="panel-subtitle">
-
                 Real-time robot monitoring
-
             </div>
 
         </div>
 
 
         <div class="legend">
+
 
             <div class="legend-item">
 
@@ -1114,6 +987,7 @@ body {
 
             </div>
 
+
         </div>
 
     </div>
@@ -1123,33 +997,15 @@ body {
     <div class="field">
 
 
-        <div class="field-border"></div>
-
-
-        <!-- PATH -->
-
-        <div class="path path1"></div>
-
-        <div class="path path2"></div>
-
-        <div class="path path3"></div>
-
-        <div class="path path4"></div>
-
-        <div class="path path5"></div>
-
-        <div class="path path6"></div>
-
-
-
         <!-- START -->
 
         <div id="start"
              class="field-node start node-open">
 
-            ▶
+            START
 
         </div>
+
 
         <div class="node-label"
              style="left: 12%; top: 22%;">
@@ -1169,12 +1025,15 @@ body {
 
         </div>
 
+
         <div class="node-label"
              style="left: 30%; top: 22%;">
 
             SWITCH 1
 
-            <small>Door 1</small>
+            <small>
+                Door 1
+            </small>
 
         </div>
 
@@ -1185,16 +1044,19 @@ body {
         <div id="door1"
              class="field-node door1 node-closed">
 
-            🔒
+            D1
 
         </div>
+
 
         <div class="node-label"
              style="left: 30%; top: 38%;">
 
             DOOR 1
 
-            <small>PIN 2</small>
+            <small>
+                PIN 2
+            </small>
 
         </div>
 
@@ -1209,12 +1071,15 @@ body {
 
         </div>
 
+
         <div class="node-label"
              style="left: 51%; top: 13%;">
 
             LASER 1
 
-            <small>Sensor</small>
+            <small>
+                Sensor
+            </small>
 
         </div>
 
@@ -1225,16 +1090,19 @@ body {
         <div id="door2"
              class="field-node door2 node-closed">
 
-            🔒
+            D2
 
         </div>
+
 
         <div class="node-label"
              style="left: 52%; top: 44%;">
 
             DOOR 2
 
-            <small>PIN 3</small>
+            <small>
+                PIN 3
+            </small>
 
         </div>
 
@@ -1245,16 +1113,19 @@ body {
         <div id="door3"
              class="field-node door3 node-closed">
 
-            🔒
+            D3
 
         </div>
+
 
         <div class="node-label"
              style="left: 52%; top: 63%;">
 
             DOOR 3
 
-            <small>PIN 4</small>
+            <small>
+                PIN 4
+            </small>
 
         </div>
 
@@ -1269,12 +1140,15 @@ body {
 
         </div>
 
+
         <div class="node-label"
              style="left: 78%; top: 23%;">
 
             LASER 2
 
-            <small>Sensor</small>
+            <small>
+                Sensor
+            </small>
 
         </div>
 
@@ -1285,16 +1159,19 @@ body {
         <div id="door4"
              class="field-node door4 node-closed">
 
-            🔒
+            D4
 
         </div>
+
 
         <div class="node-label"
              style="left: 75%; top: 54%;">
 
             DOOR 4
 
-            <small>PIN 5</small>
+            <small>
+                PIN 7
+            </small>
 
         </div>
 
@@ -1309,12 +1186,15 @@ body {
 
         </div>
 
+
         <div class="node-label"
              style="left: 29%; top: 76%;">
 
             SWITCH 2
 
-            <small>Door 4</small>
+            <small>
+                Door 4
+            </small>
 
         </div>
 
@@ -1325,16 +1205,19 @@ body {
         <div id="door5"
              class="field-node door5 node-closed">
 
-            🔒
+            D5
 
         </div>
+
 
         <div class="node-label"
              style="left: 62%; top: 76%;">
 
             DOOR 5
 
-            <small>Auto</small>
+            <small>
+                Auto
+            </small>
 
         </div>
 
@@ -1345,19 +1228,21 @@ body {
         <div id="end"
              class="field-node end node-open">
 
-            ✓
-
-        </div>
-
-        <div class="node-label"
-             style="left: 86%; top: 76%;">
-
             END
 
         </div>
 
 
+        <div class="node-label"
+             style="left: 86%; top: 76%;">
+
+            FINISH
+
+        </div>
+
+
     </div>
+
 
 </section>
 
@@ -1370,14 +1255,14 @@ body {
 <aside class="sidebar">
 
 
+
     <!-- SUMMARY -->
 
     <div class="card">
 
+
         <div class="card-title">
-
             Field Status
-
         </div>
 
 
@@ -1422,6 +1307,7 @@ body {
 
         </div>
 
+
     </div>
 
 
@@ -1430,10 +1316,9 @@ body {
 
     <div class="card">
 
+
         <div class="card-title">
-
             Devices
-
         </div>
 
 
@@ -1445,23 +1330,17 @@ body {
             <div class="device-left">
 
                 <div class="device-icon">
-
-                    🚪
-
+                    D1
                 </div>
 
                 <div>
 
                     <div class="device-name">
-
                         Door 1
-
                     </div>
 
                     <div class="device-type">
-
                         Digital Output
-
                     </div>
 
                 </div>
@@ -1487,23 +1366,17 @@ body {
             <div class="device-left">
 
                 <div class="device-icon">
-
-                    🚪
-
+                    D2
                 </div>
 
                 <div>
 
                     <div class="device-name">
-
                         Door 2
-
                     </div>
 
                     <div class="device-type">
-
                         Laser Trigger
-
                     </div>
 
                 </div>
@@ -1529,23 +1402,17 @@ body {
             <div class="device-left">
 
                 <div class="device-icon">
-
-                    🚪
-
+                    D3
                 </div>
 
                 <div>
 
                     <div class="device-name">
-
                         Door 3
-
                     </div>
 
                     <div class="device-type">
-
                         Laser Trigger
-
                     </div>
 
                 </div>
@@ -1571,23 +1438,17 @@ body {
             <div class="device-left">
 
                 <div class="device-icon">
-
-                    🚪
-
+                    D4
                 </div>
 
                 <div>
 
                     <div class="device-name">
-
                         Door 4
-
                     </div>
 
                     <div class="device-type">
-
                         Switch
-
                     </div>
 
                 </div>
@@ -1613,23 +1474,17 @@ body {
             <div class="device-left">
 
                 <div class="device-icon">
-
-                    🚪
-
+                    D5
                 </div>
 
                 <div>
 
                     <div class="device-name">
-
                         Door 5
-
                     </div>
 
                     <div class="device-type">
-
                         Automatic
-
                     </div>
 
                 </div>
@@ -1648,30 +1503,24 @@ body {
 
 
 
-        <!-- LASER -->
+        <!-- LASER 1 -->
 
         <div class="device">
 
             <div class="device-left">
 
                 <div class="device-icon">
-
-                    ⚡
-
+                    L1
                 </div>
 
                 <div>
 
                     <div class="device-name">
-
                         Laser 1
-
                     </div>
 
                     <div class="device-type">
-
                         Sensor
-
                     </div>
 
                 </div>
@@ -1690,28 +1539,24 @@ body {
 
 
 
+        <!-- LASER 2 -->
+
         <div class="device">
 
             <div class="device-left">
 
                 <div class="device-icon">
-
-                    ⚡
-
+                    L2
                 </div>
 
                 <div>
 
                     <div class="device-name">
-
                         Laser 2
-
                     </div>
 
                     <div class="device-type">
-
                         Sensor
-
                     </div>
 
                 </div>
@@ -1729,6 +1574,7 @@ body {
         </div>
 
 
+
     </div>
 
 
@@ -1737,10 +1583,9 @@ body {
 
     <div class="card">
 
+
         <div class="card-title">
-
             Recent Events
-
         </div>
 
 
@@ -1751,7 +1596,9 @@ body {
 
         </div>
 
+
     </div>
+
 
 
 </aside>
@@ -1773,8 +1620,10 @@ body {
 
 function updateDoor(id, status) {
 
+
     const node =
         document.getElementById(id);
+
 
     const badge =
         document.getElementById(
@@ -1793,11 +1642,13 @@ function updateDoor(id, status) {
 
     if (status === "OPEN") {
 
+
         node.classList.add(
             "node-open"
         );
 
-        node.innerHTML = "🔓";
+
+        node.innerHTML = "D";
 
 
         if (badge) {
@@ -1810,15 +1661,18 @@ function updateDoor(id, status) {
 
         }
 
+
     }
 
     else {
+
 
         node.classList.add(
             "node-closed"
         );
 
-        node.innerHTML = "🔒";
+
+        node.innerHTML = "D";
 
 
         if (badge) {
@@ -1836,14 +1690,17 @@ function updateDoor(id, status) {
 }
 
 
+
 // =====================================================
 // LASER
 // =====================================================
 
 function updateLaser(id, status) {
 
+
     const node =
         document.getElementById(id);
+
 
     const badge =
         document.getElementById(
@@ -1862,11 +1719,13 @@ function updateLaser(id, status) {
 
     if (status === "DETECTED") {
 
+
         node.classList.add(
             "node-detected"
         );
 
-        node.innerHTML = "⚡";
+
+        node.innerHTML = "ON";
 
 
         if (badge) {
@@ -1879,13 +1738,16 @@ function updateLaser(id, status) {
 
         }
 
+
     }
 
     else {
 
+
         node.classList.add(
             "node-off"
         );
+
 
         node.innerHTML =
             id === "laser1"
@@ -1908,11 +1770,13 @@ function updateLaser(id, status) {
 }
 
 
+
 // =====================================================
 // SWITCH
 // =====================================================
 
 function updateSwitch(id, status) {
+
 
     const node =
         document.getElementById(id);
@@ -1929,19 +1793,24 @@ function updateSwitch(id, status) {
 
     if (status === "ON") {
 
+
         node.classList.add(
             "node-open"
         );
 
+
         node.innerHTML = "S";
+
 
     }
 
     else {
 
+
         node.classList.add(
             "node-off"
         );
+
 
         node.innerHTML = "S";
 
@@ -1950,13 +1819,16 @@ function updateSwitch(id, status) {
 }
 
 
+
 // =====================================================
 // DASHBOARD
 // =====================================================
 
 async function updateDashboard() {
 
+
     try {
+
 
         const response =
             await fetch(
@@ -1972,6 +1844,7 @@ async function updateDashboard() {
             data.state;
 
 
+
         // =============================================
         // CONNECTION
         // =============================================
@@ -1982,6 +1855,7 @@ async function updateDashboard() {
             )
             .innerText =
             "ARDUINO ONLINE";
+
 
 
         // =============================================
@@ -2018,6 +1892,7 @@ async function updateDashboard() {
         );
 
 
+
         // =============================================
         // LASERS
         // =============================================
@@ -2032,6 +1907,7 @@ async function updateDashboard() {
             "laser2",
             state.laser2
         );
+
 
 
         // =============================================
@@ -2050,6 +1926,7 @@ async function updateDashboard() {
         );
 
 
+
         // =============================================
         // SUMMARY
         // =============================================
@@ -2057,13 +1934,9 @@ async function updateDashboard() {
         const doors = [
 
             state.door1,
-
             state.door2,
-
             state.door3,
-
             state.door4,
-
             state.door5
 
         ];
@@ -2079,7 +1952,6 @@ async function updateDashboard() {
         const lasers = [
 
             state.laser1,
-
             state.laser2
 
         ];
@@ -2108,6 +1980,7 @@ async function updateDashboard() {
             activeLasers;
 
 
+
         // =============================================
         // LOG
         // =============================================
@@ -2123,6 +1996,7 @@ async function updateDashboard() {
             data.messages.length > 0
         ) {
 
+
             log.innerHTML =
                 data.messages
                     .slice(-15)
@@ -2132,15 +2006,18 @@ async function updateDashboard() {
                     )
                     .join("");
 
+
             log.scrollTop =
                 log.scrollHeight;
 
         }
 
+
     }
 
 
     catch (error) {
+
 
         console.error(
             "Dashboard Error:",
@@ -2155,9 +2032,11 @@ async function updateDashboard() {
             .innerText =
             "SERVER DISCONNECTED";
 
+
     }
 
 }
+
 
 
 // =====================================================

@@ -35,6 +35,7 @@ Robot Field Control System เป็นระบบควบคุมสนา�
 - เมื่อประตู 3 ถูก Lock ประตู 5 จะถูกปิดและ Lock
 - เมื่อ Reset Arduino ระบบจะเริ่มต้นสถานะใหม่ทั้งหมด
 - แสดงสถานะการทำงานผ่าน Serial Monitor
+- แสดงสถานะประตู 5 ผ่าน LED Traffic Light (Yellow / Green / Red)
 
 ---
 
@@ -121,10 +122,12 @@ Laser Sensor 2 ใช้สำหรับควบคุมประตู 3
 ---
 
 ### 4.4 LED Traffic
-Led Traffic เซอร์โว 5
+
+LED Traffic ใช้แสดงสถานะของประตู 5
+
 | Arduino Pin | Device | Function |
 |---|---|---|
-| D13 | Red | ประตูปิดถาวรเมื่อ ประตู3เปิด |
-| D14 | Yellow | ประตูปิด5วิ |
-| D15 | Green | ประตูเปิด5วิ |
+| D14 | Yellow | ประตู 5 ปิด (รอบ 5 วินาที) |
+| D15 | Green | ประตู 5 เปิด (รอบ 5 วินาที) |
+| D16 | Red | ประตู 5 ถูก Lock (ปิดถาวร เมื่อประตู 3 ถูก Lock) |
 
