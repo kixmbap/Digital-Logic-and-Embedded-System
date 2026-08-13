@@ -105,6 +105,16 @@ unsigned long door5Timer = 0;
 
 const unsigned long DOOR5_INTERVAL = 5000;
 
+const int swpin = 17;
+const int IRpin = 18;
+
+bool startround = false;
+int lastIR = 0;
+bool endround = false;
+
+unsigned long runtimer = 0;
+unsigned long interval = 1000;
+unsigned long totalTime = 0;
 
 // =====================================================
 // SETUP
@@ -114,6 +124,7 @@ void setup() {
 
   Serial.begin(9600);
 
+  timerPinSetup();
 
   //=======================
   // Led Traffic
@@ -223,6 +234,10 @@ void setup() {
 // =====================================================
 
 void loop() {
+
+  timerCount(runtimer, interval, totalTime, startround, endround);
+  checkIRstart(IRpin, lastIR, runtimer, startround);
+  checkSWEND(swpin, totalTime, startround, endround);
 
   //=============================
   // Led Traffic
@@ -499,4 +514,73 @@ void loop() {
 
 
   delay(50);
+}
+
+void timerPinSetup(){
+  pinMode(swpin, INPUT_PULLUP);
+  pinMode(IRpin, INPUT);
+}
+
+void timerCount(unsigned long &timer, unsigned long interval, unsigned long &totalTime, bool startround, bool endround){
+  if(millis() - timer >= interval && startround && !endround){
+    timer = millis();
+    totalTime += interval/1000;
+    unsigned long mins, secs;
+    convertTime(totalTime, mins, secs);
+    Serial.print(" Time : ");
+    printTime(mins, secs);
+    Serial.println();
+  }
+}
+
+unsigned long convertTime(unsigned long totalTime, unsigned long &mins, unsigned long &secs){
+  mins = (totalTime) / 60;
+  secs = (totalTime) % 60;
+  if(mins < 1){
+    mins = 0;
+    secs = totalTime;
+  }
+}
+
+void printTime(unsigned long mins, unsigned long secs){
+  if(mins >= 1){
+    Serial.print(mins);
+    Serial.print(":");
+    if(secs < 10){
+      Serial.print("0");
+    }
+    Serial.print(secs);
+    Serial.print(" minutes");
+  } else {
+    Serial.print(secs);
+    Serial.print(" seconds");
+  }
+}
+
+void checkIRstart(const int IRpin, int &lastIR, unsigned long &timer, bool &startround){
+  int nowIR = digitalRead(IRpin);
+  if(nowIR == 1){
+    if(lastIR == 0 && !startround){
+      timer = millis();
+      Serial.print("Time start now. (");
+      Serial.print(timer);
+      Serial.println(")");
+      startround = true;
+    }
+  } else {
+    lastIR = nowIR;
+  }
+}
+
+void checkSWEND(const int swPin, unsigned long totaltime, bool &startround, bool &endround){
+  if(startround && digitalRead(swPin) == 0 && !endround){
+    endround = true;
+        Serial.print("Time end. using ");
+        unsigned long mins, secs;
+        convertTime(totalTime, mins, secs);
+        printTime(mins, secs);
+        Serial.print(" (");
+        Serial.print(millis());
+        Serial.println(")");  
+  }
 }
