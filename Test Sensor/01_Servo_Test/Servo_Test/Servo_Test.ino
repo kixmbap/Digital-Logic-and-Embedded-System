@@ -14,8 +14,8 @@ const int SERVO4_PIN = 5;
 const int SERVO5_PIN = 6;
 
 // มุม Servo
-const int CLOSED_ANGLE = 0;
-const int OPEN_ANGLE = 90;
+const int CLOSED_ANGLE = 90;
+const int OPEN_ANGLE = 180;
 
 void setup() {
 
@@ -29,6 +29,7 @@ void setup() {
 
   // เริ่มต้นให้ทุกประตูปิด
   servo1.write(CLOSED_ANGLE);
+  /*
   servo2.write(CLOSED_ANGLE);
   servo3.write(CLOSED_ANGLE);
   servo4.write(CLOSED_ANGLE);
@@ -39,6 +40,8 @@ void setup() {
   Serial.println("==============================");
   Serial.println("   SERVO LOOP TEST START");
   Serial.println("==============================");
+*/
+  setServo(servo1, 1, CLOSED_ANGLE);
 }
 
 void testServo(Servo &servo, int number) {
@@ -60,11 +63,23 @@ void testServo(Servo &servo, int number) {
   delay(1000);
 }
 
+void setServo(Servo &servo, int number, int angle){
+
+  Serial.print("DOOR ");
+  Serial.print(number);
+  Serial.println(" -> OPEN");
+
+  servo.write(OPEN_ANGLE);
+
+  servo.write(angle);
+}
+
 void loop() {
 
   // Servo 1
-  testServo(servo1, 1);
-
+ testServo(servo1, 1);
+  
+  /*
   // Servo 2
   testServo(servo2, 2);
 
@@ -82,4 +97,5 @@ void loop() {
   Serial.println("==============================");
 
   delay(2000);
+  */
 }
