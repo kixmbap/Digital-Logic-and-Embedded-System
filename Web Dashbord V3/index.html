@@ -2224,7 +2224,7 @@ body {
         <div id="raceTimer"
              class="race-timer">
 
-            <div id="currentRunnerInfo" style="display: none; margin-bottom: 12px; font-weight: bold; color: #fff; font-size: 1rem; background: rgba(255,255,255,0.2); padding: 8px 12px; border-radius: 6px; text-align: center; border: 1px solid rgba(255,255,255,0.1);">
+            <div id="currentRunnerInfo" style="display: none; margin-bottom: 12px; font-weight: bold; color: #fff; font-size: 1rem; background: #2563eb; padding: 8px 12px; border-radius: 6px; text-align: center; border: 1px solid rgba(0,0,0,0.05);">
                 ผู้แข่งขัน: - (โรงเรียน: -) [คนที่ -/-]
             </div>
 
@@ -3909,6 +3909,10 @@ function processRaceMessage(
             doorNumber >= 1
             &&
             doorNumber <= 5
+            &&
+            raceRunning
+            &&
+            !finishHandled
         ) {
 
             playDoorSound(
@@ -4695,29 +4699,12 @@ async function triggerFieldReset() {
 async function handleRunnerFinished(finalMilliseconds) {
     if (!currentSession.active) return;
     const finalSeconds = finalMilliseconds / 1000;
-    
+
     // Save current runner score
     const runner = currentSession.players[currentSession.currentIndex];
     runner.time = finalSeconds;
 
-    // Send score to Google Sheets via backend
-    try {
-        await fetch("/api/submit-score", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                name: runner.name,
-                school: runner.school,
-                time: finalSeconds
-            })
-        });
-    } catch (err) {
-        console.error("Error sending score to API:", err);
-    }
-
-    // Save to all-time leaderboard locally
+    // Save to all-time leaderboard locally (no external services - local storage only)
     const now = new Date();
     const dateString = `${now.getDate()}/${now.getMonth() + 1}/${now.getFullYear()}`;
     allTimeLeaderboard.push({
@@ -4730,13 +4717,19 @@ async function handleRunnerFinished(finalMilliseconds) {
     allTimeLeaderboard.sort((a, b) => a.time - b.time);
     localStorage.setItem("robot_field_alltime_scores", JSON.stringify(allTimeLeaderboard));
 
+    const isLastRunner = currentSession.currentIndex >= currentSession.players.length - 1;
+
+    if (isLastRunner) {
+        // Last runner in this session: skip the raw finish popup and jump
+        // straight to the round winner / session leaderboard popup.
+        document.getElementById("finishOverlay").classList.remove("show");
+        showSessionLeaderboard();
+        return;
+    }
+
     // Show next button
     const nextBtn = document.getElementById("btnNextRunner");
-    if (currentSession.currentIndex < currentSession.players.length - 1) {
-        nextBtn.innerText = "เตรียมผู้เข้าแข่งขันคนถัดไป";
-    } else {
-        nextBtn.innerText = "ดูผลลัพธ์รอบนี้ (Leaderboard)";
-    }
+    nextBtn.innerText = "เตรียมผู้เข้าแข่งขันคนถัดไป";
     nextBtn.style.display = "block";
 }
 
@@ -4765,6 +4758,16 @@ async function nextRunner() {
         // Show session leaderboard
         showSessionLeaderboard();
     }
+}
+
+function escapeHTML(str) {
+    if (str === null || str === undefined) return "";
+    return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
 }
 
 function showSessionLeaderboard() {

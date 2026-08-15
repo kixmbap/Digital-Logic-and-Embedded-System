@@ -1,9 +1,7 @@
 const express = require("express");
 const { SerialPort } = require("serialport");
-const https = require("https");
 
 const app = express();
-app.use(express.json());
 
 
 // =====================================================
@@ -15,8 +13,6 @@ const PORT = 3000;
 const SERIAL_PORT = "COM7";
 
 const BAUD_RATE = 9600;
-
-const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbzXiZLJWdftUFHoYUitYnx3Xn_IhgeDLDrJb_fEHjFA3CBXNGQFspJwkSu5FDqW8sPNzA/exec";
 
 
 // =====================================================
@@ -108,58 +104,6 @@ app.post("/api/reset", (req, res) => {
         res.json({ success: true, message: "Reset command sent to Arduino successfully" });
     });
 });
-
-// บันทึกคะแนนลง Google Sheets
-app.post("/api/submit-score", (req, res) => {
-    const { name, school, time } = req.body;
-    console.log(`Submitting score: Name: ${name}, School: ${school}, Time: ${time}`);
-
-    if (!name) {
-        return res.status(400).json({ success: false, error: "Name is required" });
-    }
-
-    const payload = {
-        name: name,
-        school: school || "-",
-        time: parseFloat(time),
-        timestamp: new Date().toISOString()
-    };
-
-    if (GOOGLE_SHEET_URL) {
-        try {
-            const url = new URL(GOOGLE_SHEET_URL);
-            const postData = JSON.stringify(payload);
-
-            const options = {
-                hostname: url.hostname,
-                path: url.pathname + url.search,
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Content-Length": Buffer.byteLength(postData)
-                }
-            };
-
-            const sheetReq = https.request(options, (sheetRes) => {
-                console.log(`Google Sheets Response Status: ${sheetRes.statusCode}`);
-            });
-
-            sheetReq.on("error", (e) => {
-                console.error(`Google Sheets request error: ${e.message}`);
-            });
-
-            sheetReq.write(postData);
-            sheetReq.end();
-        } catch (err) {
-            console.error("Failed to make request to Google Sheets URL:", err.message);
-        }
-    } else {
-        console.log("GOOGLE_SHEET_URL is not set. Saving only to local browser storage.");
-    }
-
-    res.json({ success: true, data: payload });
-});
-
 
 // =====================================================
 // START WEB SERVER
