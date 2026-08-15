@@ -1,0 +1,5047 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Robot Field Dashboard</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+
+    width: 100%;
+    height: 100%;
+
+    font-family: Arial, "Noto Sans Thai", sans-serif;
+
+    background: #eef1f5;
+
+    color: #1f2937;
+
+    overflow: hidden;
+}
+
+body {
+    min-height: 100vh;
+}
+
+/* =====================================================
+   APP
+===================================================== */
+
+.app {
+    width: 100vw;
+    height: 100vh;
+
+    min-height: 100vh;
+
+    display: flex;
+
+    flex-direction: column;
+
+    overflow: hidden;
+}
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.header {
+    width: 100%;
+
+    height: 76px;
+
+    flex-shrink: 0;
+
+    background: #ffffff;
+
+    border-bottom: 1px solid #e5e7eb;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0 28px;
+}
+
+.logo {
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+}
+
+.logo-icon {
+    width: 44px;
+
+    height: 44px;
+
+    border-radius: 12px;
+
+    background: #111827;
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 23px;
+
+    overflow: hidden;
+}
+
+.logo-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.logo-text h1 {
+    margin: 0;
+
+    font-size: 21px;
+}
+
+.logo-text span {
+    font-size: 12px;
+
+    color: #6b7280;
+}
+
+/* =====================================================
+   CONNECTION
+===================================================== */
+
+.connection {
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 9px 15px;
+
+    border-radius: 20px;
+
+    background: #ecfdf3;
+
+    color: #15803d;
+
+    font-size: 13px;
+
+    font-weight: bold;
+}
+
+.connection-dot {
+    width: 9px;
+
+    height: 9px;
+
+    border-radius: 50%;
+
+    background: #22c55e;
+
+    box-shadow:
+        0 0 0 4px #dcfce7;
+}
+
+/* =====================================================
+   CONTENT
+===================================================== */
+
+.content {
+    width: 100%;
+
+    height: calc(100vh - 76px);
+
+    flex: 1;
+
+    min-height: 0;
+
+    padding: 16px;
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        320px;
+
+    gap: 16px;
+
+    overflow: hidden;
+
+    align-items: stretch;
+}
+
+/* =====================================================
+   FIELD PANEL
+===================================================== */
+
+.field-panel {
+    width: 100%;
+
+    height: 100%;
+
+    min-width: 0;
+
+    min-height: 0;
+
+    background: white;
+
+    border-radius: 16px;
+
+    border: 1px solid #e5e7eb;
+
+    overflow: hidden;
+
+    display: flex;
+
+    flex-direction: column;
+
+    position: relative;
+}
+
+/* =====================================================
+   FIELD BACKGROUND
+===================================================== */
+
+.field-panel::before {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background-image:
+        url("/images/logo.png");
+
+    background-size: 50% auto;
+
+    background-position: center;
+
+    background-repeat: no-repeat;
+
+    opacity: 0.08;
+
+    z-index: 0;
+}
+
+.field-panel > * {
+    position: relative;
+
+    z-index: 1;
+}
+
+/* =====================================================
+   PANEL HEADER
+===================================================== */
+
+.panel-header {
+    height: 62px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0 20px;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.panel-title {
+    font-size: 16px;
+
+    font-weight: bold;
+}
+
+.panel-subtitle {
+    font-size: 12px;
+
+    color: #9ca3af;
+
+    margin-top: 3px;
+}
+
+.legend {
+    display: flex;
+
+    gap: 15px;
+
+    font-size: 11px;
+
+    color: #6b7280;
+}
+
+.legend-item {
+    display: flex;
+
+    align-items: center;
+
+    gap: 5px;
+}
+
+.legend-dot {
+    width: 8px;
+
+    height: 8px;
+
+    border-radius: 50%;
+}
+
+.legend-green {
+    background: #22c55e;
+}
+
+.legend-red {
+    background: #ef4444;
+}
+
+.legend-blue {
+    background: #06b6d4;
+}
+
+/* =====================================================
+   FIELD
+===================================================== */
+
+.field {
+    position: relative;
+
+    flex: 1;
+
+    width: 100%;
+
+    height: 100%;
+
+    min-height: 0;
+
+    background:
+        linear-gradient(
+            rgba(229,231,235,.45) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(229,231,235,.45) 1px,
+            transparent 1px
+        );
+
+    background-size: 35px 35px;
+
+    overflow: hidden;
+}
+
+/* =====================================================
+   TIMER
+===================================================== */
+
+.race-timer {
+    position: absolute;
+
+    left: 20px;
+
+    top: 20px;
+
+    z-index: 30;
+
+    min-width: 150px;
+
+    padding: 12px 16px;
+
+    background: rgba(255,255,255,.96);
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 5px 18px rgba(0,0,0,.12);
+}
+
+.timer-title {
+    font-size: 10px;
+
+    font-weight: bold;
+
+    color: #6b7280;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 3px;
+}
+
+.timer-value {
+    font-family: Consolas, monospace;
+
+    font-size: 26px;
+
+    font-weight: bold;
+
+    color: #374151;
+
+    letter-spacing: 1px;
+}
+
+.timer-status {
+    margin-top: 3px;
+
+    font-size: 10px;
+
+    color: #9ca3af;
+}
+
+.race-timer.running {
+    border-color: #22c55e;
+
+    box-shadow:
+        0 0 0 3px rgba(34,197,94,.10),
+        0 5px 18px rgba(0,0,0,.12);
+}
+
+.race-timer.running .timer-value {
+    color: #15803d;
+}
+
+.race-timer.running .timer-status {
+    color: #15803d;
+}
+
+/* =====================================================
+   FIELD NODE
+===================================================== */
+
+.field-node {
+    position: absolute;
+
+    width: 48px;
+
+    height: 48px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 20px;
+
+    font-weight: bold;
+
+    z-index: 5;
+
+    transition: .25s;
+
+    box-shadow:
+        0 4px 12px rgba(0,0,0,.12);
+}
+
+.field-node:hover {
+    transform: scale(1.12);
+}
+
+/* =====================================================
+   NODE STATUS
+===================================================== */
+
+.node-open {
+    background: #dcfce7;
+
+    border: 3px solid #22c55e;
+
+    color: #15803d;
+}
+
+.node-closed {
+    background: #fee2e2;
+
+    border: 3px solid #ef4444;
+
+    color: #b91c1c;
+}
+
+.node-detected {
+    background: #cffafe;
+
+    border: 3px solid #06b6d4;
+
+    color: #0891b2;
+}
+
+.node-off {
+    background: #f3f4f6;
+
+    border: 3px solid #9ca3af;
+
+    color: #6b7280;
+}
+
+/* =====================================================
+   NODE POSITIONS
+===================================================== */
+
+.start {
+    left: 10%;
+
+    top: 13%;
+}
+
+.switch1 {
+    left: 28%;
+
+    top: 13%;
+}
+
+.door1 {
+    left: 28%;
+
+    top: 28%;
+}
+
+.laser1 {
+    left: 48%;
+
+    top: 18%;
+}
+
+.door2 {
+    left: 49%;
+
+    top: 34%;
+}
+
+.door3 {
+    left: 49%;
+
+    top: 53%;
+}
+
+.laser2 {
+    left: 76%;
+
+    top: 28%;
+}
+
+.door4 {
+    left: 72%;
+
+    top: 43%;
+}
+
+.switch2 {
+    left: 27%;
+
+    top: 67%;
+}
+
+.door5 {
+    left: 60%;
+
+    top: 67%;
+}
+
+.end {
+    left: 84%;
+
+    top: 67%;
+}
+
+/* =====================================================
+   LABEL
+===================================================== */
+
+.node-label {
+    position: absolute;
+
+    transform: translateX(-50%);
+
+    text-align: center;
+
+    z-index: 6;
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    color: #374151;
+
+    white-space: nowrap;
+}
+
+.node-label small {
+    display: block;
+
+    color: #9ca3af;
+
+    font-weight: normal;
+
+    margin-top: 2px;
+}
+
+/* =====================================================
+   START ANIMATION
+===================================================== */
+
+.start.race-active {
+    animation:
+        startPulse 1s infinite;
+}
+
+@keyframes startPulse {
+
+    0% {
+        box-shadow:
+            0 0 0 0 rgba(34,197,94,.55),
+            0 4px 12px rgba(0,0,0,.12);
+    }
+
+    70% {
+        box-shadow:
+            0 0 0 12px rgba(34,197,94,0),
+            0 4px 12px rgba(0,0,0,.12);
+    }
+
+    100% {
+        box-shadow:
+            0 0 0 0 rgba(34,197,94,0),
+            0 4px 12px rgba(0,0,0,.12);
+    }
+
+}
+
+/* =====================================================
+   FINISH ANIMATION
+===================================================== */
+
+.end.finish-active {
+    animation:
+        finishPulse .8s infinite;
+}
+
+@keyframes finishPulse {
+
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.18);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+
+}
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
+.sidebar {
+    width: 320px;
+
+    height: 100%;
+
+    min-height: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+
+    overflow: hidden;
+
+    align-self: stretch;
+}
+
+/* =====================================================
+   CARD
+===================================================== */
+
+.card {
+    width: 100%;
+
+    background: white;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 16px;
+
+    padding: 12px 14px;
+
+    flex-shrink: 0;
+
+    overflow: visible;
+}
+
+.card-title {
+    font-size: 14px;
+
+    font-weight: bold;
+
+    margin-bottom: 8px;
+}
+
+/* =====================================================
+   SUMMARY
+===================================================== */
+
+.summary {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 8px;
+}
+
+.summary-box {
+    padding: 9px;
+
+    background: #f9fafb;
+
+    border-radius: 10px;
+}
+
+.summary-number {
+    font-size: 21px;
+
+    font-weight: bold;
+}
+
+.summary-text {
+    font-size: 10px;
+
+    color: #6b7280;
+}
+
+/* =====================================================
+   DEVICE
+===================================================== */
+
+.device {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 6px 0;
+
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.device:last-child {
+    border-bottom: none;
+}
+
+.device-left {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+.device-icon {
+    width: 30px;
+
+    height: 30px;
+
+    flex-shrink: 0;
+
+    border-radius: 8px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: #f3f4f6;
+}
+
+.device-name {
+    font-size: 12px;
+
+    font-weight: bold;
+}
+
+.device-type {
+    font-size: 9px;
+
+    color: #9ca3af;
+}
+
+.badge {
+    padding: 3px 7px;
+
+    border-radius: 20px;
+
+    font-size: 9px;
+
+    font-weight: bold;
+
+    flex-shrink: 0;
+}
+
+.badge-open {
+    background: #dcfce7;
+
+    color: #15803d;
+}
+
+.badge-closed {
+    background: #fee2e2;
+
+    color: #b91c1c;
+}
+
+.badge-detected {
+    background: #cffafe;
+
+    color: #0e7490;
+}
+
+.badge-off {
+    background: #f3f4f6;
+
+    color: #6b7280;
+}
+
+/* =====================================================
+   LOG
+===================================================== */
+
+.log {
+    height: 120px;
+
+    overflow-y: auto;
+
+    background: #111827;
+
+    border-radius: 10px;
+
+    padding: 8px;
+
+    font-family: Consolas, monospace;
+
+    font-size: 10px;
+}
+
+.log-line {
+    color: #d1d5db;
+
+    padding: 2px 0;
+}
+
+.log-line:last-child {
+    color: #4ade80;
+}
+
+/* =====================================================
+   AUDIO
+===================================================== */
+
+.audio-status {
+    margin-top: 6px;
+
+    font-size: 10px;
+
+    color: #9ca3af;
+}
+
+.sound-button-container {
+    position: fixed;
+
+    top: 90px;
+
+    right: 25px;
+
+    z-index: 200;
+
+    background: white;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 12px;
+
+    padding: 10px 15px;
+
+    box-shadow:
+        0 5px 20px rgba(0,0,0,.15);
+}
+
+.sound-button {
+    border: none;
+
+    background: #111827;
+
+    color: white;
+
+    padding: 10px 16px;
+
+    border-radius: 8px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.sound-button:hover {
+    background: #374151;
+}
+
+/* =====================================================
+   FINISH POPUP
+===================================================== */
+
+.finish-overlay {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 1000;
+
+    background:
+        rgba(17,24,39,.65);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transition:
+        opacity .3s ease,
+        visibility .3s ease;
+}
+
+.finish-overlay.show {
+    opacity: 1;
+
+    visibility: visible;
+}
+
+.finish-popup {
+    width: min(420px, 90vw);
+
+    background: white;
+
+    border-radius: 20px;
+
+    padding: 34px;
+
+    text-align: center;
+
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.25);
+
+    transform:
+        translateY(20px)
+        scale(.95);
+
+    transition:
+        transform .35s ease;
+}
+
+.finish-overlay.show .finish-popup {
+    transform:
+        translateY(0)
+        scale(1);
+}
+
+.finish-title {
+    font-size: 13px;
+
+    font-weight: bold;
+
+    letter-spacing: 2px;
+
+    color: #6b7280;
+}
+
+.finish-heading {
+    margin-top: 8px;
+
+    font-size: 28px;
+
+    font-weight: bold;
+
+    color: #111827;
+}
+
+.finish-time {
+    margin-top: 15px;
+
+    font-family: Consolas, monospace;
+
+    font-size: 48px;
+
+    font-weight: bold;
+
+    color: #15803d;
+}
+
+.finish-line {
+    width: 60px;
+
+    height: 4px;
+
+    background: #22c55e;
+
+    border-radius: 10px;
+
+    margin: 18px auto;
+}
+
+.finish-button {
+    border: none;
+
+    background: #111827;
+
+    color: white;
+
+    padding: 10px 25px;
+
+    border-radius: 9px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.finish-button:hover {
+    background: #374151;
+}
+
+/* =====================================================
+   DESKTOP FULL SCREEN
+===================================================== */
+
+@media (min-width: 1001px) {
+
+    html,
+    body {
+        width: 100%;
+        height: 100%;
+
+        overflow: hidden;
+    }
+
+    .app {
+        width: 100vw;
+        height: 100vh;
+
+        min-height: 0;
+
+        overflow: hidden;
+    }
+
+    .header {
+        height: 70px;
+
+        min-height: 70px;
+
+        flex-shrink: 0;
+    }
+
+    .content {
+        height: calc(100vh - 70px);
+
+        min-height: 0;
+
+        padding: 12px;
+
+        gap: 12px;
+
+        grid-template-columns:
+            minmax(0, 1fr)
+            320px;
+
+        overflow: hidden;
+
+        align-items: stretch;
+    }
+
+    .field-panel {
+        width: 100%;
+        height: 100%;
+
+        min-width: 0;
+        min-height: 0;
+
+        overflow: hidden;
+    }
+
+    .panel-header {
+        height: 54px;
+
+        flex-shrink: 0;
+    }
+
+    .field {
+        width: 100%;
+        height: 100%;
+
+        min-height: 0;
+
+        overflow: hidden;
+    }
+
+    .sidebar {
+        width: 320px;
+
+        height: 100%;
+
+        min-height: 0;
+
+        gap: 8px;
+
+        overflow: hidden;
+    }
+
+    /*
+       SUMMARY
+    */
+
+    .sidebar .card:nth-child(1) {
+        flex: 0 0 145px;
+
+        height: 145px;
+    }
+
+    /*
+       DEVICES
+
+       ใช้พื้นที่ที่เหลือ
+       เพื่อให้รายการ Device ทั้งหมดแสดง
+    */
+
+    .sidebar .card:nth-child(2) {
+        flex: 1 1 auto;
+
+        height: auto;
+
+        min-height: 0;
+
+        overflow: hidden;
+    }
+
+    /*
+       LOG
+    */
+
+    .sidebar .card:nth-child(3) {
+        flex: 0 0 200px;
+
+        height: 200px;
+
+        min-height: 0;
+
+        overflow: hidden;
+    }
+
+    .sidebar .card:nth-child(2) .device {
+        padding: 5px 0;
+    }
+
+    .log {
+        height: calc(100% - 46px);
+
+        min-height: 0;
+
+        overflow-y: auto;
+
+        overflow-x: hidden;
+    }
+
+}
+
+
+/* =====================================================
+   LARGE SCREEN
+===================================================== */
+
+@media (min-width: 1400px) {
+
+    .content {
+        grid-template-columns:
+            minmax(0, 1fr)
+            340px;
+
+        gap: 14px;
+    }
+
+    .sidebar {
+        width: 340px;
+    }
+
+    .sidebar .card:nth-child(1) {
+        flex-basis: 150px;
+
+        height: 150px;
+    }
+
+    .sidebar .card:nth-child(3) {
+        flex-basis: 220px;
+
+        height: 220px;
+    }
+
+    .sidebar .card:nth-child(2) .device {
+        padding: 6px 0;
+    }
+
+}
+
+
+/* =====================================================
+   SHORT SCREEN
+===================================================== */
+
+@media (min-width: 1001px) and (max-height: 800px) {
+
+    .header {
+        height: 62px;
+
+        min-height: 62px;
+    }
+
+    .content {
+        height: calc(100vh - 62px);
+
+        padding: 8px;
+
+        gap: 8px;
+    }
+
+    .panel-header {
+        height: 48px;
+    }
+
+    .sidebar {
+        gap: 6px;
+    }
+
+    .sidebar .card:nth-child(1) {
+        flex: 0 0 112px;
+
+        height: 112px;
+
+        padding: 8px 10px;
+    }
+
+    .sidebar .card:nth-child(2) {
+        flex: 1 1 auto;
+
+        height: auto;
+
+        padding: 8px 10px;
+
+        min-height: 0;
+    }
+
+    .sidebar .card:nth-child(3) {
+        flex: 0 0 165px;
+
+        height: 165px;
+
+        padding: 8px 10px;
+    }
+
+    .card-title {
+        margin-bottom: 5px;
+
+        font-size: 12px;
+    }
+
+    .summary {
+        gap: 5px;
+    }
+
+    .summary-box {
+        padding: 6px;
+    }
+
+    .summary-number {
+        font-size: 18px;
+    }
+
+    .summary-text {
+        font-size: 9px;
+    }
+
+    .device {
+        padding: 3px 0 !important;
+    }
+
+    .device-icon {
+        width: 26px;
+
+        height: 26px;
+    }
+
+    .device-name {
+        font-size: 11px;
+    }
+
+    .device-type {
+        font-size: 8px;
+    }
+
+    .badge {
+        font-size: 8px;
+
+        padding: 2px 5px;
+    }
+
+    .log {
+        height: calc(100% - 42px);
+
+        font-size: 8px;
+    }
+
+}
+
+
+/* =====================================================
+   VERY SHORT SCREEN
+===================================================== */
+
+@media (min-width: 1001px) and (max-height: 650px) {
+
+    .header {
+        height: 55px;
+
+        min-height: 55px;
+    }
+
+    .content {
+        height: calc(100vh - 55px);
+
+        padding: 6px;
+
+        gap: 6px;
+    }
+
+    .panel-header {
+        height: 42px;
+    }
+
+    .sidebar {
+        gap: 5px;
+    }
+
+    .sidebar .card:nth-child(1) {
+        flex: 0 0 92px;
+
+        height: 92px;
+
+        padding: 6px 8px;
+    }
+
+    .sidebar .card:nth-child(2) {
+        flex: 1 1 auto;
+
+        height: auto;
+
+        padding: 6px 8px;
+
+        min-height: 0;
+    }
+
+    .sidebar .card:nth-child(3) {
+        flex: 0 0 135px;
+
+        height: 135px;
+
+        padding: 6px 8px;
+    }
+
+    .card-title {
+        font-size: 11px;
+
+        margin-bottom: 3px;
+    }
+
+    .summary {
+        gap: 4px;
+    }
+
+    .summary-box {
+        padding: 4px;
+    }
+
+    .summary-number {
+        font-size: 16px;
+    }
+
+    .summary-text {
+        font-size: 8px;
+    }
+
+    .device {
+        padding: 2px 0 !important;
+    }
+
+    .device-icon {
+        width: 22px;
+
+        height: 22px;
+
+        font-size: 9px;
+    }
+
+    .device-name {
+        font-size: 9px;
+    }
+
+    .device-type {
+        font-size: 7px;
+    }
+
+    .badge {
+        font-size: 7px;
+
+        padding: 2px 4px;
+    }
+
+    .log {
+        height: calc(100% - 38px);
+
+        font-size: 7px;
+
+        padding: 5px;
+    }
+
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 1000px) {
+
+    html,
+    body {
+        overflow: auto;
+    }
+
+    .app {
+        height: auto;
+
+        min-height: 100vh;
+
+        overflow: visible;
+    }
+
+    .content {
+        height: auto;
+
+        min-height: calc(100vh - 76px);
+
+        grid-template-columns: 1fr;
+
+        overflow: visible;
+    }
+
+    .field-panel {
+        height: 650px;
+
+        min-height: 650px;
+    }
+
+    .sidebar {
+        width: 100%;
+
+        height: auto;
+
+        display: grid;
+
+        grid-template-columns:
+            1fr 1fr;
+
+        overflow: visible;
+    }
+
+    .sidebar .card {
+        height: auto !important;
+
+        flex: none;
+
+        min-height: auto;
+    }
+
+}
+
+@media (max-width: 700px) {
+
+    html,
+    body {
+        overflow: auto;
+    }
+
+    .header {
+        height: 65px;
+
+        padding: 0 15px;
+    }
+
+    .logo-text h1 {
+        font-size: 17px;
+    }
+
+    .logo-text span {
+        font-size: 10px;
+    }
+
+    .logo-icon {
+        width: 38px;
+
+        height: 38px;
+    }
+
+    .connection {
+        padding: 7px 10px;
+
+        font-size: 11px;
+    }
+
+    .legend {
+        display: none;
+    }
+
+    .content {
+        height: auto;
+
+        padding: 10px;
+
+        gap: 10px;
+    }
+
+    .field-panel {
+        height: 600px;
+
+        min-height: 600px;
+
+        border-radius: 12px;
+    }
+
+    .sidebar {
+        display: flex;
+
+        width: 100%;
+
+        height: auto;
+    }
+
+    .sidebar .card {
+        height: auto !important;
+    }
+
+    .race-timer {
+        left: 10px;
+
+        top: 10px;
+
+        min-width: 130px;
+    }
+
+    .timer-value {
+        font-size: 22px;
+    }
+
+    .sound-button-container {
+        top: 75px;
+
+        right: 10px;
+    }
+
+}
+
+/* =====================================================
+   FIX FIELD NOT CUT OFF
+===================================================== */
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.app {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.content {
+    width: 100%;
+    max-width: 100vw;
+    height: calc(100vh - 70px);
+
+    padding: 12px;
+    gap: 12px;
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        320px;
+
+    overflow: hidden;
+}
+
+.field-panel {
+    width: 100%;
+    min-width: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+.field {
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    min-height: 0;
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+/* =====================================================
+   FIX TIMER
+===================================================== */
+
+.race-timer {
+    left: 20px;
+    top: 450px;
+
+    max-width: calc(100% - 40px);
+}
+
+/* =====================================================
+   FIX NODE SIZE
+===================================================== */
+
+.field-node {
+    width: 48px;
+    height: 48px;
+
+    font-size: 18px;
+
+    transform-origin: center;
+}
+
+/* OPEN / DETECT ไม่ให้ล้นวงกลม */
+#door1,
+#door2,
+#door3,
+#door4,
+#door5 {
+    font-size: 18px;
+}
+
+#laser1,
+#laser2 {
+    font-size: 11px;
+}
+
+/* =====================================================
+   KEEP EVERYTHING INSIDE FIELD
+===================================================== */
+
+.start {
+    left: 10%;
+}
+
+.switch1 {
+    left: 28%;
+}
+
+.door1 {
+    left: 28%;
+}
+
+.laser1 {
+    left: 48%;
+}
+
+.door2 {
+    left: 49%;
+}
+
+.door3 {
+    left: 49%;
+}
+
+.laser2 {
+    left: 76%;
+}
+
+.door4 {
+    left: 72%;
+}
+
+.switch2 {
+    left: 27%;
+}
+
+.door5 {
+    left: 60%;
+}
+
+.end {
+    left: 84%;
+}
+
+/* =====================================================
+   FIX RIGHT SIDEBAR OVERFLOW
+===================================================== */
+
+.main-content {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.dashboard {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 380px;
+    gap: 14px;
+}
+
+/* Field Map */
+.field-map {
+    min-width: 0;
+    width: 100%;
+    overflow: hidden;
+}
+
+/* ฝั่งขวา */
+.sidebar,
+.right-sidebar {
+    width: 100%;
+    max-width: 380px;
+    min-width: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* การ์ดทุกใบในฝั่งขวา */
+.sidebar > *,
+.right-sidebar > * {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+/* =====================================================
+   FIELD STATUS
+===================================================== */
+
+.field-status {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* =====================================================
+   DEVICES
+===================================================== */
+
+.devices {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* แต่ละรายการ Device */
+.device-item {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* ชื่ออุปกรณ์ */
+.device-info {
+    min-width: 0;
+    overflow: hidden;
+}
+
+.device-info strong,
+.device-info span {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* สถานะ OPEN / CLOSED / DETECTED */
+.device-status {
+    flex-shrink: 0;
+    max-width: 90px;
+}
+
+/* =====================================================
+   RECENT EVENTS
+===================================================== */
+
+.recent-events {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.events-list {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* =====================================================
+   SOUND BUTTON
+===================================================== */
+
+.sound-card {
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.sound-card button {
+    max-width: 100%;
+    box-sizing: border-box;
+    white-space: nowrap;
+}
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 1200px) {
+    .dashboard {
+        grid-template-columns: minmax(0, 1fr) 330px;
+    }
+
+    .sidebar,
+    .right-sidebar {
+        max-width: 330px;
+    }
+}
+
+@media (max-width: 900px) {
+    .dashboard {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar,
+    .right-sidebar {
+        max-width: 100%;
+    }
+}
+
+/* =====================================================
+   ADDITIONAL CUSTOM MODALS & SESSION STYLES
+===================================================== */
+.header-btn {
+    background: #3b82f6;
+    border: 1px solid #2563eb;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+}
+.header-btn:hover {
+    background: #2563eb;
+    transform: translateY(-1px);
+}
+.header-btn:active {
+    transform: translateY(1px);
+}
+#btnNewMatch {
+    background: #10b981;
+    border-color: #059669;
+}
+#btnNewMatch:hover {
+    background: #059669;
+}
+
+/* Modal Layout */
+.custom-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+.custom-modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+.custom-modal {
+    background: white;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+    display: flex;
+    flex-direction: column;
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+.custom-modal-overlay.active .custom-modal {
+    transform: scale(1);
+}
+.custom-modal-header {
+    padding: 20px;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.custom-modal-header h2 {
+    margin: 0;
+    font-size: 1.3rem;
+    color: #111827;
+}
+.custom-modal-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #9ca3af;
+}
+.custom-modal-close:hover {
+    color: #4b5563;
+}
+.custom-modal-body {
+    padding: 20px;
+    flex: 1;
+}
+.custom-modal-footer {
+    padding: 15px 20px;
+    border-top: 1px solid #e5e7eb;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+.form-group {
+    margin-bottom: 15px;
+}
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 6px;
+    font-size: 0.9rem;
+    color: #374151;
+}
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    transition: border-color 0.2s;
+}
+.form-control:focus {
+    border-color: #3b82f6;
+    outline: none;
+}
+.btn-primary {
+    background: #3b82f6;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.btn-primary:hover {
+    background: #2563eb;
+}
+.btn-secondary {
+    background: #e5e7eb;
+    color: #4b5563;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.btn-secondary:hover {
+    background: #d1d5db;
+}
+.player-input-row {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 10px;
+}
+.player-input-row-title {
+    font-weight: bold;
+    font-size: 0.85rem;
+    color: #4b5563;
+    margin-bottom: 8px;
+    border-bottom: 1px dashed #e5e7eb;
+    padding-bottom: 4px;
+}
+.player-input-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+.custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+.custom-table th, .custom-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+}
+.custom-table th {
+    background: #f3f4f6;
+    font-weight: bold;
+    color: #374151;
+}
+.custom-table tr:hover {
+    background: #f9fafb;
+}
+.rank-icon {
+    font-size: 1.2rem;
+}
+.next-runner-btn {
+    animation: pulse 2s infinite;
+}
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     SOUND UNLOCK
+===================================================== -->
+
+<div id="soundUnlock"
+     class="sound-button-container">
+
+    <button
+        id="soundButton"
+        class="sound-button"
+        onclick="enableSound()">
+
+        🔊 เปิดเสียง
+
+    </button>
+
+</div>
+
+
+<div class="app">
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="header">
+
+    <div class="logo">
+
+        <div class="logo-icon">
+
+            <img
+                src="images/logo.png"
+                alt="Logo">
+
+        </div>
+
+        <div class="logo-text">
+
+            <h1>
+                GROUP2
+            </h1>
+
+            <span>
+                Digital Logic & Embedded System
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="connection" style="gap: 15px; display: flex; align-items: center;">
+        <button id="btnStats" class="header-btn" onclick="showAllTimeLeaderboard()">ดูสถิติทั้งหมด</button>
+        <button id="btnResetMatch" class="header-btn" style="background: #ef4444; border-color: #dc2626;" onclick="resetCurrentSession()">รีเซ็ตการแข่ง</button>
+        <button id="btnNewMatch" class="header-btn" onclick="showSetupModal()">เริ่มแข่งรอบใหม่</button>
+        <div class="connection-dot"></div>
+        <span id="connectionText">
+            ARDUINO ONLINE
+        </span>
+    </div>
+
+</header>
+
+
+<!-- =====================================================
+     CONTENT
+===================================================== -->
+
+<main class="content">
+
+
+<!-- =====================================================
+     FIELD
+===================================================== -->
+
+<section class="field-panel">
+
+
+    <div class="panel-header">
+
+        <div>
+
+            <div class="panel-title">
+                Field Map
+            </div>
+
+            <div class="panel-subtitle">
+                Real-time robot monitoring
+            </div>
+
+        </div>
+
+
+        <div class="legend">
+
+            <div class="legend-item">
+                <div class="legend-dot legend-green"></div>
+                OPEN
+            </div>
+
+            <div class="legend-item">
+                <div class="legend-dot legend-red"></div>
+                CLOSED
+            </div>
+
+            <div class="legend-item">
+                <div class="legend-dot legend-blue"></div>
+                DETECTED
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="field">
+
+
+        <!-- TIMER -->
+
+        <div id="raceTimer"
+             class="race-timer">
+
+            <div id="currentRunnerInfo" style="display: none; margin-bottom: 12px; font-weight: bold; color: #fff; font-size: 1rem; background: rgba(255,255,255,0.2); padding: 8px 12px; border-radius: 6px; text-align: center; border: 1px solid rgba(255,255,255,0.1);">
+                ผู้แข่งขัน: - (โรงเรียน: -) [คนที่ -/-]
+            </div>
+
+            <div class="timer-title">
+                RACE TIME
+            </div>
+
+            <div id="timerValue"
+                 class="timer-value">
+
+                00:00
+
+            </div>
+
+            <div id="timerStatus"
+                 class="timer-status">
+
+                WAITING FOR START
+
+            </div>
+
+            <button id="btnNextRunner" class="next-runner-btn" style="display: none; margin-top: 15px; width: 100%; padding: 12px; border: none; border-radius: 8px; font-weight: bold; font-size: 1rem; color: white; background: #10b981; cursor: pointer; transition: background 0.2s; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);" onclick="nextRunner()">
+                เตรียมผู้เข้าแข่งขันคนถัดไป
+            </button>
+
+        </div>
+
+
+        <!-- START -->
+
+        <div id="start"
+             class="field-node start node-open">
+
+            >
+
+        </div>
+
+        <div class="node-label"
+             style="left: 12%; top: 22%;">
+
+            START
+
+        </div>
+
+
+        <!-- SWITCH 1 -->
+
+        <div id="switch1"
+             class="field-node switch1 node-off">
+
+            S
+
+        </div>
+
+        <div class="node-label"
+             style="left: 30%; top: 22%;">
+
+            SWITCH 1
+
+            <small>
+                Door 1
+            </small>
+
+        </div>
+
+
+        <!-- DOOR 1 -->
+
+        <div id="door1"
+             class="field-node door1 node-closed">
+
+            D1
+
+        </div>
+
+        <div class="node-label"
+             style="left: 30%; top: 38%;">
+
+            DOOR 1
+
+            <small>
+                PIN 2
+            </small>
+
+        </div>
+
+
+        <!-- LASER 1 -->
+
+        <div id="laser1"
+             class="field-node laser1 node-off">
+
+            L1
+
+        </div>
+
+        <div class="node-label"
+             style="left: 51%; top: 13%;">
+
+            LASER 1
+
+            <small>
+                Sensor
+            </small>
+
+        </div>
+
+
+        <!-- DOOR 2 -->
+
+        <div id="door2"
+             class="field-node door2 node-closed">
+
+            D2
+
+        </div>
+
+        <div class="node-label"
+             style="left: 52%; top: 44%;">
+
+            DOOR 2
+
+            <small>
+                PIN 3
+            </small>
+
+        </div>
+
+
+        <!-- DOOR 3 -->
+
+        <div id="door3"
+             class="field-node door3 node-closed">
+
+            D3
+
+        </div>
+
+        <div class="node-label"
+             style="left: 52%; top: 63%;">
+
+            DOOR 3
+
+            <small>
+                PIN 4
+            </small>
+
+        </div>
+
+
+        <!-- LASER 2 -->
+
+        <div id="laser2"
+             class="field-node laser2 node-off">
+
+            L2
+
+        </div>
+
+        <div class="node-label"
+             style="left: 78%; top: 23%;">
+
+            LASER 2
+
+            <small>
+                Sensor
+            </small>
+
+        </div>
+
+
+        <!-- DOOR 4 -->
+
+        <div id="door4"
+             class="field-node door4 node-closed">
+
+            D4
+
+        </div>
+
+        <div class="node-label"
+             style="left: 75%; top: 54%;">
+
+            DOOR 4
+
+            <small>
+                PIN 5
+            </small>
+
+        </div>
+
+
+        <!-- SWITCH 2 -->
+
+        <div id="switch2"
+             class="field-node switch2 node-off">
+
+            S
+
+        </div>
+
+        <div class="node-label"
+             style="left: 29%; top: 76%;">
+
+            SWITCH 2
+
+            <small>
+                Door 4
+            </small>
+
+        </div>
+
+
+        <!-- DOOR 5 -->
+
+        <div id="door5"
+             class="field-node door5 node-closed">
+
+            D5
+
+        </div>
+
+        <div class="node-label"
+             style="left: 62%; top: 76%;">
+
+            DOOR 5
+
+            <small>
+                Auto
+            </small>
+
+        </div>
+
+
+        <!-- END -->
+
+        <div id="end"
+             class="field-node end node-open">
+
+            ✓
+
+        </div>
+
+        <div class="node-label"
+             style="left: 86%; top: 76%;">
+
+            END
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside class="sidebar">
+
+
+    <!-- SUMMARY -->
+
+    <div class="card">
+
+        <div class="card-title">
+            Field Status
+        </div>
+
+        <div class="summary">
+
+            <div class="summary-box">
+
+                <div id="openCount"
+                     class="summary-number">
+
+                    0
+
+                </div>
+
+                <div class="summary-text">
+                    Doors Open
+                </div>
+
+            </div>
+
+
+            <div class="summary-box">
+
+                <div id="laserCount"
+                     class="summary-number">
+
+                    0
+
+                </div>
+
+                <div class="summary-text">
+                    Laser Active
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- DEVICES -->
+
+    <div class="card">
+
+        <div class="card-title">
+            Devices
+        </div>
+
+
+        <!-- DOOR 1 -->
+
+        <div class="device">
+
+            <div class="device-left">
+
+                <div class="device-icon">
+                    D1
+                </div>
+
+                <div>
+
+                    <div class="device-name">
+                        Door 1
+                    </div>
+
+                    <div class="device-type">
+                        Digital Output
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div id="door1Status"
+                 class="badge badge-closed">
+
+                CLOSED
+
+            </div>
+
+        </div>
+
+
+        <!-- DOOR 2 -->
+
+        <div class="device">
+
+            <div class="device-left">
+
+                <div class="device-icon">
+                    D2
+                </div>
+
+                <div>
+
+                    <div class="device-name">
+                        Door 2
+                    </div>
+
+                    <div class="device-type">
+                        Laser Trigger
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div id="door2Status"
+                 class="badge badge-closed">
+
+                CLOSED
+
+            </div>
+
+        </div>
+
+
+        <!-- DOOR 3 -->
+
+        <div class="device">
+
+            <div class="device-left">
+
+                <div class="device-icon">
+                    D3
+                </div>
+
+                <div>
+
+                    <div class="device-name">
+                        Door 3
+                    </div>
+
+                    <div class="device-type">
+                        Laser Trigger
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div id="door3Status"
+                 class="badge badge-closed">
+
+                CLOSED
+
+            </div>
+
+        </div>
+
+
+        <!-- DOOR 4 -->
+
+        <div class="device">
+
+            <div class="device-left">
+
+                <div class="device-icon">
+                    D4
+                </div>
+
+                <div>
+
+                    <div class="device-name">
+                        Door 4
+                    </div>
+
+                    <div class="device-type">
+                        Switch
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div id="door4Status"
+                 class="badge badge-closed">
+
+                CLOSED
+
+            </div>
+
+        </div>
+
+
+        <!-- DOOR 5 -->
+
+        <div class="device">
+
+            <div class="device-left">
+
+                <div class="device-icon">
+                    D5
+                </div>
+
+                <div>
+
+                    <div class="device-name">
+                        Door 5
+                    </div>
+
+                    <div class="device-type">
+                        Automatic
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div id="door5Status"
+                 class="badge badge-closed">
+
+                CLOSED
+
+            </div>
+
+        </div>
+
+
+        <!-- LASER 1 -->
+
+        <div class="device">
+
+            <div class="device-left">
+
+                <div class="device-icon">
+                    L1
+                </div>
+
+                <div>
+
+                    <div class="device-name">
+                        Laser 1
+                    </div>
+
+                    <div class="device-type">
+                        Sensor
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div id="laser1Status"
+                 class="badge badge-off">
+
+                OFF
+
+            </div>
+
+        </div>
+
+
+        <!-- LASER 2 -->
+
+        <div class="device">
+
+            <div class="device-left">
+
+                <div class="device-icon">
+                    L2
+                </div>
+
+                <div>
+
+                    <div class="device-name">
+                        Laser 2
+                    </div>
+
+                    <div class="device-type">
+                        Sensor
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div id="laser2Status"
+                 class="badge badge-off">
+
+                OFF
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- LOG -->
+
+    <div class="card">
+
+        <div class="card-title">
+            Recent Events
+        </div>
+
+        <div id="log"
+             class="log">
+
+            Waiting for Arduino...
+
+        </div>
+
+        <div id="audioStatus"
+             class="audio-status">
+
+            🔇 กรุณากด "เปิดเสียง" ก่อนเริ่มการแข่งขัน
+
+        </div>
+
+    </div>
+
+
+</aside>
+
+
+</main>
+
+</div>
+
+
+<!-- =====================================================
+     FINISH POPUP
+===================================================== -->
+
+<div id="finishOverlay"
+     class="finish-overlay">
+
+    <div class="finish-popup">
+
+        <div class="finish-title">
+            ROBOT FIELD
+        </div>
+
+        <div class="finish-heading">
+            RACE FINISHED
+        </div>
+
+        <div id="finishTime"
+             class="finish-time">
+
+            00:00
+
+        </div>
+
+        <div class="finish-line"></div>
+
+        <button id="closeFinish"
+                class="finish-button">
+
+            CLOSE
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     AUDIO
+===================================================== -->
+
+<audio id="startSound"
+       src="sounds/start.mp3"
+       preload="auto">
+</audio>
+
+<audio id="runningSound"
+       src="sounds/running.mp3"
+       preload="auto"
+       loop>
+</audio>
+
+<audio id="doorSound"
+       src="sounds/door.mp3"
+       preload="auto">
+</audio>
+
+<audio id="finishSound"
+       src="sounds/finish.mp3"
+       preload="auto">
+</audio>
+
+
+<script>
+
+/* =====================================================
+   RACE STATE
+===================================================== */
+
+let raceRunning = false;
+
+let raceFinished = false;
+
+let finishHandled = false;
+
+let arduinoRaceMilliseconds = 0;
+
+
+/*
+   เก็บข้อความที่เคยประมวลผลแล้ว
+*/
+let processedMessageKeys = new Set();
+
+
+/*
+   เก็บ index ของ message ล่าสุด
+*/
+let lastMessageCount = 0;
+
+
+/* =====================================================
+   AUDIO
+===================================================== */
+
+const startSound =
+    document.getElementById("startSound");
+
+const runningSound =
+    document.getElementById("runningSound");
+
+const doorSound =
+    document.getElementById("doorSound");
+
+const finishSound =
+    document.getElementById("finishSound");
+
+
+let audioUnlocked = false;
+
+
+/* =====================================================
+   ENABLE SOUND
+===================================================== */
+
+async function enableSound() {
+
+    try {
+
+        const sounds = [
+            startSound,
+            runningSound,
+            doorSound,
+            finishSound
+        ];
+
+        for (const audio of sounds) {
+
+            try {
+
+                audio.muted = true;
+
+                await audio.play();
+
+                audio.pause();
+
+                audio.currentTime = 0;
+
+                audio.muted = false;
+
+            }
+            catch (error) {
+
+                console.log(
+                    "Audio prepare error:",
+                    error
+                );
+
+            }
+
+        }
+
+
+        audioUnlocked = true;
+
+
+        const button =
+            document.getElementById(
+                "soundButton"
+            );
+
+
+        button.innerHTML =
+            "🔊 เสียงเปิดแล้ว";
+
+
+        button.style.background =
+            "#15803d";
+
+
+        const status =
+            document.getElementById(
+                "audioStatus"
+            );
+
+
+        if (status) {
+
+            status.innerText =
+                "🔊 SOUND ENABLED";
+
+            status.style.color =
+                "#15803d";
+
+        }
+
+
+        setTimeout(
+            function () {
+
+                const box =
+                    document.getElementById(
+                        "soundUnlock"
+                    );
+
+                if (box) {
+
+                    box.style.display =
+                        "none";
+
+                }
+
+            },
+            1000
+        );
+
+
+        console.log(
+            "AUDIO UNLOCKED"
+        );
+
+    }
+    catch (error) {
+
+        console.log(
+            "ENABLE AUDIO ERROR:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   START SOUND
+===================================================== */
+
+async function playStartSound() {
+
+    if (!audioUnlocked) {
+
+        console.log(
+            "START SOUND BLOCKED - AUDIO NOT UNLOCKED"
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+        startSound.pause();
+
+        startSound.currentTime = 0;
+
+        startSound.volume = 1;
+
+        await startSound.play();
+
+        console.log(
+            "START SOUND PLAY"
+        );
+
+    }
+    catch (error) {
+
+        console.log(
+            "START SOUND ERROR:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   RUNNING SOUND
+===================================================== */
+
+async function startRunningSound() {
+
+    if (!audioUnlocked) {
+
+        return;
+
+    }
+
+
+    try {
+
+        runningSound.pause();
+
+        runningSound.currentTime = 0;
+
+        runningSound.loop = true;
+
+        runningSound.volume = 1;
+
+        await runningSound.play();
+
+        console.log(
+            "RUNNING SOUND PLAY"
+        );
+
+    }
+    catch (error) {
+
+        console.log(
+            "RUNNING SOUND ERROR:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   STOP RUNNING SOUND
+===================================================== */
+
+function stopRunningSound() {
+
+    try {
+
+        runningSound.pause();
+
+        runningSound.currentTime = 0;
+
+    }
+    catch (error) {
+
+        console.log(
+            "STOP RUNNING ERROR:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   DOOR SOUND
+===================================================== */
+
+async function playDoorSound(
+    doorNumber
+) {
+
+    if (!audioUnlocked) {
+
+        console.log(
+            "DOOR " +
+            doorNumber +
+            " SOUND BLOCKED - AUDIO NOT UNLOCKED"
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+        doorSound.pause();
+
+        doorSound.currentTime = 0;
+
+        doorSound.volume = 1;
+
+
+        await doorSound.play();
+
+
+        console.log(
+            "DOOR " +
+            doorNumber +
+            " SOUND PLAY"
+        );
+
+    }
+    catch (error) {
+
+        console.log(
+            "DOOR SOUND ERROR:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   FINISH SOUND
+===================================================== */
+
+async function playFinishSound() {
+
+    if (!audioUnlocked) {
+
+        console.log(
+            "FINISH SOUND BLOCKED - AUDIO NOT UNLOCKED"
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+        finishSound.pause();
+
+        finishSound.currentTime = 0;
+
+        finishSound.volume = 1;
+
+
+        await finishSound.play();
+
+
+        console.log(
+            "FINISH SOUND PLAY"
+        );
+
+    }
+    catch (error) {
+
+        console.log(
+            "FINISH SOUND ERROR:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   FORMAT TIME
+===================================================== */
+
+function formatTime(
+    milliseconds
+) {
+
+    milliseconds =
+        Math.max(
+            0,
+            Number(milliseconds) || 0
+        );
+
+
+    const totalSeconds =
+        Math.floor(
+            milliseconds / 1000
+        );
+
+
+    const minutes =
+        Math.floor(
+            totalSeconds / 60
+        );
+
+
+    const seconds =
+        totalSeconds % 60;
+
+
+    return (
+        String(minutes).padStart(2, "0")
+        +
+        ":"
+        +
+        String(seconds).padStart(2, "0")
+    );
+
+}
+
+
+/* =====================================================
+   TIMER
+===================================================== */
+
+function updateTimerDisplay() {
+
+    document
+        .getElementById("timerValue")
+        .innerText =
+        formatTime(
+            arduinoRaceMilliseconds
+        );
+
+}
+
+
+/* =====================================================
+   PARSE ARDUINO TIME
+===================================================== */
+
+function parseArduinoTime(
+    message
+) {
+
+    const text =
+        String(message).trim();
+
+
+    let finishSecondsMatch =
+        text.match(
+            /Time\s+end\.\s+using\s+(\d+)\s+seconds/i
+        );
+
+
+    if (finishSecondsMatch) {
+
+        const seconds =
+            parseInt(
+                finishSecondsMatch[1],
+                10
+            );
+
+
+        return {
+
+            type: "finish",
+
+            milliseconds:
+                seconds * 1000
+
+        };
+
+    }
+
+
+    let finishMinuteMatch =
+        text.match(
+            /Time\s+end\.\s+using\s+(\d+):(\d+)\s+minutes/i
+        );
+
+
+    if (finishMinuteMatch) {
+
+        const minutes =
+            parseInt(
+                finishMinuteMatch[1],
+                10
+            );
+
+
+        const seconds =
+            parseInt(
+                finishMinuteMatch[2],
+                10
+            );
+
+
+        return {
+
+            type: "finish",
+
+            milliseconds:
+                (
+                    minutes * 60 +
+                    seconds
+                ) * 1000
+
+        };
+
+    }
+
+
+    let secondsMatch =
+        text.match(
+            /Time\s*:\s*(\d+)\s+seconds/i
+        );
+
+
+    if (secondsMatch) {
+
+        const seconds =
+            parseInt(
+                secondsMatch[1],
+                10
+            );
+
+
+        return {
+
+            type: "time",
+
+            milliseconds:
+                seconds * 1000
+
+        };
+
+    }
+
+
+    let minuteMatch =
+        text.match(
+            /Time\s*:\s*(\d+):(\d+)\s+minutes/i
+        );
+
+
+    if (minuteMatch) {
+
+        const minutes =
+            parseInt(
+                minuteMatch[1],
+                10
+            );
+
+
+        const seconds =
+            parseInt(
+                minuteMatch[2],
+                10
+            );
+
+
+        return {
+
+            type: "time",
+
+            milliseconds:
+                (
+                    minutes * 60 +
+                    seconds
+                ) * 1000
+
+        };
+
+    }
+
+
+    let msMatch =
+        text.match(
+            /Time\s*:\s*(\d+)\s*ms/i
+        );
+
+
+    if (msMatch) {
+
+        return {
+
+            type: "time",
+
+            milliseconds:
+                parseInt(
+                    msMatch[1],
+                    10
+                )
+
+        };
+
+    }
+
+
+    return null;
+
+}
+
+
+/* =====================================================
+   START RACE
+===================================================== */
+
+function startRace() {
+
+    if (raceRunning) {
+
+        return;
+
+    }
+
+
+    raceRunning = true;
+
+    raceFinished = false;
+
+    finishHandled = false;
+
+
+    arduinoRaceMilliseconds = 0;
+
+    updateTimerDisplay();
+
+
+    document
+        .getElementById("raceTimer")
+        .classList.add("running");
+
+
+    document
+        .getElementById("timerStatus")
+        .innerText =
+        "RACE RUNNING";
+
+
+    document
+        .getElementById("start")
+        .classList.add("race-active");
+
+
+    document
+        .getElementById("end")
+        .classList.remove("finish-active");
+
+
+    playStartSound();
+
+
+    startRunningSound();
+
+
+    console.log(
+        "RACE STARTED"
+    );
+
+}
+
+
+/* =====================================================
+   FINISH RACE
+===================================================== */
+
+function finishRace(
+    finalMilliseconds
+) {
+
+    if (finishHandled) {
+
+        console.log(
+            "FINISH ALREADY HANDLED"
+        );
+
+        return;
+
+    }
+
+
+    finishHandled = true;
+
+    raceRunning = false;
+
+    raceFinished = true;
+
+
+    if (
+        Number.isFinite(
+            Number(finalMilliseconds)
+        )
+        &&
+        Number(finalMilliseconds) > 0
+    ) {
+
+        arduinoRaceMilliseconds =
+            Number(
+                finalMilliseconds
+            );
+
+    }
+
+
+    updateTimerDisplay();
+
+
+    document
+        .getElementById("raceTimer")
+        .classList.remove("running");
+
+
+    document
+        .getElementById("timerStatus")
+        .innerText =
+        "FINISHED";
+
+
+    document
+        .getElementById("start")
+        .classList.remove("race-active");
+
+
+    document
+        .getElementById("end")
+        .classList.add("finish-active");
+
+
+    stopRunningSound();
+
+
+    playFinishSound();
+
+
+    showFinishPopup(
+        arduinoRaceMilliseconds
+    );
+
+
+    console.log(
+        "================================"
+    );
+
+    console.log(
+        "RACE FINISHED"
+    );
+
+    console.log(
+        "TIME:",
+        formatTime(
+            arduinoRaceMilliseconds
+        )
+    );
+
+    console.log(
+        "================================"
+    );
+
+}
+
+
+/* =====================================================
+   SHOW FINISH POPUP
+===================================================== */
+
+function showFinishPopup(
+    milliseconds
+) {
+
+    const time =
+        formatTime(
+            milliseconds
+        );
+
+
+    document
+        .getElementById("finishTime")
+        .innerText =
+        time;
+
+
+    document
+        .getElementById("finishOverlay")
+        .classList.add("show");
+
+
+    console.log(
+        "FINISH POPUP SHOW:",
+        time
+    );
+
+}
+
+
+/* =====================================================
+   CLOSE POPUP
+===================================================== */
+
+document
+    .getElementById("closeFinish")
+    .addEventListener(
+        "click",
+        function () {
+
+            document
+                .getElementById("finishOverlay")
+                .classList.remove("show");
+
+        }
+    );
+
+
+/* =====================================================
+   PROCESS ARDUINO MESSAGE
+===================================================== */
+
+function processRaceMessage(
+    message
+) {
+
+    const text =
+        String(message).trim();
+
+
+    const upperText =
+        text.toUpperCase();
+
+
+    console.log(
+        "Arduino message:",
+        text
+    );
+
+
+    /* =================================================
+       IGNORE SCORE
+    ================================================= */
+
+    if (
+        upperText.includes("SCORE:")
+        ||
+        upperText.includes("POINTS")
+    ) {
+
+        console.log(
+            "SCORE MESSAGE IGNORED:",
+            text
+        );
+
+        return;
+
+    }
+
+
+    /* =================================================
+       START
+    ================================================= */
+
+    if (
+        upperText.includes(
+            "TIME START NOW"
+        )
+        ||
+        upperText.includes(
+            "START NOW"
+        )
+        ||
+        upperText.includes(
+            "RACE START"
+        )
+    ) {
+
+        startRace();
+
+        return;
+
+    }
+
+
+    /* =================================================
+       PIN 18 = FINISH
+    ================================================= */
+
+    const pin18Detected =
+        /\bPIN\s*18\b/i.test(
+            text
+        );
+
+
+    if (pin18Detected) {
+
+        console.log(
+            "================================"
+        );
+
+        console.log(
+            "PIN 18 DETECTED = FINISH"
+        );
+
+        console.log(
+            "CURRENT TIME:",
+            formatTime(
+                arduinoRaceMilliseconds
+            )
+        );
+
+        console.log(
+            "================================"
+        );
+
+
+        if (!finishHandled) {
+
+            finishRace(
+                arduinoRaceMilliseconds
+            );
+
+        }
+
+
+        return;
+
+    }
+
+
+    /* =================================================
+       TIME
+    ================================================= */
+
+    const parsed =
+        parseArduinoTime(
+            text
+        );
+
+
+    if (parsed) {
+
+        if (
+            parsed.type === "finish"
+        ) {
+
+            arduinoRaceMilliseconds =
+                parsed.milliseconds;
+
+
+            updateTimerDisplay();
+
+
+            if (
+                raceRunning
+                &&
+                !finishHandled
+            ) {
+
+                finishRace(
+                    parsed.milliseconds
+                );
+
+            }
+
+
+            return;
+
+        }
+
+
+        arduinoRaceMilliseconds =
+            parsed.milliseconds;
+
+
+        updateTimerDisplay();
+
+
+        return;
+
+    }
+
+
+    /* =================================================
+       OTHER FINISH
+    ================================================= */
+
+    if (
+        upperText.includes("FINISH")
+        ||
+        upperText.includes("GOAL")
+        ||
+        upperText.includes("RACE END")
+        ||
+        upperText.includes("REACH END")
+    ) {
+
+        if (!finishHandled) {
+
+            finishRace(
+                arduinoRaceMilliseconds
+            );
+
+        }
+
+        return;
+
+    }
+
+
+    /* =================================================
+       EVERY DOOR OPEN
+    ================================================= */
+
+    const doorOpenMatch =
+        text.match(
+            /DOOR\s*(\d+)\s*->\s*OPEN/i
+        );
+
+
+    if (
+        doorOpenMatch
+    ) {
+
+        const doorNumber =
+            parseInt(
+                doorOpenMatch[1],
+                10
+            );
+
+
+        console.log(
+            "DOOR OPEN:",
+            doorNumber
+        );
+
+
+        if (
+            doorNumber >= 1
+            &&
+            doorNumber <= 5
+        ) {
+
+            playDoorSound(
+                doorNumber
+            );
+
+        }
+
+
+        return;
+
+    }
+
+}
+
+
+/* =====================================================
+   PROCESS ALL MESSAGES
+===================================================== */
+
+function checkRaceMessages(
+    messages
+) {
+
+    if (
+        !Array.isArray(messages)
+        ||
+        messages.length === 0
+    ) {
+
+        return;
+
+    }
+
+
+    if (
+        messages.length <
+        lastMessageCount
+    ) {
+
+        processedMessageKeys.clear();
+
+    }
+
+
+    messages.forEach(
+        function (
+            message,
+            index
+        ) {
+
+            const key =
+                index +
+                "|" +
+                String(message);
+
+
+            if (
+                processedMessageKeys.has(
+                    key
+                )
+            ) {
+
+                return;
+
+            }
+
+
+            processedMessageKeys.add(
+                key
+            );
+
+
+            processRaceMessage(
+                message
+            );
+
+        }
+    );
+
+
+    lastMessageCount =
+        messages.length;
+
+
+    if (
+        processedMessageKeys.size >
+        1000
+    ) {
+
+        const recent =
+            Array.from(
+                processedMessageKeys
+            ).slice(-500);
+
+
+        processedMessageKeys =
+            new Set(
+                recent
+            );
+
+    }
+
+}
+
+
+/* =====================================================
+   DOOR UPDATE
+===================================================== */
+
+function updateDoor(
+    id,
+    status
+) {
+
+    const node =
+        document.getElementById(
+            id
+        );
+
+
+    const badge =
+        document.getElementById(
+            id + "Status"
+        );
+
+
+    if (!node) {
+
+        return;
+
+    }
+
+
+    node.classList.remove(
+        "node-open",
+        "node-closed"
+    );
+
+
+    if (
+        status === "OPEN"
+    ) {
+
+        node.classList.add(
+            "node-open"
+        );
+
+
+        node.innerHTML =
+            "OPEN";
+
+
+        if (badge) {
+
+            badge.className =
+                "badge badge-open";
+
+            badge.innerHTML =
+                "OPEN";
+
+        }
+
+    }
+    else {
+
+        node.classList.add(
+            "node-closed"
+        );
+
+
+        const number =
+            id.replace(
+                "door",
+                ""
+            );
+
+
+        node.innerHTML =
+            "D" + number;
+
+
+        if (badge) {
+
+            badge.className =
+                "badge badge-closed";
+
+            badge.innerHTML =
+                "CLOSED";
+
+        }
+
+    }
+
+}
+
+
+/* =====================================================
+   LASER UPDATE
+===================================================== */
+
+function updateLaser(
+    id,
+    status
+) {
+
+    const node =
+        document.getElementById(
+            id
+        );
+
+
+    const badge =
+        document.getElementById(
+            id + "Status"
+        );
+
+
+    if (!node) {
+
+        return;
+
+    }
+
+
+    node.classList.remove(
+        "node-detected",
+        "node-off"
+    );
+
+
+    if (
+        status === "DETECTED"
+    ) {
+
+        node.classList.add(
+            "node-detected"
+        );
+
+
+        node.innerHTML =
+            "DETECT";
+
+
+        if (badge) {
+
+            badge.className =
+                "badge badge-detected";
+
+            badge.innerHTML =
+                "DETECTED";
+
+        }
+
+    }
+    else {
+
+        node.classList.add(
+            "node-off"
+        );
+
+
+        node.innerHTML =
+            id === "laser1"
+                ? "L1"
+                : "L2";
+
+
+        if (badge) {
+
+            badge.className =
+                "badge badge-off";
+
+            badge.innerHTML =
+                "OFF";
+
+        }
+
+    }
+
+}
+
+
+/* =====================================================
+   SWITCH UPDATE
+===================================================== */
+
+function updateSwitch(
+    id,
+    status
+) {
+
+    const node =
+        document.getElementById(
+            id
+        );
+
+
+    if (!node) {
+
+        return;
+
+    }
+
+
+    node.classList.remove(
+        "node-open",
+        "node-off"
+    );
+
+
+    if (
+        status === "ON"
+    ) {
+
+        node.classList.add(
+            "node-open"
+        );
+
+
+        node.innerHTML =
+            "ON";
+
+    }
+    else {
+
+        node.classList.add(
+            "node-off"
+        );
+
+
+        node.innerHTML =
+            "S";
+
+    }
+
+}
+
+
+/* =====================================================
+   DASHBOARD
+===================================================== */
+
+async function updateDashboard() {
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/state",
+                {
+                    cache: "no-store"
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "HTTP " +
+                response.status
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        const state =
+            data.state || {};
+
+
+        /* =============================================
+           CONNECTION
+        ============================================= */
+
+        document
+            .getElementById(
+                "connectionText"
+            )
+            .innerText =
+            "ARDUINO ONLINE";
+
+
+        /* =============================================
+           RACE MESSAGES
+        ============================================= */
+
+        checkRaceMessages(
+            data.messages || []
+        );
+
+
+        /* =============================================
+           DOORS
+        ============================================= */
+
+        updateDoor(
+            "door1",
+            state.door1
+        );
+
+        updateDoor(
+            "door2",
+            state.door2
+        );
+
+        updateDoor(
+            "door3",
+            state.door3
+        );
+
+        updateDoor(
+            "door4",
+            state.door4
+        );
+
+        updateDoor(
+            "door5",
+            state.door5
+        );
+
+
+        /* =============================================
+           LASERS
+        ============================================= */
+
+        updateLaser(
+            "laser1",
+            state.laser1
+        );
+
+        updateLaser(
+            "laser2",
+            state.laser2
+        );
+
+
+        /* =============================================
+           SWITCHES
+        ============================================= */
+
+        updateSwitch(
+            "switch1",
+            state.switch1
+        );
+
+        updateSwitch(
+            "switch2",
+            state.switch2
+        );
+
+
+        /* =============================================
+           SUMMARY
+        ============================================= */
+
+        const doors = [
+
+            state.door1,
+            state.door2,
+            state.door3,
+            state.door4,
+            state.door5
+
+        ];
+
+
+        const openDoors =
+            doors.filter(
+                function (
+                    door
+                ) {
+
+                    return (
+                        door === "OPEN"
+                    );
+
+                }
+            ).length;
+
+
+        const lasers = [
+
+            state.laser1,
+            state.laser2
+
+        ];
+
+
+        const activeLasers =
+            lasers.filter(
+                function (
+                    laser
+                ) {
+
+                    return (
+                        laser ===
+                        "DETECTED"
+                    );
+
+                }
+            ).length;
+
+
+        document
+            .getElementById(
+                "openCount"
+            )
+            .innerText =
+            openDoors;
+
+
+        document
+            .getElementById(
+                "laserCount"
+            )
+            .innerText =
+            activeLasers;
+
+
+        /* =============================================
+           LOG
+        ============================================= */
+
+        const log =
+            document.getElementById(
+                "log"
+            );
+
+
+        if (
+            data.messages
+            &&
+            data.messages.length
+        ) {
+
+            log.innerHTML =
+                data.messages
+                    .slice(-15)
+                    .map(
+                        function (
+                            message
+                        ) {
+
+                            return `
+                                <div class="log-line">
+                                    ${escapeHtml(message)}
+                                </div>
+                            `;
+
+                        }
+                    )
+                    .join("");
+
+
+            log.scrollTop =
+                log.scrollHeight;
+
+        }
+
+    }
+    catch (error) {
+
+        console.error(
+            "Dashboard Error:",
+            error
+        );
+
+
+        document
+            .getElementById(
+                "connectionText"
+            )
+            .innerText =
+            "SERVER DISCONNECTED";
+
+    }
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHtml(
+    text
+) {
+
+    return String(text)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+/* =====================================================
+   START DASHBOARD
+===================================================== */
+
+setInterval(
+    updateDashboard,
+    500
+);
+
+
+updateDashboard();
+
+
+/* =====================================================
+   COMPETITOR REGISTRATION & LEADERBOARD LOGIC
+===================================================== */
+
+let currentSession = {
+    active: false,
+    players: [],
+    currentIndex: -1
+};
+
+let allTimeLeaderboard = JSON.parse(localStorage.getItem("robot_field_alltime_scores") || "[]");
+
+async function resetCurrentSession() {
+    if (confirm("ต้องการล้างข้อมูลการแข่งและรีเซ็ตสนามใหม่ทั้งหมดใช่หรือไม่?")) {
+        currentSession.active = false;
+        currentSession.players = [];
+        currentSession.currentIndex = -1;
+        
+        // Reset Arduino & backend state
+        await triggerFieldReset();
+        
+        // Reset UI runner display
+        updateActiveRunnerDisplay();
+        
+        // Reset timer states
+        raceRunning = false;
+        raceFinished = false;
+        finishHandled = false;
+        arduinoRaceMilliseconds = 0;
+        updateTimerDisplay();
+        
+        document.getElementById("raceTimer").classList.remove("running");
+        document.getElementById("timerStatus").innerText = "WAITING FOR START";
+        document.getElementById("start").classList.remove("race-active");
+        document.getElementById("end").classList.remove("finish-active");
+        
+        alert("รีเซ็ตระบบและรอบการแข่งขันเรียบร้อยแล้ว");
+    }
+}
+
+function showSetupModal() {
+    document.getElementById("setupModal").classList.add("active");
+    generatePlayerInputs();
+}
+
+function closeSetupModal() {
+    document.getElementById("setupModal").classList.remove("active");
+}
+
+function generatePlayerInputs() {
+    const countInput = document.getElementById("playerCount");
+    let count = parseInt(countInput.value, 10);
+    if (isNaN(count) || count < 1) count = 1;
+    if (count > 20) count = 20;
+
+    const container = document.getElementById("playerInputsContainer");
+    container.innerHTML = "";
+
+    for (let i = 0; i < count; i++) {
+        const row = document.createElement("div");
+        row.className = "player-input-row";
+        row.innerHTML = `
+            <div class="player-input-row-title">ผู้เข้าแข่งขันคนที่ ${i + 1}</div>
+            <div class="player-input-grid">
+                <div class="form-group" style="margin-bottom: 0;">
+                    <input type="text" class="form-control player-name-input" placeholder="ชื่อผู้แข่งขัน (บังคับ)" required>
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                    <input type="text" class="form-control player-school-input" placeholder="โรงเรียน (ไม่บังคับ)">
+                </div>
+            </div>
+        `;
+        container.appendChild(row);
+    }
+}
+
+function clampPlayerCount() {
+    const countInput = document.getElementById("playerCount");
+    let count = parseInt(countInput.value, 10);
+    if (isNaN(count) || count < 1) count = 1;
+    if (count > 20) count = 20;
+    countInput.value = count;
+    generatePlayerInputs();
+}
+
+async function startSession() {
+    const nameInputs = document.querySelectorAll(".player-name-input");
+    const schoolInputs = document.querySelectorAll(".player-school-input");
+    
+    let players = [];
+    let isValid = true;
+
+    nameInputs.forEach((input, index) => {
+        const name = input.value.trim();
+        const school = schoolInputs[index].value.trim();
+        if (!name) {
+            input.style.borderColor = "#ef4444";
+            isValid = false;
+        } else {
+            input.style.borderColor = "";
+            players.push({
+                name: name,
+                school: school || "-",
+                time: null
+            });
+        }
+    });
+
+    if (!isValid) {
+        alert("กรุณากรอกชื่อผู้เข้าแข่งขันให้ครบถ้วน");
+        return;
+    }
+
+    currentSession.active = true;
+    currentSession.players = players;
+    currentSession.currentIndex = 0;
+
+    closeSetupModal();
+    updateActiveRunnerDisplay();
+
+    // Trigger physical field reset on start
+    await triggerFieldReset();
+}
+
+function updateActiveRunnerDisplay() {
+    const info = document.getElementById("currentRunnerInfo");
+    if (currentSession.active && currentSession.currentIndex >= 0 && currentSession.currentIndex < currentSession.players.length) {
+        const p = currentSession.players[currentSession.currentIndex];
+        info.innerText = `ผู้แข่งขัน: ${p.name} ${p.school !== "-" ? "(" + p.school + ")" : ""} [คนที่ ${currentSession.currentIndex + 1}/${currentSession.players.length}]`;
+        info.style.display = "block";
+        document.getElementById("btnNextRunner").style.display = "none";
+    } else {
+        info.style.display = "none";
+        document.getElementById("btnNextRunner").style.display = "none";
+    }
+}
+
+async function triggerFieldReset() {
+    try {
+        console.log("Triggering field reset via API...");
+        const res = await fetch("/api/reset", { method: "POST" });
+        if (!res.ok) throw new Error("Reset API returned error");
+        console.log("Field reset complete.");
+    } catch (err) {
+        console.error("Failed to trigger reset:", err);
+    }
+}
+
+async function handleRunnerFinished(finalMilliseconds) {
+    if (!currentSession.active) return;
+    const finalSeconds = finalMilliseconds / 1000;
+    
+    // Save current runner score
+    const runner = currentSession.players[currentSession.currentIndex];
+    runner.time = finalSeconds;
+
+    // Send score to Google Sheets via backend
+    try {
+        await fetch("/api/submit-score", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                name: runner.name,
+                school: runner.school,
+                time: finalSeconds
+            })
+        });
+    } catch (err) {
+        console.error("Error sending score to API:", err);
+    }
+
+    // Save to all-time leaderboard locally
+    const now = new Date();
+    const dateString = `${now.getDate()}/${now.getMonth() + 1}/${now.getFullYear()}`;
+    allTimeLeaderboard.push({
+        name: runner.name,
+        school: runner.school,
+        time: finalSeconds,
+        date: dateString
+    });
+    // Sort ascending by time
+    allTimeLeaderboard.sort((a, b) => a.time - b.time);
+    localStorage.setItem("robot_field_alltime_scores", JSON.stringify(allTimeLeaderboard));
+
+    // Show next button
+    const nextBtn = document.getElementById("btnNextRunner");
+    if (currentSession.currentIndex < currentSession.players.length - 1) {
+        nextBtn.innerText = "เตรียมผู้เข้าแข่งขันคนถัดไป";
+    } else {
+        nextBtn.innerText = "ดูผลลัพธ์รอบนี้ (Leaderboard)";
+    }
+    nextBtn.style.display = "block";
+}
+
+async function nextRunner() {
+    document.getElementById("btnNextRunner").style.display = "none";
+    
+    if (currentSession.currentIndex < currentSession.players.length - 1) {
+        currentSession.currentIndex++;
+        updateActiveRunnerDisplay();
+        
+        // Reset physical and virtual field
+        await triggerFieldReset();
+        
+        // Reset page elements back to waiting state
+        raceRunning = false;
+        raceFinished = false;
+        finishHandled = false;
+        arduinoRaceMilliseconds = 0;
+        updateTimerDisplay();
+        
+        document.getElementById("raceTimer").classList.remove("running");
+        document.getElementById("timerStatus").innerText = "WAITING FOR START";
+        document.getElementById("start").classList.remove("race-active");
+        document.getElementById("end").classList.remove("finish-active");
+    } else {
+        // Show session leaderboard
+        showSessionLeaderboard();
+    }
+}
+
+function showSessionLeaderboard() {
+    // Sort players in this session by time
+    const sortedPlayers = [...currentSession.players].sort((a, b) => {
+        if (a.time === null) return 1;
+        if (b.time === null) return -1;
+        return a.time - b.time;
+    });
+
+    const tbody = document.getElementById("sessionLeaderboardTable");
+    tbody.innerHTML = "";
+
+    sortedPlayers.forEach((p, idx) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td style="text-align: center; font-weight: bold;">${idx + 1}</td>
+            <td>${escapeHTML(p.name)}</td>
+            <td>${escapeHTML(p.school)}</td>
+            <td style="text-align: right; font-weight: bold; color: #2563eb;">${p.time !== null ? p.time.toFixed(2) + " วินาที" : "ไม่มีสถิติ"}</td>
+        `;
+        tbody.appendChild(tr);
+    });
+
+    document.getElementById("sessionLeaderboardModal").classList.add("active");
+}
+
+function closeSessionLeaderboard() {
+    document.getElementById("sessionLeaderboardModal").classList.remove("active");
+    
+    // Clear session status
+    currentSession.active = false;
+    currentSession.players = [];
+    currentSession.currentIndex = -1;
+    
+    updateActiveRunnerDisplay();
+    triggerFieldReset();
+}
+
+function showAllTimeLeaderboard() {
+    const tbody = document.getElementById("allTimeLeaderboardTable");
+    tbody.innerHTML = "";
+
+    if (allTimeLeaderboard.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: #9ca3af; padding: 20px;">ยังไม่มีประวัติการแข่งขัน</td></tr>`;
+    } else {
+        allTimeLeaderboard.forEach((p, idx) => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+                <td style="text-align: center; font-weight: bold;">${idx + 1}</td>
+                <td>${escapeHTML(p.name)}</td>
+                <td>${escapeHTML(p.school)}</td>
+                <td style="text-align: right; font-weight: bold; color: #10b981;">${p.time.toFixed(2)} วินาที</td>
+                <td style="text-align: center; color: #6b7280; font-size: 0.85rem;">${p.date || "-"}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    document.getElementById("allTimeLeaderboardModal").classList.add("active");
+}
+
+function closeAllTimeLeaderboard() {
+    document.getElementById("allTimeLeaderboardModal").classList.remove("active");
+}
+
+function clearAllTimeLeaderboard() {
+    if (confirm("คุณแน่ใจหรือไม่ว่าต้องการล้างข้อมูลสถิติประวัติทั้งหมด? การกระทำนี้ไม่สามารถย้อนกลับได้")) {
+        allTimeLeaderboard = [];
+        localStorage.removeItem("robot_field_alltime_scores");
+        showAllTimeLeaderboard();
+    }
+}
+
+// Extend finishRace securely
+const originalFinishRace = finishRace;
+finishRace = function(finalMilliseconds) {
+    originalFinishRace(finalMilliseconds);
+    if (currentSession.active) {
+        handleRunnerFinished(finalMilliseconds);
+    }
+};
+
+/* =====================================================
+   DRAGGABLE RACE TIMER
+   ผู้ใช้ลากกล่อง RACE TIME ไปวางที่ไหนในสนามก็ได้
+   เพื่อเลี่ยงไม่ให้ไปบังโหนดอื่น (ไม่แก้ตำแหน่ง/สไตล์เดิม)
+===================================================== */
+
+(function enableRaceTimerDrag() {
+
+    const timer = document.getElementById("raceTimer");
+    const field = timer.parentElement;
+
+    let dragging = false;
+    let offsetX = 0;
+    let offsetY = 0;
+
+    function loadSavedPosition() {
+        try {
+            const saved = JSON.parse(localStorage.getItem("raceTimerPos") || "null");
+            if (saved && typeof saved.left === "number" && typeof saved.top === "number") {
+                timer.style.left = saved.left + "px";
+                timer.style.top = saved.top + "px";
+            }
+        } catch (error) {
+            console.log("RACE TIMER POSITION LOAD ERROR:", error);
+        }
+    }
+
+    function savePosition(left, top) {
+        try {
+            localStorage.setItem("raceTimerPos", JSON.stringify({ left: left, top: top }));
+        } catch (error) {
+            console.log("RACE TIMER POSITION SAVE ERROR:", error);
+        }
+    }
+
+    function startDrag(clientX, clientY) {
+        const timerRect = timer.getBoundingClientRect();
+        offsetX = clientX - timerRect.left;
+        offsetY = clientY - timerRect.top;
+        dragging = true;
+        timer.style.cursor = "grabbing";
+    }
+
+    function moveDrag(clientX, clientY) {
+        if (!dragging) return;
+
+        const fieldRect = field.getBoundingClientRect();
+
+        let newLeft = clientX - fieldRect.left - offsetX;
+        let newTop = clientY - fieldRect.top - offsetY;
+
+        const maxLeft = Math.max(0, fieldRect.width - timer.offsetWidth);
+        const maxTop = Math.max(0, fieldRect.height - timer.offsetHeight);
+
+        newLeft = Math.min(Math.max(0, newLeft), maxLeft);
+        newTop = Math.min(Math.max(0, newTop), maxTop);
+
+        timer.style.left = newLeft + "px";
+        timer.style.top = newTop + "px";
+    }
+
+    function endDrag() {
+        if (!dragging) return;
+        dragging = false;
+        timer.style.cursor = "grab";
+        savePosition(
+            parseFloat(timer.style.left) || 0,
+            parseFloat(timer.style.top) || 0
+        );
+    }
+
+    timer.addEventListener("mousedown", function (event) {
+        if (event.target.closest("#btnNextRunner")) return;
+        startDrag(event.clientX, event.clientY);
+        event.preventDefault();
+    });
+
+    document.addEventListener("mousemove", function (event) {
+        moveDrag(event.clientX, event.clientY);
+    });
+
+    document.addEventListener("mouseup", endDrag);
+
+    timer.addEventListener("touchstart", function (event) {
+        if (event.target.closest("#btnNextRunner")) return;
+        const touch = event.touches[0];
+        startDrag(touch.clientX, touch.clientY);
+    }, { passive: true });
+
+    document.addEventListener("touchmove", function (event) {
+        if (!dragging) return;
+        const touch = event.touches[0];
+        moveDrag(touch.clientX, touch.clientY);
+    }, { passive: true });
+
+    document.addEventListener("touchend", endDrag);
+
+    timer.style.cursor = "grab";
+
+    loadSavedPosition();
+
+})();
+
+</script>
+
+<!-- =====================================================
+     SETUP MODAL
+===================================================== -->
+<div id="setupModal" class="custom-modal-overlay">
+    <div class="custom-modal">
+        <div class="custom-modal-header">
+            <h2>ตั้งค่าการแข่งขันรอบใหม่</h2>
+            <button class="custom-modal-close" onclick="closeSetupModal()">&times;</button>
+        </div>
+        <div class="custom-modal-body">
+            <div class="form-group">
+                <label for="playerCount">จำนวนผู้เข้าแข่งขัน (คน)</label>
+                <input type="number" id="playerCount" class="form-control" min="1" max="20" value="1" onkeyup="generatePlayerInputs()" onchange="clampPlayerCount()">
+            </div>
+            <div id="playerInputsContainer">
+                <!-- Dynamic input rows generated by JS -->
+            </div>
+        </div>
+        <div class="custom-modal-footer">
+            <button class="btn-secondary" onclick="closeSetupModal()">ยกเลิก</button>
+            <button class="btn-primary" onclick="startSession()">เริ่มแข่งขัน</button>
+        </div>
+    </div>
+</div>
+
+<!-- =====================================================
+     SESSION LEADERBOARD MODAL
+===================================================== -->
+<div id="sessionLeaderboardModal" class="custom-modal-overlay">
+    <div class="custom-modal" style="max-width: 600px;">
+        <div class="custom-modal-header">
+            <h2>ผลการแข่งขันรอบนี้ (Leaderboard)</h2>
+            <button class="custom-modal-close" onclick="closeSessionLeaderboard()">&times;</button>
+        </div>
+        <div class="custom-modal-body">
+            <table class="custom-table">
+                <thead>
+                    <tr>
+                        <th style="width: 70px; text-align: center;">อันดับ</th>
+                        <th>ชื่อผู้แข่งขัน</th>
+                        <th>โรงเรียน</th>
+                        <th style="width: 120px; text-align: right;">เวลา (วินาที)</th>
+                    </tr>
+                </thead>
+                <tbody id="sessionLeaderboardTable">
+                    <!-- Leaderboard items generated by JS -->
+                </tbody>
+            </table>
+        </div>
+        <div class="custom-modal-footer">
+            <button class="btn-primary" onclick="closeSessionLeaderboard()">ตกลง & บันทึก</button>
+        </div>
+    </div>
+</div>
+
+<!-- =====================================================
+     ALL-TIME LEADERBOARD MODAL
+===================================================== -->
+<div id="allTimeLeaderboardModal" class="custom-modal-overlay">
+    <div class="custom-modal" style="max-width: 650px;">
+        <div class="custom-modal-header">
+            <h2>ประวัติการแข่งขันทั้งหมด (All-Time Stats)</h2>
+            <button class="custom-modal-close" onclick="closeAllTimeLeaderboard()">&times;</button>
+        </div>
+        <div class="custom-modal-body">
+            <div style="max-height: 350px; overflow-y: auto;">
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 70px; text-align: center;">อันดับ</th>
+                            <th>ชื่อผู้แข่งขัน</th>
+                            <th>โรงเรียน</th>
+                            <th style="width: 120px; text-align: right;">เวลา (วินาที)</th>
+                            <th style="width: 120px; text-align: center;">วันที่</th>
+                        </tr>
+                    </thead>
+                    <tbody id="allTimeLeaderboardTable">
+                        <!-- All-time stats generated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="custom-modal-footer" style="justify-content: space-between;">
+            <button class="btn-secondary" style="background: #ef4444; color: white;" onclick="clearAllTimeLeaderboard()">ล้างประวัติทั้งหมด</button>
+            <button class="btn-primary" onclick="closeAllTimeLeaderboard()">ปิด</button>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>
