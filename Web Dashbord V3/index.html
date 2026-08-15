@@ -418,6 +418,8 @@ body {
     box-shadow:
         0 0 0 3px rgba(34,197,94,.10),
         0 5px 18px rgba(0,0,0,.12);
+
+    animation: timerRunningGlow 1.4s ease-in-out infinite;
 }
 
 .race-timer.running .timer-value {
@@ -426,6 +428,40 @@ body {
 
 .race-timer.running .timer-status {
     color: #15803d;
+}
+
+@keyframes timerRunningGlow {
+    0%, 100% {
+        box-shadow:
+            0 0 0 3px rgba(34,197,94,.10),
+            0 5px 18px rgba(0,0,0,.12);
+    }
+    50% {
+        box-shadow:
+            0 0 0 7px rgba(34,197,94,.22),
+            0 5px 18px rgba(0,0,0,.12);
+    }
+}
+
+@keyframes timerFinishBounce {
+    0% { transform: scale(1); }
+    30% { transform: scale(1.12); }
+    55% { transform: scale(0.96); }
+    75% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.race-timer.finish-bounce {
+    animation: timerFinishBounce .6s ease;
+}
+
+@keyframes timerFinishGlow {
+    0%, 100% { text-shadow: none; }
+    50% { text-shadow: 0 0 12px rgba(34,197,94,.7); }
+}
+
+.race-timer.finish-bounce .timer-value {
+    animation: timerFinishGlow .6s ease;
 }
 
 /* =====================================================
@@ -461,6 +497,27 @@ body {
 
 .field-node:hover {
     transform: scale(1.12);
+}
+
+@keyframes nodePop {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 4px 12px rgba(0,0,0,.12);
+    }
+    40% {
+        transform: scale(1.3);
+        box-shadow:
+            0 4px 20px rgba(0,0,0,.25),
+            0 0 0 8px rgba(59,130,246,.35);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 4px 12px rgba(0,0,0,.12);
+    }
+}
+
+.node-pop {
+    animation: nodePop .5s ease;
 }
 
 /* =====================================================
@@ -1038,10 +1095,18 @@ body {
     font-weight: bold;
 
     cursor: pointer;
+
+    transition: transform .15s ease, background .15s ease;
 }
 
 .finish-button:hover {
     background: #374151;
+
+    transform: scale(1.05);
+}
+
+.finish-button:active {
+    transform: scale(0.94);
 }
 
 /* =====================================================
@@ -1911,10 +1976,10 @@ body {
 }
 .header-btn:hover {
     background: #2563eb;
-    transform: translateY(-1px);
+    transform: translateY(-1px) scale(1.03);
 }
 .header-btn:active {
-    transform: translateY(1px);
+    transform: translateY(1px) scale(0.97);
 }
 #btnNewMatch {
     background: #10b981;
@@ -1979,9 +2044,14 @@ body {
     font-size: 1.5rem;
     cursor: pointer;
     color: #9ca3af;
+    transition: transform .15s ease, color .15s ease;
 }
 .custom-modal-close:hover {
     color: #4b5563;
+    transform: rotate(90deg) scale(1.15);
+}
+.custom-modal-close:active {
+    transform: rotate(90deg) scale(0.9);
 }
 .custom-modal-body {
     padding: 20px;
@@ -2024,10 +2094,14 @@ body {
     border-radius: 8px;
     font-weight: bold;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: background 0.2s, transform .15s ease;
 }
 .btn-primary:hover {
     background: #2563eb;
+    transform: translateY(-1px);
+}
+.btn-primary:active {
+    transform: scale(0.96);
 }
 .btn-secondary {
     background: #e5e7eb;
@@ -2037,10 +2111,14 @@ body {
     border-radius: 8px;
     font-weight: bold;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: background 0.2s, transform .15s ease;
 }
 .btn-secondary:hover {
     background: #d1d5db;
+    transform: translateY(-1px);
+}
+.btn-secondary:active {
+    transform: scale(0.96);
 }
 .player-input-row {
     background: #f9fafb;
@@ -2090,6 +2168,30 @@ body {
     0% { transform: scale(1); }
     50% { transform: scale(1.02); }
     100% { transform: scale(1); }
+}
+.next-runner-btn:hover {
+    animation-play-state: paused;
+    transform: scale(1.05);
+}
+.next-runner-btn:active {
+    animation-play-state: paused;
+    transform: scale(0.93);
+}
+
+@keyframes leaderboardRowIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.leaderboard-row-in {
+    opacity: 0;
+    animation: leaderboardRowIn .35s ease forwards;
+}
+@keyframes rankGlow {
+    0%, 100% { background-color: transparent; }
+    50% { background-color: rgba(250,204,21,.28); }
+}
+.leaderboard-row-first {
+    animation: leaderboardRowIn .35s ease forwards, rankGlow 1s ease-in-out .35s 3;
 }
 </style>
 
@@ -2871,12 +2973,17 @@ body {
 </audio>
 
 <audio id="doorSound"
-       src="sounds/door.mp3"
+       src="sounds/dooropen.mp3"
        preload="auto">
 </audio>
 
 <audio id="finishSound"
        src="sounds/finish.mp3"
+       preload="auto">
+</audio>
+
+<audio id="winningSound"
+       src="sounds/winning.mp3"
        preload="auto">
 </audio>
 
@@ -2894,6 +3001,8 @@ let raceFinished = false;
 let finishHandled = false;
 
 let arduinoRaceMilliseconds = 0;
+
+let nodeLastStatus = {};
 
 
 /*
@@ -2924,6 +3033,9 @@ const doorSound =
 const finishSound =
     document.getElementById("finishSound");
 
+const winningSound =
+    document.getElementById("winningSound");
+
 
 let audioUnlocked = false;
 
@@ -2940,7 +3052,8 @@ async function enableSound() {
             startSound,
             runningSound,
             doorSound,
-            finishSound
+            finishSound,
+            winningSound
         ];
 
         for (const audio of sounds) {
@@ -3251,6 +3364,52 @@ async function playFinishSound() {
 
 
 /* =====================================================
+   WINNING SOUND
+===================================================== */
+
+async function playWinningSound() {
+
+    if (!audioUnlocked) {
+
+        console.log(
+            "WINNING SOUND BLOCKED - AUDIO NOT UNLOCKED"
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+        winningSound.pause();
+
+        winningSound.currentTime = 0;
+
+        winningSound.volume = 1;
+
+
+        await winningSound.play();
+
+
+        console.log(
+            "WINNING SOUND PLAY"
+        );
+
+    }
+    catch (error) {
+
+        console.log(
+            "WINNING SOUND ERROR:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =====================================================
    FORMAT TIME
 ===================================================== */
 
@@ -3505,6 +3664,10 @@ function startRace() {
         .getElementById("raceTimer")
         .classList.add("running");
 
+    document
+        .getElementById("raceTimer")
+        .classList.remove("finish-bounce");
+
 
     document
         .getElementById("timerStatus")
@@ -3583,6 +3746,10 @@ function finishRace(
     document
         .getElementById("raceTimer")
         .classList.remove("running");
+
+    document
+        .getElementById("raceTimer")
+        .classList.add("finish-bounce");
 
 
     document
@@ -4020,6 +4187,38 @@ function checkRaceMessages(
 
 
 /* =====================================================
+   NODE CHANGE ANIMATION
+===================================================== */
+
+function triggerNodePop(node) {
+
+    node.classList.remove("node-pop");
+
+    void node.offsetWidth;
+
+    node.classList.add("node-pop");
+
+    setTimeout(
+        () => node.classList.remove("node-pop"),
+        500
+    );
+
+}
+
+function checkNodeStatusChanged(id, status) {
+
+    const changed =
+        nodeLastStatus[id] !== undefined &&
+        nodeLastStatus[id] !== status;
+
+    nodeLastStatus[id] = status;
+
+    return changed;
+
+}
+
+
+/* =====================================================
    DOOR UPDATE
 ===================================================== */
 
@@ -4043,6 +4242,13 @@ function updateDoor(
     if (!node) {
 
         return;
+
+    }
+
+
+    if (checkNodeStatusChanged(id, status)) {
+
+        triggerNodePop(node);
 
     }
 
@@ -4138,6 +4344,13 @@ function updateLaser(
     }
 
 
+    if (checkNodeStatusChanged(id, status)) {
+
+        triggerNodePop(node);
+
+    }
+
+
     node.classList.remove(
         "node-detected",
         "node-off"
@@ -4214,6 +4427,13 @@ function updateSwitch(
     if (!node) {
 
         return;
+
+    }
+
+
+    if (checkNodeStatusChanged(id, status)) {
+
+        triggerNodePop(node);
 
     }
 
@@ -4613,10 +4833,10 @@ function generatePlayerInputs() {
             <div class="player-input-row-title">ผู้เข้าแข่งขันคนที่ ${i + 1}</div>
             <div class="player-input-grid">
                 <div class="form-group" style="margin-bottom: 0;">
-                    <input type="text" class="form-control player-name-input" placeholder="ชื่อผู้แข่งขัน (บังคับ)" required>
+                    <input type="text" class="form-control player-name-input" placeholder="ชื่อผู้แข่งขัน" required>
                 </div>
                 <div class="form-group" style="margin-bottom: 0;">
-                    <input type="text" class="form-control player-school-input" placeholder="โรงเรียน (ไม่บังคับ)">
+                    <input type="text" class="form-control player-school-input" placeholder="อื่นๆ เช่น โรงเรียน (ไม่บังคับ)">
                 </div>
             </div>
         `;
@@ -4789,10 +5009,14 @@ function showSessionLeaderboard() {
             <td>${escapeHTML(p.school)}</td>
             <td style="text-align: right; font-weight: bold; color: #2563eb;">${p.time !== null ? p.time.toFixed(2) + " วินาที" : "ไม่มีสถิติ"}</td>
         `;
+        tr.classList.add(idx === 0 && p.time !== null ? "leaderboard-row-first" : "leaderboard-row-in");
+        tr.style.animationDelay = (idx * 0.08) + "s";
         tbody.appendChild(tr);
     });
 
     document.getElementById("sessionLeaderboardModal").classList.add("active");
+
+    playWinningSound();
 }
 
 function closeSessionLeaderboard() {
@@ -4823,6 +5047,8 @@ function showAllTimeLeaderboard() {
                 <td style="text-align: right; font-weight: bold; color: #10b981;">${p.time.toFixed(2)} วินาที</td>
                 <td style="text-align: center; color: #6b7280; font-size: 0.85rem;">${p.date || "-"}</td>
             `;
+            tr.classList.add(idx === 0 ? "leaderboard-row-first" : "leaderboard-row-in");
+            tr.style.animationDelay = (idx * 0.08) + "s";
             tbody.appendChild(tr);
         });
     }
@@ -4996,7 +5222,7 @@ finishRace = function(finalMilliseconds) {
                     <tr>
                         <th style="width: 70px; text-align: center;">อันดับ</th>
                         <th>ชื่อผู้แข่งขัน</th>
-                        <th>โรงเรียน</th>
+                        <th>อื่นๆ</th>
                         <th style="width: 120px; text-align: right;">เวลา (วินาที)</th>
                     </tr>
                 </thead>
@@ -5027,7 +5253,7 @@ finishRace = function(finalMilliseconds) {
                         <tr>
                             <th style="width: 70px; text-align: center;">อันดับ</th>
                             <th>ชื่อผู้แข่งขัน</th>
-                            <th>โรงเรียน</th>
+                            <th>อื่นๆ</th>
                             <th style="width: 120px; text-align: right;">เวลา (วินาที)</th>
                             <th style="width: 120px; text-align: center;">วันที่</th>
                         </tr>
