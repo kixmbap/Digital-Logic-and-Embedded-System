@@ -16,8 +16,8 @@ html, body {
     width: 100%;
     min-height: 100vh;
     font-family: Arial, "Noto Sans Thai", sans-serif;
-    background: linear-gradient(180deg, #0f172a 0%, #1e293b 60%, #111827 100%);
-    color: #f3f4f6;
+    background: #ffffff;
+    color: #1f2937;
     overflow-x: hidden;
 }
 
@@ -40,7 +40,7 @@ h1 {
 
 .subtitle {
     text-align: center;
-    color: #9ca3af;
+    color: #6b7280;
     margin-bottom: 40px;
     font-size: 0.95rem;
 }
@@ -64,38 +64,71 @@ h1 {
 }
 
 .podium-card {
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.12);
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
     border-radius: 14px;
     padding: 16px 14px;
     width: 100%;
     text-align: center;
     margin-bottom: 12px;
-    backdrop-filter: blur(4px);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
+
+.podium-photo {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 8px;
+    border: 4px solid #e5e7eb;
+    background: #f3f4f6;
+}
+
+.podium-photo-placeholder {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    margin: 0 auto 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e5e7eb;
+    color: #9ca3af;
+    font-weight: bold;
+    font-size: 2.6rem;
+    border: 4px solid #e5e7eb;
+}
+
+.rank-1 .podium-photo,
+.rank-1 .podium-photo-placeholder { border-color: #2563eb; width: 160px; height: 160px; font-size: 3.2rem; }
+.rank-2 .podium-photo,
+.rank-2 .podium-photo-placeholder { border-color: #60a5fa; }
+.rank-3 .podium-photo,
+.rank-3 .podium-photo-placeholder { border-color: #93c5fd; }
 
 .podium-rank-badge {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
     font-weight: bold;
-    font-size: 1.2rem;
+    font-size: 1rem;
     margin-bottom: 8px;
-    color: #1f2937;
+    color: #fff;
 }
 
-.rank-1 .podium-rank-badge { background: linear-gradient(135deg, #fef08a, #f59e0b); width: 52px; height: 52px; font-size: 1.5rem; }
-.rank-2 .podium-rank-badge { background: linear-gradient(135deg, #e5e7eb, #9ca3af); }
-.rank-3 .podium-rank-badge { background: linear-gradient(135deg, #fdba74, #c2703d); }
+.rank-1 .podium-rank-badge { background: linear-gradient(135deg, #60a5fa, #1d4ed8); width: 42px; height: 42px; font-size: 1.25rem; }
+.rank-2 .podium-rank-badge { background: linear-gradient(135deg, #bfdbfe, #60a5fa); }
+.rank-3 .podium-rank-badge { background: linear-gradient(135deg, #dbeafe, #93c5fd); }
 
 .podium-name {
     font-weight: bold;
     font-size: 1.1rem;
     margin-bottom: 4px;
     word-break: break-word;
+    color: #111827;
 }
 
 .podium-ig {
@@ -103,7 +136,7 @@ h1 {
     align-items: center;
     justify-content: center;
     gap: 4px;
-    color: #d1d5db;
+    color: #4b5563;
     font-size: 0.85rem;
     margin-bottom: 6px;
 }
@@ -111,7 +144,7 @@ h1 {
 .podium-time {
     font-size: 1.15rem;
     font-weight: bold;
-    color: #4ade80;
+    color: #059669;
 }
 
 .podium-block {
@@ -123,24 +156,24 @@ h1 {
     padding-top: 10px;
     font-size: 2.5rem;
     font-weight: bold;
-    color: rgba(255,255,255,0.85);
+    color: rgba(255,255,255,0.9);
 }
 
-.block-1 { height: 190px; background: linear-gradient(180deg, #f59e0b, #b45309); order: 2; }
-.block-2 { height: 130px; background: linear-gradient(180deg, #9ca3af, #4b5563); order: 1; }
-.block-3 { height: 90px;  background: linear-gradient(180deg, #c2703d, #7c4a29); order: 3; }
+.block-1 { height: 190px; background: linear-gradient(180deg, #3b82f6, #1d4ed8); order: 2; }
+.block-2 { height: 130px; background: linear-gradient(180deg, #93c5fd, #60a5fa); order: 1; }
+.block-3 { height: 90px;  background: linear-gradient(180deg, #bfdbfe, #93c5fd); order: 3; }
 
 .podium-slot.rank-1 { order: 2; }
 .podium-slot.rank-2 { order: 1; }
 .podium-slot.rank-3 { order: 3; }
 
-.rank-1 .podium-card { border-color: rgba(245, 158, 11, 0.5); }
+.rank-1 .podium-card { border-color: #93c5fd; }
 
 /* ===================== REST LIST ===================== */
 
 .rest-title {
     font-size: 1.1rem;
-    color: #9ca3af;
+    color: #6b7280;
     margin: 0 0 14px;
     padding-left: 4px;
     border-left: 4px solid #4f5bd5;
@@ -156,8 +189,8 @@ h1 {
     display: flex;
     align-items: center;
     gap: 16px;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.08);
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
     border-radius: 10px;
     padding: 10px 18px;
 }
@@ -166,13 +199,14 @@ h1 {
     width: 34px;
     text-align: center;
     font-weight: bold;
-    color: #9ca3af;
+    color: #6b7280;
     flex-shrink: 0;
 }
 
 .rest-name {
     flex: 1;
     font-weight: bold;
+    color: #111827;
 }
 
 .rest-ig {
@@ -180,13 +214,13 @@ h1 {
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    color: #d1d5db;
+    color: #4b5563;
     font-size: 0.9rem;
 }
 
 .rest-time {
     font-weight: bold;
-    color: #4ade80;
+    color: #059669;
     width: 100px;
     text-align: right;
     flex-shrink: 0;
@@ -194,7 +228,7 @@ h1 {
 
 .empty-msg {
     text-align: center;
-    color: #6b7280;
+    color: #9ca3af;
     padding: 60px 0;
     font-size: 1.1rem;
 }
@@ -204,9 +238,9 @@ h1 {
     width: 9px;
     height: 9px;
     border-radius: 50%;
-    background: #4ade80;
+    background: #10b981;
     margin-right: 6px;
-    box-shadow: 0 0 8px #4ade80;
+    box-shadow: 0 0 8px rgba(16,185,129,0.6);
     animation: pulse 1.4s infinite;
 }
 
@@ -232,8 +266,8 @@ h1 {
 </svg>
 
 <div class="wrap">
-    <h1>PODIUM DASHBOARD</h1>
-    <div class="subtitle"><span class="live-dot"></span>อัปเดตแบบเรียลไทม์ &middot; สถิติสะสมตลอดกาล</div>
+    <!--<h1>ท้าย CP</h1>-->
+    <!-- <div class="subtitle"><span class="live-dot"></span>&middot; สถิติ</div> -->
 
     <div id="podiumArea"></div>
     <div id="restArea"></div>
@@ -265,6 +299,14 @@ function igHandleHTML(p) {
     return `${igIconHTML()}<span>${escapeHTML(value)}</span>`;
 }
 
+function photoOrPlaceholderHTML(p) {
+    if (p.photo) {
+        return `<img class="podium-photo" src="${p.photo}" alt="${escapeHTML(p.name)}">`;
+    }
+    const initial = (p.name || "?").trim().charAt(0).toUpperCase() || "?";
+    return `<div class="podium-photo-placeholder">${escapeHTML(initial)}</div>`;
+}
+
 function loadLeaderboard() {
     try {
         const data = JSON.parse(localStorage.getItem("robot_field_alltime_scores") || "[]");
@@ -278,6 +320,7 @@ function podiumSlotHTML(p, rank) {
     return `
         <div class="podium-slot rank-${rank}">
             <div class="podium-card">
+                ${photoOrPlaceholderHTML(p)}
                 <div class="podium-rank-badge">${rank}</div>
                 <div class="podium-name">${escapeHTML(p.name)}</div>
                 <div class="podium-ig">${igHandleHTML(p)}</div>

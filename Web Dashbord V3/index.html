@@ -2233,6 +2233,33 @@ body {
     grid-template-columns: 1fr 1fr;
     gap: 10px;
 }
+.player-photo-section {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+.player-photo-video,
+.player-photo-preview {
+    width: 100%;
+    max-width: 380px;
+    aspect-ratio: 1 / 1;
+    border-radius: 12px;
+    object-fit: cover;
+    background: #111827;
+    border: 1px solid #e5e7eb;
+}
+.player-photo-actions {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.player-photo-actions button {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+}
 .custom-table {
     width: 100%;
     border-collapse: collapse;
@@ -4204,7 +4231,7 @@ function processRaceMessage(
         if (
             doorNumber >= 1
             &&
-            doorNumber <= 5
+            doorNumber <= 4
             &&
             raceRunning
             &&
@@ -4217,6 +4244,26 @@ function processRaceMessage(
 
         }
 
+
+        return;
+
+    }
+
+
+    /* =================================================
+       DOOR 5 - เล่นเสียงเฉพาะตอน IR จับได้จริง
+       (ไม่เล่นตอนเปิด/ปิดอัตโนมัติตามไฟจราจร)
+    ================================================= */
+
+    if (
+        text === "DOOR 5 -> LOCKED"
+        &&
+        raceRunning
+        &&
+        !finishHandled
+    ) {
+
+        playDoorSound(5);
 
         return;
 
@@ -5001,9 +5048,12 @@ function showSetupModal() {
 
 function closeSetupModal() {
     document.getElementById("setupModal").classList.remove("active");
+    stopAllPlayerCameras();
 }
 
 function generatePlayerInputs() {
+    stopAllPlayerCameras();
+
     const countInput = document.getElementById("playerCount");
     let count = parseInt(countInput.value, 10);
     if (isNaN(count) || count < 1) count = 1;
@@ -5025,9 +5075,135 @@ function generatePlayerInputs() {
                     <input type="text" class="form-control player-ig-input" placeholder="ไอดี IG เช่น @username (ไม่บังคับ)">
                 </div>
             </div>
+            <div class="player-photo-section">
+                <video class="player-photo-video" autoplay playsinline muted style="display:none;"></video>
+                <img class="player-photo-preview" style="display:none;" alt="รูปผู้แข่งขัน">
+                <div class="player-photo-actions">
+                    <button type="button" class="btn-secondary player-photo-open-btn" onclick="openPlayerCamera(${i})">เปิดกล้อง / ถ่ายรูป (ไม่บังคับ)</button>
+                    <button type="button" class="btn-primary player-photo-capture-btn" style="display:none;" onclick="capturePlayerPhoto(${i})">ถ่ายรูป</button>
+                    <button type="button" class="btn-secondary player-photo-retake-btn" style="display:none;" onclick="retakePlayerPhoto(${i})">ถ่ายใหม่</button>
+                    <button type="button" class="btn-secondary player-photo-cancel-btn" style="display:none;" onclick="cancelPlayerPhoto(${i})">ยกเลิก</button>
+                </div>
+            </div>
         `;
         container.appendChild(row);
     }
+}
+
+let playerPhotos = [];
+let playerCameraStreams = [];
+
+function getPlayerRow(index) {
+    return document.querySelectorAll(".player-input-row")[index];
+}
+
+function stopPlayerCameraStream(index) {
+    const stream = playerCameraStreams[index];
+    if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+        playerCameraStreams[index] = null;
+    }
+}
+
+function stopAllPlayerCameras() {
+    playerCameraStreams.forEach(stream => {
+        if (stream) stream.getTracks().forEach(track => track.stop());
+    });
+    playerCameraStreams = [];
+    playerPhotos = [];
+}
+
+async function openPlayerCamera(index) {
+    const row = getPlayerRow(index);
+    if (!row) return;
+    const video = row.querySelector(".player-photo-video");
+    const openBtn = row.querySelector(".player-photo-open-btn");
+    const captureBtn = row.querySelector(".player-photo-capture-btn");
+
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
+        playerCameraStreams[index] = stream;
+        video.srcObject = stream;
+        video.style.display = "block";
+        openBtn.style.display = "none";
+        captureBtn.style.display = "inline-block";
+    } catch (err) {
+        console.error("Camera error:", err);
+        alert("ไม่สามารถเปิดกล้องได้ กรุณาตรวจสอบสิทธิ์การใช้กล้องของเบราว์เซอร์ (ต้องเปิดผ่าน localhost หรือ HTTPS)");
+    }
+}
+
+function capturePhotoDataURL(video) {
+    const size = 300;
+    const canvas = document.createElement("canvas");
+    canvas.width = size;
+    canvas.height = size;
+    const ctx = canvas.getContext("2d");
+    const vw = video.videoWidth || size;
+    const vh = video.videoHeight || size;
+    const minSide = Math.min(vw, vh);
+    const sx = (vw - minSide) / 2;
+    const sy = (vh - minSide) / 2;
+    ctx.drawImage(video, sx, sy, minSide, minSide, 0, 0, size, size);
+    return canvas.toDataURL("image/jpeg", 0.7);
+}
+
+function capturePlayerPhoto(index) {
+    const row = getPlayerRow(index);
+    if (!row) return;
+    const video = row.querySelector(".player-photo-video");
+    const preview = row.querySelector(".player-photo-preview");
+    const captureBtn = row.querySelector(".player-photo-capture-btn");
+    const retakeBtn = row.querySelector(".player-photo-retake-btn");
+    const cancelBtn = row.querySelector(".player-photo-cancel-btn");
+
+    const dataURL = capturePhotoDataURL(video);
+    playerPhotos[index] = dataURL;
+
+    stopPlayerCameraStream(index);
+
+    video.style.display = "none";
+    preview.src = dataURL;
+    preview.style.display = "block";
+    captureBtn.style.display = "none";
+    retakeBtn.style.display = "inline-block";
+    cancelBtn.style.display = "inline-block";
+}
+
+function retakePlayerPhoto(index) {
+    const row = getPlayerRow(index);
+    if (!row) return;
+    const preview = row.querySelector(".player-photo-preview");
+    const retakeBtn = row.querySelector(".player-photo-retake-btn");
+    const cancelBtn = row.querySelector(".player-photo-cancel-btn");
+
+    playerPhotos[index] = null;
+    preview.style.display = "none";
+    retakeBtn.style.display = "none";
+    cancelBtn.style.display = "none";
+
+    openPlayerCamera(index);
+}
+
+function cancelPlayerPhoto(index) {
+    const row = getPlayerRow(index);
+    if (!row) return;
+    const video = row.querySelector(".player-photo-video");
+    const preview = row.querySelector(".player-photo-preview");
+    const openBtn = row.querySelector(".player-photo-open-btn");
+    const captureBtn = row.querySelector(".player-photo-capture-btn");
+    const retakeBtn = row.querySelector(".player-photo-retake-btn");
+    const cancelBtn = row.querySelector(".player-photo-cancel-btn");
+
+    stopPlayerCameraStream(index);
+    playerPhotos[index] = null;
+
+    video.style.display = "none";
+    preview.style.display = "none";
+    captureBtn.style.display = "none";
+    retakeBtn.style.display = "none";
+    cancelBtn.style.display = "none";
+    openBtn.style.display = "inline-block";
 }
 
 function clampPlayerCount() {
@@ -5057,6 +5233,7 @@ async function startSession() {
             players.push({
                 name: name,
                 ig: ig || "-",
+                photo: playerPhotos[index] || null,
                 time: null
             });
         }
@@ -5113,15 +5290,28 @@ async function handleRunnerFinished(finalMilliseconds) {
     // Save to all-time leaderboard locally (no external services - local storage only)
     const now = new Date();
     const dateString = `${now.getDate()}/${now.getMonth() + 1}/${now.getFullYear()}`;
-    allTimeLeaderboard.push({
+    const newEntry = {
         name: runner.name,
         ig: runner.ig,
+        photo: runner.photo || null,
         time: finalSeconds,
         date: dateString
-    });
+    };
+    allTimeLeaderboard.push(newEntry);
     // Sort ascending by time
     allTimeLeaderboard.sort((a, b) => a.time - b.time);
-    localStorage.setItem("robot_field_alltime_scores", JSON.stringify(allTimeLeaderboard));
+    try {
+        localStorage.setItem("robot_field_alltime_scores", JSON.stringify(allTimeLeaderboard));
+    } catch (err) {
+        // localStorage เต็ม (รูปภาพเก็บสะสมมากเกินไป) - บันทึกใหม่โดยตัดรูปภาพของรอบนี้ทิ้ง
+        console.error("localStorage full, dropping photo for this entry:", err);
+        newEntry.photo = null;
+        try {
+            localStorage.setItem("robot_field_alltime_scores", JSON.stringify(allTimeLeaderboard));
+        } catch (err2) {
+            console.error("Still failed to save leaderboard:", err2);
+        }
+    }
 
     const isLastRunner = currentSession.currentIndex >= currentSession.players.length - 1;
 
@@ -5386,7 +5576,7 @@ finishRace = function(finalMilliseconds) {
      SETUP MODAL
 ===================================================== -->
 <div id="setupModal" class="custom-modal-overlay">
-    <div class="custom-modal">
+    <div class="custom-modal" style="max-width: 640px;">
         <div class="custom-modal-header">
             <h2>ตั้งค่าการแข่งขันรอบใหม่</h2>
             <button class="custom-modal-close" onclick="closeSetupModal()">&times;</button>
