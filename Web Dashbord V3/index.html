@@ -2293,6 +2293,17 @@ body {
 
 <body>
 
+<svg width="0" height="0" style="position:absolute;visibility:hidden;">
+  <defs>
+    <linearGradient id="igGradient" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#feda75"/>
+      <stop offset="25%" stop-color="#fa7e1e"/>
+      <stop offset="50%" stop-color="#d62976"/>
+      <stop offset="75%" stop-color="#962fbf"/>
+      <stop offset="100%" stop-color="#4f5bd5"/>
+    </linearGradient>
+  </defs>
+</svg>
 
 <!-- =====================================================
      SOUND UNLOCK
@@ -2445,7 +2456,7 @@ body {
              class="race-timer">
 
             <div id="currentRunnerInfo" style="display: none; margin-bottom: 12px; font-weight: bold; color: #fff; font-size: 1rem; background: #2563eb; padding: 8px 12px; border-radius: 6px; text-align: center; border: 1px solid rgba(0,0,0,0.05);">
-                ผู้แข่งขัน: - (โรงเรียน: -) [คนที่ -/-]
+                ผู้แข่งขัน: - (IG: -) [คนที่ -/-]
             </div>
 
             <div class="timer-title">
@@ -5011,7 +5022,7 @@ function generatePlayerInputs() {
                     <input type="text" class="form-control player-name-input" placeholder="ชื่อผู้แข่งขัน" required>
                 </div>
                 <div class="form-group" style="margin-bottom: 0;">
-                    <input type="text" class="form-control player-school-input" placeholder="อื่นๆ เช่น โรงเรียน (ไม่บังคับ)">
+                    <input type="text" class="form-control player-ig-input" placeholder="ไอดี IG เช่น @username (ไม่บังคับ)">
                 </div>
             </div>
         `;
@@ -5030,14 +5041,14 @@ function clampPlayerCount() {
 
 async function startSession() {
     const nameInputs = document.querySelectorAll(".player-name-input");
-    const schoolInputs = document.querySelectorAll(".player-school-input");
-    
+    const igInputs = document.querySelectorAll(".player-ig-input");
+
     let players = [];
     let isValid = true;
 
     nameInputs.forEach((input, index) => {
         const name = input.value.trim();
-        const school = schoolInputs[index].value.trim();
+        const ig = igInputs[index].value.trim();
         if (!name) {
             input.style.borderColor = "#ef4444";
             isValid = false;
@@ -5045,7 +5056,7 @@ async function startSession() {
             input.style.borderColor = "";
             players.push({
                 name: name,
-                school: school || "-",
+                ig: ig || "-",
                 time: null
             });
         }
@@ -5071,7 +5082,7 @@ function updateActiveRunnerDisplay() {
     const info = document.getElementById("currentRunnerInfo");
     if (currentSession.active && currentSession.currentIndex >= 0 && currentSession.currentIndex < currentSession.players.length) {
         const p = currentSession.players[currentSession.currentIndex];
-        info.innerText = `ผู้แข่งขัน: ${p.name} ${p.school !== "-" ? "(" + p.school + ")" : ""} [คนที่ ${currentSession.currentIndex + 1}/${currentSession.players.length}]`;
+        info.innerText = `ผู้แข่งขัน: ${p.name} ${p.ig !== "-" ? "(IG: " + p.ig + ")" : ""} [คนที่ ${currentSession.currentIndex + 1}/${currentSession.players.length}]`;
         info.style.display = "block";
         document.getElementById("btnNextRunner").style.display = "none";
     } else {
@@ -5104,7 +5115,7 @@ async function handleRunnerFinished(finalMilliseconds) {
     const dateString = `${now.getDate()}/${now.getMonth() + 1}/${now.getFullYear()}`;
     allTimeLeaderboard.push({
         name: runner.name,
-        school: runner.school,
+        ig: runner.ig,
         time: finalSeconds,
         date: dateString
     });
@@ -5165,6 +5176,20 @@ function escapeHTML(str) {
         .replace(/'/g, "&#39;");
 }
 
+function igIconHTML() {
+    return `<svg viewBox="0 0 24 24" width="14" height="14" style="vertical-align:middle;margin-right:4px;flex-shrink:0;">
+        <rect x="2" y="2" width="20" height="20" rx="6" ry="6" fill="none" stroke="url(#igGradient)" stroke-width="2"/>
+        <circle cx="12" cy="12" r="5" fill="none" stroke="url(#igGradient)" stroke-width="2"/>
+        <circle cx="17.5" cy="6.5" r="1.2" fill="url(#igGradient)"/>
+    </svg>`;
+}
+
+function igHandleHTML(ig) {
+    const value = ig || "-";
+    if (value === "-") return "-";
+    return `<span style="display:inline-flex;align-items:center;">${igIconHTML()}${escapeHTML(value)}</span>`;
+}
+
 function showSessionLeaderboard() {
     // Sort players in this session by time
     const sortedPlayers = [...currentSession.players].sort((a, b) => {
@@ -5181,7 +5206,7 @@ function showSessionLeaderboard() {
         tr.innerHTML = `
             <td style="text-align: center; font-weight: bold;">${idx + 1}</td>
             <td>${escapeHTML(p.name)}</td>
-            <td>${escapeHTML(p.school)}</td>
+            <td>${igHandleHTML(p.ig || p.school)}</td>
             <td style="text-align: right; font-weight: bold; color: #2563eb;">${p.time !== null ? p.time.toFixed(2) + " วินาที" : "ไม่มีสถิติ"}</td>
         `;
         tr.classList.add(idx === 0 && p.time !== null ? "leaderboard-row-first" : "leaderboard-row-in");
@@ -5218,7 +5243,7 @@ function showAllTimeLeaderboard() {
             tr.innerHTML = `
                 <td style="text-align: center; font-weight: bold;">${idx + 1}</td>
                 <td>${escapeHTML(p.name)}</td>
-                <td>${escapeHTML(p.school)}</td>
+                <td>${igHandleHTML(p.ig || p.school)}</td>
                 <td style="text-align: right; font-weight: bold; color: #10b981;">${p.time.toFixed(2)} วินาที</td>
                 <td style="text-align: center; color: #6b7280; font-size: 0.85rem;">${p.date || "-"}</td>
             `;
@@ -5397,7 +5422,7 @@ finishRace = function(finalMilliseconds) {
                     <tr>
                         <th style="width: 70px; text-align: center;">อันดับ</th>
                         <th>ชื่อผู้แข่งขัน</th>
-                        <th>อื่นๆ</th>
+                        <th>IG</th>
                         <th style="width: 120px; text-align: right;">เวลา (วินาที)</th>
                     </tr>
                 </thead>
@@ -5428,7 +5453,7 @@ finishRace = function(finalMilliseconds) {
                         <tr>
                             <th style="width: 70px; text-align: center;">อันดับ</th>
                             <th>ชื่อผู้แข่งขัน</th>
-                            <th>อื่นๆ</th>
+                            <th>IG</th>
                             <th style="width: 120px; text-align: right;">เวลา (วินาที)</th>
                             <th style="width: 120px; text-align: center;">วันที่</th>
                         </tr>

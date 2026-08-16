@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Podium Dashboard</title>
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100vh;
+    font-family: Arial, "Noto Sans Thai", sans-serif;
+    background: linear-gradient(180deg, #0f172a 0%, #1e293b 60%, #111827 100%);
+    color: #f3f4f6;
+    overflow-x: hidden;
+}
+
+.wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 30px 20px 60px;
+}
+
+h1 {
+    text-align: center;
+    font-size: 2.2rem;
+    letter-spacing: 2px;
+    margin: 0 0 6px;
+    background: linear-gradient(90deg, #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.subtitle {
+    text-align: center;
+    color: #9ca3af;
+    margin-bottom: 40px;
+    font-size: 0.95rem;
+}
+
+/* ===================== PODIUM ===================== */
+
+.podium {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 18px;
+    margin-bottom: 50px;
+    min-height: 340px;
+}
+
+.podium-slot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 220px;
+}
+
+.podium-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 14px;
+    padding: 16px 14px;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 12px;
+    backdrop-filter: blur(4px);
+}
+
+.podium-rank-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+    color: #1f2937;
+}
+
+.rank-1 .podium-rank-badge { background: linear-gradient(135deg, #fef08a, #f59e0b); width: 52px; height: 52px; font-size: 1.5rem; }
+.rank-2 .podium-rank-badge { background: linear-gradient(135deg, #e5e7eb, #9ca3af); }
+.rank-3 .podium-rank-badge { background: linear-gradient(135deg, #fdba74, #c2703d); }
+
+.podium-name {
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-bottom: 4px;
+    word-break: break-word;
+}
+
+.podium-ig {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    color: #d1d5db;
+    font-size: 0.85rem;
+    margin-bottom: 6px;
+}
+
+.podium-time {
+    font-size: 1.15rem;
+    font-weight: bold;
+    color: #4ade80;
+}
+
+.podium-block {
+    width: 100%;
+    border-radius: 10px 10px 0 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 10px;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: rgba(255,255,255,0.85);
+}
+
+.block-1 { height: 190px; background: linear-gradient(180deg, #f59e0b, #b45309); order: 2; }
+.block-2 { height: 130px; background: linear-gradient(180deg, #9ca3af, #4b5563); order: 1; }
+.block-3 { height: 90px;  background: linear-gradient(180deg, #c2703d, #7c4a29); order: 3; }
+
+.podium-slot.rank-1 { order: 2; }
+.podium-slot.rank-2 { order: 1; }
+.podium-slot.rank-3 { order: 3; }
+
+.rank-1 .podium-card { border-color: rgba(245, 158, 11, 0.5); }
+
+/* ===================== REST LIST ===================== */
+
+.rest-title {
+    font-size: 1.1rem;
+    color: #9ca3af;
+    margin: 0 0 14px;
+    padding-left: 4px;
+    border-left: 4px solid #4f5bd5;
+}
+
+.rest-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.rest-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 10px 18px;
+}
+
+.rest-rank {
+    width: 34px;
+    text-align: center;
+    font-weight: bold;
+    color: #9ca3af;
+    flex-shrink: 0;
+}
+
+.rest-name {
+    flex: 1;
+    font-weight: bold;
+}
+
+.rest-ig {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: #d1d5db;
+    font-size: 0.9rem;
+}
+
+.rest-time {
+    font-weight: bold;
+    color: #4ade80;
+    width: 100px;
+    text-align: right;
+    flex-shrink: 0;
+}
+
+.empty-msg {
+    text-align: center;
+    color: #6b7280;
+    padding: 60px 0;
+    font-size: 1.1rem;
+}
+
+.live-dot {
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #4ade80;
+    margin-right: 6px;
+    box-shadow: 0 0 8px #4ade80;
+    animation: pulse 1.4s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+}
+
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute;visibility:hidden;">
+  <defs>
+    <linearGradient id="igGradient" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#feda75"/>
+      <stop offset="25%" stop-color="#fa7e1e"/>
+      <stop offset="50%" stop-color="#d62976"/>
+      <stop offset="75%" stop-color="#962fbf"/>
+      <stop offset="100%" stop-color="#4f5bd5"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<div class="wrap">
+    <h1>PODIUM DASHBOARD</h1>
+    <div class="subtitle"><span class="live-dot"></span>อัปเดตแบบเรียลไทม์ &middot; สถิติสะสมตลอดกาล</div>
+
+    <div id="podiumArea"></div>
+    <div id="restArea"></div>
+</div>
+
+<script>
+
+function igIconHTML() {
+    return `<svg viewBox="0 0 24 24" width="14" height="14" style="vertical-align:middle;flex-shrink:0;">
+        <rect x="2" y="2" width="20" height="20" rx="6" ry="6" fill="none" stroke="url(#igGradient)" stroke-width="2"/>
+        <circle cx="12" cy="12" r="5" fill="none" stroke="url(#igGradient)" stroke-width="2"/>
+        <circle cx="17.5" cy="6.5" r="1.2" fill="url(#igGradient)"/>
+    </svg>`;
+}
+
+function escapeHTML(str) {
+    if (str === null || str === undefined) return "";
+    return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+}
+
+function igHandleHTML(p) {
+    const value = p.ig || p.school || "-";
+    if (value === "-") return "-";
+    return `${igIconHTML()}<span>${escapeHTML(value)}</span>`;
+}
+
+function loadLeaderboard() {
+    try {
+        const data = JSON.parse(localStorage.getItem("robot_field_alltime_scores") || "[]");
+        return Array.isArray(data) ? [...data].sort((a, b) => a.time - b.time) : [];
+    } catch (e) {
+        return [];
+    }
+}
+
+function podiumSlotHTML(p, rank) {
+    return `
+        <div class="podium-slot rank-${rank}">
+            <div class="podium-card">
+                <div class="podium-rank-badge">${rank}</div>
+                <div class="podium-name">${escapeHTML(p.name)}</div>
+                <div class="podium-ig">${igHandleHTML(p)}</div>
+                <div class="podium-time">${p.time.toFixed(2)} วิ</div>
+            </div>
+            <div class="podium-block block-${rank}">${rank}</div>
+        </div>
+    `;
+}
+
+function restRowHTML(p, rank) {
+    return `
+        <div class="rest-row">
+            <div class="rest-rank">${rank}</div>
+            <div class="rest-name">${escapeHTML(p.name)}</div>
+            <div class="rest-ig">${igHandleHTML(p)}</div>
+            <div class="rest-time">${p.time.toFixed(2)} วิ</div>
+        </div>
+    `;
+}
+
+function render() {
+    const scores = loadLeaderboard();
+    const podiumArea = document.getElementById("podiumArea");
+    const restArea = document.getElementById("restArea");
+
+    if (scores.length === 0) {
+        podiumArea.innerHTML = "";
+        restArea.innerHTML = `<div class="empty-msg">ยังไม่มีข้อมูลผลการแข่งขัน</div>`;
+        return;
+    }
+
+    const top3 = scores.slice(0, 3);
+    const rest = scores.slice(3);
+
+    podiumArea.innerHTML = `<div class="podium">${
+        top3.map((p, idx) => podiumSlotHTML(p, idx + 1)).join("")
+    }</div>`;
+
+    if (rest.length > 0) {
+        restArea.innerHTML = `
+            <div class="rest-title">อันดับ 4 เป็นต้นไป</div>
+            <div class="rest-list">${
+                rest.map((p, idx) => restRowHTML(p, idx + 4)).join("")
+            }</div>
+        `;
+    } else {
+        restArea.innerHTML = "";
+    }
+}
+
+render();
+setInterval(render, 1000);
+window.addEventListener("storage", (e) => {
+    if (e.key === "robot_field_alltime_scores") render();
+});
+
+</script>
+
+</body>
+</html>
