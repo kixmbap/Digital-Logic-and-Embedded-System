@@ -1,6 +1,6 @@
 
 //ขา
-const int switchpin = 2;
+const int switchpin = 8;
 
 bool switch1 = false;
 bool door1 = false;
