@@ -35,19 +35,19 @@ Servo door5;
 const int CLOSED = 0;
 const int OPEN = 90;
 
-const int servo1close = 90;
-const int servo1open = 180;
+const int servo1close = 70;
+const int servo1open = 160;
 
-const int servo2close = 0;
+const int servo2close = 20;
 const int servo2open = 95;
 
-const int servo3close = 90;
-const int servo3open = 0;
+const int servo3close = 0;
+const int servo3open = 90;
 
 const int servo4close = 180;
 const int servo4open = 90;
 
-const int servo5close = 90;
+const int servo5close = 100;
 const int servo5open = 0;
 
 
@@ -142,6 +142,7 @@ void setup() {
   delay(1000);
 }
 
+
 //LOOP
 void loop() {
   timerCount(runtimer, interval, totalTime, startround, endround);
@@ -228,6 +229,7 @@ void timerPinSetup(){
   pinMode(swpin, INPUT_PULLUP);
   pinMode(IRpin, INPUT);
 }
+
 
 void timerCount(unsigned long &timer, unsigned long interval, unsigned long &totalTime, bool startround, bool endround){
   if(millis() - timer >= interval && startround && !endround){
