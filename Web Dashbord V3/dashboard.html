@@ -19,9 +19,29 @@ html, body {
     background: #ffffff;
     color: #1f2937;
     overflow-x: hidden;
+    position: relative;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: -20%;
+    left: -20%;
+    width: 140%;
+    height: 140%;
+    background-image: url("/images/logo.png");
+    background-size: 160px 160px;
+    background-position: 0 0;
+    background-repeat: repeat;
+    opacity: 0.05;
+    transform: rotate(-15deg);
+    z-index: 0;
+    pointer-events: none;
 }
 
 .wrap {
+    position: relative;
+    z-index: 1;
     max-width: 1100px;
     margin: 0 auto;
     padding: 30px 20px 60px;
@@ -316,30 +336,162 @@ function loadLeaderboard() {
     }
 }
 
-function podiumSlotHTML(p, rank) {
+function keyFor(p) {
+    return `${p.name}||${p.ig || p.school || ""}||${p.date || ""}`;
+}
+
+function podiumContentHTML(p, rank) {
     return `
-        <div class="podium-slot rank-${rank}">
-            <div class="podium-card">
-                ${photoOrPlaceholderHTML(p)}
-                <div class="podium-rank-badge">${rank}</div>
-                <div class="podium-name">${escapeHTML(p.name)}</div>
-                <div class="podium-ig">${igHandleHTML(p)}</div>
-                <div class="podium-time">${p.time.toFixed(2)} วิ</div>
-            </div>
-            <div class="podium-block block-${rank}">${rank}</div>
-        </div>
+        ${photoOrPlaceholderHTML(p)}
+        <div class="podium-rank-badge">${rank}</div>
+        <div class="podium-name">${escapeHTML(p.name)}</div>
+        <div class="podium-ig">${igHandleHTML(p)}</div>
+        <div class="podium-time">${p.time.toFixed(2)} วิ</div>
     `;
 }
 
-function restRowHTML(p, rank) {
+function restRowContentHTML(p, rank) {
     return `
-        <div class="rest-row">
-            <div class="rest-rank">${rank}</div>
-            <div class="rest-name">${escapeHTML(p.name)}</div>
-            <div class="rest-ig">${igHandleHTML(p)}</div>
-            <div class="rest-time">${p.time.toFixed(2)} วิ</div>
-        </div>
+        <div class="rest-rank">${rank}</div>
+        <div class="rest-name">${escapeHTML(p.name)}</div>
+        <div class="rest-ig">${igHandleHTML(p)}</div>
+        <div class="rest-time">${p.time.toFixed(2)} วิ</div>
     `;
+}
+
+let podiumInitialized = false;
+let podiumOccupantKeys = { 1: null, 2: null, 3: null };
+let restRowMap = new Map();
+
+function ensurePodiumShell() {
+    if (podiumInitialized) return;
+    const podiumArea = document.getElementById("podiumArea");
+    podiumArea.innerHTML = `
+        <div class="podium">${
+            [1, 2, 3].map(rank => `
+                <div class="podium-slot rank-${rank}">
+                    <div class="podium-card">
+                        <div class="podium-card-content" data-rank="${rank}"></div>
+                    </div>
+                    <div class="podium-block block-${rank}">${rank}</div>
+                </div>
+            `).join("")
+        }</div>
+    `;
+    podiumInitialized = true;
+}
+
+function renderPodium(top3) {
+    ensurePodiumShell();
+    const podiumArea = document.getElementById("podiumArea");
+    for (let i = 0; i < 3; i++) {
+        const rank = i + 1;
+        const p = top3[i] || null;
+        const key = p ? keyFor(p) : null;
+        const contentEl = podiumArea.querySelector(`.podium-card-content[data-rank="${rank}"]`);
+
+        if (podiumOccupantKeys[rank] === key) {
+            if (p) {
+                const timeEl = contentEl.querySelector(".podium-time");
+                if (timeEl) timeEl.textContent = `${p.time.toFixed(2)} วิ`;
+            }
+            continue;
+        }
+
+        podiumOccupantKeys[rank] = key;
+        contentEl.style.transition = "none";
+        contentEl.style.opacity = "0";
+        contentEl.style.transform = "translateY(8px) scale(0.96)";
+        contentEl.innerHTML = p ? podiumContentHTML(p, rank) : "";
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                contentEl.style.transition = "opacity 0.4s ease, transform 0.4s ease";
+                contentEl.style.opacity = "1";
+                contentEl.style.transform = "translateY(0) scale(1)";
+            });
+        });
+    }
+}
+
+function renderRestList(rest) {
+    const restArea = document.getElementById("restArea");
+
+    if (rest.length === 0) {
+        restRowMap.clear();
+        restArea.innerHTML = "";
+        return;
+    }
+
+    let listEl = restArea.querySelector(".rest-list");
+    if (!listEl) {
+        restArea.innerHTML = `<div class="rest-title">อันดับ 4 เป็นต้นไป</div><div class="rest-list"></div>`;
+        listEl = restArea.querySelector(".rest-list");
+    }
+
+    const firstRects = new Map();
+    restRowMap.forEach((el, key) => firstRects.set(key, el.getBoundingClientRect()));
+
+    const usedKeys = new Set();
+    const newKeys = new Set();
+    const orderedElements = [];
+
+    rest.forEach((p, idx) => {
+        const rank = idx + 4;
+        const key = keyFor(p);
+        usedKeys.add(key);
+        let el = restRowMap.get(key);
+        if (!el) {
+            el = document.createElement("div");
+            el.className = "rest-row";
+            el.dataset.key = key;
+            restRowMap.set(key, el);
+            newKeys.add(key);
+        }
+        el.innerHTML = restRowContentHTML(p, rank);
+        orderedElements.push(el);
+    });
+
+    restRowMap.forEach((el, key) => {
+        if (!usedKeys.has(key)) {
+            el.remove();
+            restRowMap.delete(key);
+        }
+    });
+
+    orderedElements.forEach(el => listEl.appendChild(el));
+
+    orderedElements.forEach(el => {
+        const key = el.dataset.key;
+
+        if (newKeys.has(key)) {
+            el.style.transition = "none";
+            el.style.opacity = "0";
+            el.style.transform = "translateY(-8px) scale(0.98)";
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    el.style.transition = "opacity 0.35s ease, transform 0.35s ease";
+                    el.style.opacity = "1";
+                    el.style.transform = "translateY(0) scale(1)";
+                });
+            });
+            return;
+        }
+
+        const first = firstRects.get(key);
+        if (!first) return;
+        const last = el.getBoundingClientRect();
+        const dy = first.top - last.top;
+        if (Math.abs(dy) < 1) return;
+
+        el.style.transition = "none";
+        el.style.transform = `translateY(${dy}px)`;
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                el.style.transition = "transform 0.35s ease";
+                el.style.transform = "";
+            });
+        });
+    });
 }
 
 function render() {
@@ -348,6 +500,9 @@ function render() {
     const restArea = document.getElementById("restArea");
 
     if (scores.length === 0) {
+        podiumInitialized = false;
+        podiumOccupantKeys = { 1: null, 2: null, 3: null };
+        restRowMap.clear();
         podiumArea.innerHTML = "";
         restArea.innerHTML = `<div class="empty-msg">ยังไม่มีข้อมูลผลการแข่งขัน</div>`;
         return;
@@ -356,20 +511,8 @@ function render() {
     const top3 = scores.slice(0, 3);
     const rest = scores.slice(3);
 
-    podiumArea.innerHTML = `<div class="podium">${
-        top3.map((p, idx) => podiumSlotHTML(p, idx + 1)).join("")
-    }</div>`;
-
-    if (rest.length > 0) {
-        restArea.innerHTML = `
-            <div class="rest-title">อันดับ 4 เป็นต้นไป</div>
-            <div class="rest-list">${
-                rest.map((p, idx) => restRowHTML(p, idx + 4)).join("")
-            }</div>
-        `;
-    } else {
-        restArea.innerHTML = "";
-    }
+    renderPodium(top3);
+    renderRestList(rest);
 }
 
 render();
