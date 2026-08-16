@@ -47,8 +47,8 @@ const int servo3open = 180;
 const int servo4close = 105;
 const int servo4open = 20;
 
-const int servo5close = 160;
-const int servo5open = 60;
+const int servo5close = 60;
+const int servo5open = 160;
 
 
 
@@ -232,7 +232,7 @@ void loop() {
   if (door4Opened) {
     door4.write(servo4open);
   }
-  checkIRservo3(IR2, door3, servo3close, door3Locked);
+  checkIRservo3(IR2, door3, servo3open, door3Locked);
   checkIRservo2(IR2, door5, servo5close, door5Locked);
   delay(50);
 }

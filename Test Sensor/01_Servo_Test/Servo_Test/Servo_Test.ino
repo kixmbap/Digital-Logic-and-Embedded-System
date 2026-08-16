@@ -14,8 +14,8 @@ const int SERVO4_PIN = 5;
 const int SERVO5_PIN = 6;
 
 // มุม Servo
-const int CLOSED_ANGLE = 0;
-const int OPEN_ANGLE = 90;
+const int CLOSED_ANGLE = 84;
+const int OPEN_ANGLE = 180;
 
 void setup() {
 
@@ -72,13 +72,13 @@ void loop() {
 
 
   // Servo 1
- testServo(servo1, 1);
+ //testServo(servo1, 1);
 
   // Servo 2
  // testServo(servo2, 2);
 
   // Servo 3
- // testServo(servo3, 3);
+  testServo(servo3, 3);
 
   // Servo 4
 //  testServo(servo4, 4);
