@@ -283,7 +283,9 @@ void checkIRstart(const int IRpin, int &lastIR, unsigned long &timer, bool &star
   int nowIR = digitalRead(IRpin);
   if(nowIR == 1){
     if(lastIR == 0 && !startround){
+      digitalWrite(yellow, HIGH);
       timer = millis();
+      light = timer;
       Serial.print("Time start now. (");
       Serial.print(timer);
       Serial.println(")");
