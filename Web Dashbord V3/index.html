@@ -323,6 +323,99 @@ body {
 }
 
 /* =====================================================
+   TRAFFIC LIGHT
+===================================================== */
+
+.traffic-light {
+    position: absolute;
+
+    right: 20px;
+
+    top: 20px;
+
+    z-index: 30;
+
+    background: #1f2937;
+
+    border-radius: 14px;
+
+    padding: 10px 12px 14px;
+
+    box-shadow:
+        0 5px 18px rgba(0,0,0,.25);
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 6px;
+}
+
+.traffic-light-title {
+    font-size: 9px;
+
+    font-weight: bold;
+
+    letter-spacing: 1px;
+
+    color: #9ca3af;
+}
+
+.traffic-light-body {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 7px;
+
+    background: #111827;
+
+    padding: 8px;
+
+    border-radius: 10px;
+}
+
+.light-bulb {
+    width: 26px;
+
+    height: 26px;
+
+    border-radius: 50%;
+
+    background: #374151;
+
+    box-shadow: inset 0 0 4px rgba(0,0,0,.5);
+
+    transition: .2s;
+}
+
+.light-bulb.light-red.is-on {
+    background: #ef4444;
+
+    box-shadow:
+        0 0 14px 4px rgba(239,68,68,.75),
+        inset 0 0 4px rgba(0,0,0,.3);
+}
+
+.light-bulb.light-yellow.is-on {
+    background: #facc15;
+
+    box-shadow:
+        0 0 14px 4px rgba(250,204,21,.75),
+        inset 0 0 4px rgba(0,0,0,.3);
+}
+
+.light-bulb.light-green.is-on {
+    background: #22c55e;
+
+    box-shadow:
+        0 0 14px 4px rgba(34,197,94,.75),
+        inset 0 0 4px rgba(0,0,0,.3);
+}
+
+/* =====================================================
    FIELD
 ===================================================== */
 
@@ -578,7 +671,7 @@ body {
     top: 28%;
 }
 
-.laser1 {
+.ir1 {
     left: 48%;
 
     top: 18%;
@@ -596,7 +689,7 @@ body {
     top: 53%;
 }
 
-.laser2 {
+.ir2 {
     left: 76%;
 
     top: 28%;
@@ -1742,8 +1835,8 @@ body {
     font-size: 18px;
 }
 
-#laser1,
-#laser2 {
+#ir1,
+#ir2 {
     font-size: 11px;
 }
 
@@ -1763,7 +1856,7 @@ body {
     left: 28%;
 }
 
-.laser1 {
+.ir1 {
     left: 48%;
 }
 
@@ -1775,7 +1868,7 @@ body {
     left: 49%;
 }
 
-.laser2 {
+.ir2 {
     left: 76%;
 }
 
@@ -2321,6 +2414,31 @@ body {
     <div class="field">
 
 
+        <!-- TRAFFIC LIGHT -->
+
+        <div id="trafficLight"
+             class="traffic-light">
+
+            <div class="traffic-light-title">
+                TRAFFIC LIGHT
+            </div>
+
+            <div class="traffic-light-body">
+
+                <div id="lightRed"
+                     class="light-bulb light-red"></div>
+
+                <div id="lightYellow"
+                     class="light-bulb light-yellow"></div>
+
+                <div id="lightGreen"
+                     class="light-bulb light-green"></div>
+
+            </div>
+
+        </div>
+
+
         <!-- TIMER -->
 
         <div id="raceTimer"
@@ -2414,19 +2532,19 @@ body {
         </div>
 
 
-        <!-- LASER 1 -->
+        <!-- IR 1 -->
 
-        <div id="laser1"
-             class="field-node laser1 node-off">
+        <div id="ir1"
+             class="field-node ir1 node-off">
 
-            L1
+            IR1
 
         </div>
 
         <div class="node-label"
              style="left: 51%; top: 13%;">
 
-            LASER 1
+            IR 1
 
             <small>
                 Sensor
@@ -2477,19 +2595,19 @@ body {
         </div>
 
 
-        <!-- LASER 2 -->
+        <!-- IR 2 -->
 
-        <div id="laser2"
-             class="field-node laser2 node-off">
+        <div id="ir2"
+             class="field-node ir2 node-off">
 
-            L2
+            IR2
 
         </div>
 
         <div class="node-label"
              style="left: 78%; top: 23%;">
 
-            LASER 2
+            IR 2
 
             <small>
                 Sensor
@@ -2618,7 +2736,7 @@ body {
 
             <div class="summary-box">
 
-                <div id="laserCount"
+                <div id="irCount"
                      class="summary-number">
 
                     0
@@ -2626,7 +2744,7 @@ body {
                 </div>
 
                 <div class="summary-text">
-                    Laser Active
+                    IR Triggered
                 </div>
 
             </div>
@@ -2696,7 +2814,7 @@ body {
                     </div>
 
                     <div class="device-type">
-                        Laser Trigger
+                        IR Trigger
                     </div>
 
                 </div>
@@ -2730,7 +2848,7 @@ body {
                     </div>
 
                     <div class="device-type">
-                        Laser Trigger
+                        IR Trigger
                     </div>
 
                 </div>
@@ -2815,20 +2933,20 @@ body {
         </div>
 
 
-        <!-- LASER 1 -->
+        <!-- IR 1 -->
 
         <div class="device">
 
             <div class="device-left">
 
                 <div class="device-icon">
-                    L1
+                    IR1
                 </div>
 
                 <div>
 
                     <div class="device-name">
-                        Laser 1
+                        IR 1
                     </div>
 
                     <div class="device-type">
@@ -2839,30 +2957,30 @@ body {
 
             </div>
 
-            <div id="laser1Status"
+            <div id="ir1Status"
                  class="badge badge-off">
 
-                OFF
+                WAITING
 
             </div>
 
         </div>
 
 
-        <!-- LASER 2 -->
+        <!-- IR 2 -->
 
         <div class="device">
 
             <div class="device-left">
 
                 <div class="device-icon">
-                    L2
+                    IR2
                 </div>
 
                 <div>
 
                     <div class="device-name">
-                        Laser 2
+                        IR 2
                     </div>
 
                     <div class="device-type">
@@ -2873,10 +2991,10 @@ body {
 
             </div>
 
-            <div id="laser2Status"
+            <div id="ir2Status"
                  class="badge badge-off">
 
-                OFF
+                WAITING
 
             </div>
 
@@ -4317,10 +4435,10 @@ function updateDoor(
 
 
 /* =====================================================
-   LASER UPDATE
+   IR SENSOR UPDATE
 ===================================================== */
 
-function updateLaser(
+function updateIR(
     id,
     status
 ) {
@@ -4358,7 +4476,7 @@ function updateLaser(
 
 
     if (
-        status === "DETECTED"
+        status === "TRIGGERED"
     ) {
 
         node.classList.add(
@@ -4367,7 +4485,7 @@ function updateLaser(
 
 
         node.innerHTML =
-            "DETECT";
+            "HIT";
 
 
         if (badge) {
@@ -4376,7 +4494,7 @@ function updateLaser(
                 "badge badge-detected";
 
             badge.innerHTML =
-                "DETECTED";
+                "TRIGGERED";
 
         }
 
@@ -4389,9 +4507,9 @@ function updateLaser(
 
 
         node.innerHTML =
-            id === "laser1"
-                ? "L1"
-                : "L2";
+            id === "ir1"
+                ? "IR1"
+                : "IR2";
 
 
         if (badge) {
@@ -4400,11 +4518,60 @@ function updateLaser(
                 "badge badge-off";
 
             badge.innerHTML =
-                "OFF";
+                "WAITING";
 
         }
 
     }
+
+}
+
+
+/* =====================================================
+   TRAFFIC LIGHT UPDATE
+===================================================== */
+
+function updateTrafficLight(
+    status
+) {
+
+    const red =
+        document.getElementById(
+            "lightRed"
+        );
+
+    const yellow =
+        document.getElementById(
+            "lightYellow"
+        );
+
+    const green =
+        document.getElementById(
+            "lightGreen"
+        );
+
+
+    if (!red || !yellow || !green) {
+
+        return;
+
+    }
+
+
+    red.classList.toggle(
+        "is-on",
+        status === "RED"
+    );
+
+    yellow.classList.toggle(
+        "is-on",
+        status === "YELLOW"
+    );
+
+    green.classList.toggle(
+        "is-on",
+        status === "GREEN"
+    );
 
 }
 
@@ -4559,17 +4726,26 @@ async function updateDashboard() {
 
 
         /* =============================================
-           LASERS
+           IR SENSORS
         ============================================= */
 
-        updateLaser(
-            "laser1",
-            state.laser1
+        updateIR(
+            "ir1",
+            state.ir1
         );
 
-        updateLaser(
-            "laser2",
-            state.laser2
+        updateIR(
+            "ir2",
+            state.ir2
+        );
+
+
+        /* =============================================
+           TRAFFIC LIGHT
+        ============================================= */
+
+        updateTrafficLight(
+            state.light
         );
 
 
@@ -4617,23 +4793,23 @@ async function updateDashboard() {
             ).length;
 
 
-        const lasers = [
+        const irSensors = [
 
-            state.laser1,
-            state.laser2
+            state.ir1,
+            state.ir2
 
         ];
 
 
-        const activeLasers =
-            lasers.filter(
+        const triggeredIR =
+            irSensors.filter(
                 function (
-                    laser
+                    ir
                 ) {
 
                     return (
-                        laser ===
-                        "DETECTED"
+                        ir ===
+                        "TRIGGERED"
                     );
 
                 }
@@ -4650,10 +4826,10 @@ async function updateDashboard() {
 
         document
             .getElementById(
-                "laserCount"
+                "irCount"
             )
             .innerText =
-            activeLasers;
+            triggeredIR;
 
 
         /* =============================================

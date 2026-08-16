@@ -31,13 +31,15 @@ let state = {
 
     door5: "CLOSED",
 
-    laser1: "NOT_DETECTED",
+    ir1: "WAITING",
 
-    laser2: "NOT_DETECTED",
+    ir2: "WAITING",
 
     switch1: "OFF",
 
     switch2: "OFF",
+
+    light: "YELLOW",
 
     system: "READY"
 
@@ -87,10 +89,11 @@ app.post("/api/reset", (req, res) => {
         door3: "CLOSED",
         door4: "CLOSED",
         door5: "CLOSED",
-        laser1: "NOT_DETECTED",
-        laser2: "NOT_DETECTED",
+        ir1: "WAITING",
+        ir2: "WAITING",
         switch1: "OFF",
         switch2: "OFF",
+        light: "YELLOW",
         system: "READY"
     };
     messages = [];
@@ -283,6 +286,8 @@ function processMessage(message) {
 
         state.door2 = "OPEN";
 
+        state.ir1 = "TRIGGERED";
+
     }
 
 
@@ -315,12 +320,16 @@ function processMessage(message) {
 
         state.door3 = "CLOSED";
 
+        state.ir2 = "TRIGGERED";
+
     }
 
 
     if (message === "DOOR 3 -> LOCKED") {
 
         state.door3 = "CLOSED";
+
+        state.ir2 = "TRIGGERED";
 
     }
 
@@ -365,41 +374,32 @@ function processMessage(message) {
 
         state.door5 = "CLOSED";
 
-    }
-
-
-    // =================================================
-    // LASER 1
-    // =================================================
-
-    if (message === "LASER 1 DETECTED") {
-
-        state.laser1 = "DETECTED";
-
-    }
-
-
-    if (message === "LASER 1 LOST") {
-
-        state.laser1 = "NOT_DETECTED";
+        state.ir2 = "TRIGGERED";
 
     }
 
 
     // =================================================
-    // LASER 2
+    // TRAFFIC LIGHT
     // =================================================
 
-    if (message === "LASER 2 DETECTED") {
+    if (message === "LIGHT -> RED") {
 
-        state.laser2 = "DETECTED";
+        state.light = "RED";
 
     }
 
 
-    if (message === "LASER 2 LOST") {
+    if (message === "LIGHT -> YELLOW") {
 
-        state.laser2 = "NOT_DETECTED";
+        state.light = "YELLOW";
+
+    }
+
+
+    if (message === "LIGHT -> GREEN") {
+
+        state.light = "GREEN";
 
     }
 
