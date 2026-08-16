@@ -52,6 +52,9 @@ let state = {
 
 let messages = [];
 
+// นับลำดับข้อความไปเรื่อยๆ ไม่รีเซ็ต ใช้ให้เว็บแยกข้อความซ้ำ/ใหม่ได้แม่นยำ แม้ log จะ shift
+let messageSeq = 0;
+
 
 // =====================================================
 // WEB SERVER
@@ -231,7 +234,9 @@ serial.on("data", (data) => {
         // เก็บ Log
         // -----------------------------------------
 
-        messages.push(message);
+        messageSeq++;
+
+        messages.push({ seq: messageSeq, text: message });
 
 
         // เก็บสูงสุด 100 ข้อความ

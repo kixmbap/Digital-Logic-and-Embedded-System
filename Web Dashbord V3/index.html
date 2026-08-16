@@ -4245,14 +4245,13 @@ function checkRaceMessages(
 
     messages.forEach(
         function (
-            message,
-            index
+            message
         ) {
 
             const key =
-                index +
-                "|" +
-                String(message);
+                String(
+                    message.seq
+                );
 
 
             if (
@@ -4272,7 +4271,7 @@ function checkRaceMessages(
 
 
             processRaceMessage(
-                message
+                message.text
             );
 
         }
@@ -4858,7 +4857,7 @@ async function updateDashboard() {
 
                             return `
                                 <div class="log-line">
-                                    ${escapeHtml(message)}
+                                    ${escapeHtml(message.text)}
                                 </div>
                             `;
 
