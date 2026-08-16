@@ -28,12 +28,6 @@ void setup() {
   servo5.attach(SERVO5_PIN);
 
   // เริ่มต้นให้ทุกประตูปิด
-  servo1.write(CLOSED_ANGLE);
-  
-  servo2.write(CLOSED_ANGLE);
-  servo3.write(CLOSED_ANGLE);
-  servo4.write(CLOSED_ANGLE);
-  servo5.write(CLOSED_ANGLE);
 
   delay(1000);
 
@@ -41,7 +35,7 @@ void setup() {
   Serial.println("   SERVO LOOP TEST START");
   Serial.println("==============================");
 
-  setServo(servo1, 1, CLOSED_ANGLE);
+  setServo(servo1, 1, 90);
 }
 
 void testServo(Servo &servo, int number) {
@@ -79,19 +73,18 @@ void loop() {
 
   // Servo 1
  testServo(servo1, 1);
-/*
+
   // Servo 2
-  testServo(servo2, 2);
+ // testServo(servo2, 2);
 
   // Servo 3
-  testServo(servo3, 3);
+ // testServo(servo3, 3);
 
   // Servo 4
-  testServo(servo4, 4);
+//  testServo(servo4, 4);
 
   // Servo 5
-  testServo(servo5, 5);
-*/
+//  testServo(servo5, 5);
   Serial.println("==============================");
   Serial.println("ALL SERVO TEST COMPLETE");
   Serial.println("==============================");
