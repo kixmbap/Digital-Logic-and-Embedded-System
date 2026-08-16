@@ -38,17 +38,17 @@ const int OPEN = 90;
 const int servo1close = 70;
 const int servo1open = 160;
 
-const int servo2close = 20;
-const int servo2open = 95;
+const int servo2close = 17;
+const int servo2open = 100;
 
-const int servo3close = 0;
-const int servo3open = 90;
+const int servo3close = 84;
+const int servo3open = 180;
 
-const int servo4close = 180;
-const int servo4open = 90;
+const int servo4close = 105;
+const int servo4open = 20;
 
-const int servo5close = 100;
-const int servo5open = 0;
+const int servo5close = 160;
+const int servo5open = 60;
 
 
 
