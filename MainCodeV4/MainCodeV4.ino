@@ -285,7 +285,7 @@ void checkIRstart(const int IRpin, int &lastIR, unsigned long &timer, bool &star
     if(lastIR == 0 && !startround){
       digitalWrite(yellow, HIGH);
       timer = millis();
-      light = timer;
+      light = 0;
       Serial.print("Time start now. (");
       Serial.print(timer);
       Serial.println(")");
@@ -396,11 +396,13 @@ void resetField() {
   lastIR = 0;
 
   // รีเซ็ตไฟจราจรกลับเป็นค่าเริ่มต้น (เหลือง)
+  /*
   digitalWrite(yellow, HIGH);
   digitalWrite(green, LOW);
   digitalWrite(red, LOW);
   light = millis();
   mil = 5000;
+  */
 
   // เริ่ม Timer ประตู 5 ใหม่
   door5Timer = millis();
