@@ -146,6 +146,13 @@ void setup() {
 
 //LOOP
 void loop() {
+  if (Serial.available() > 0) {
+    char cmd = Serial.read();
+    if (cmd == 'R' || cmd == 'r') {
+      resetField();
+    }
+  }
+
   timerCount(runtimer, interval, totalTime, startround, endround);
   checkIRstart(IRpin, lastIR, runtimer, startround);
   checkSWEND(swpin, totalTime, startround, endround);
@@ -355,6 +362,54 @@ void checkSWEND(const int swPin, unsigned long totaltime, bool &startround, bool
         printTime(mins, secs);
         Serial.print(" (");
         Serial.print(millis());
-        Serial.println(")");  
+        Serial.println(")");
   }
+}
+
+void resetField() {
+  // RESET → ปิดประตูทั้งหมด
+  door1.write(servo1close);
+  door2.write(servo2close);
+  door3.write(servo3close);
+  door4.write(servo4close);
+  door5.write(servo5close);
+
+  // Reset state
+  lastSwitch1 = HIGH;
+  lastSwitch2 = HIGH;
+  door1Opened = false;
+  door2Locked = false;
+  door3Locked = false;
+  door4Opened = false;
+  door5Opened = false;
+  door5Locked = false;
+  laser1Detected = false;
+  laser2Detected = false;
+
+  // รีเซ็ตรอบจับเวลา
+  startround = false;
+  endround = false;
+  totalTime = 0;
+  runtimer = 0;
+  lastIR = 0;
+
+  // รีเซ็ตไฟจราจรกลับเป็นค่าเริ่มต้น (เหลือง)
+  digitalWrite(yellow, HIGH);
+  digitalWrite(green, LOW);
+  digitalWrite(red, LOW);
+  light = millis();
+  mil = 5000;
+
+  // เริ่ม Timer ประตู 5 ใหม่
+  door5Timer = millis();
+
+  Serial.println("SYSTEM_RESET_COMPLETE");
+  Serial.println("Door 1 : CLOSED");
+  Serial.println("Door 2 : CLOSED");
+  Serial.println("Door 3 : CLOSED");
+  Serial.println("Door 4 : CLOSED");
+  Serial.println("Door 5 : CLOSED");
+  Serial.println("LIGHT -> YELLOW");
+  Serial.println("System Ready");
+  Serial.println("================================");
 }
