@@ -41,14 +41,14 @@ const int servo1open = 160;
 const int servo2close = 17;
 const int servo2open = 100;
 
-const int servo3close = 84;
+const int servo3close = 73;
 const int servo3open = 180;
 
 const int servo4close = 105;
 const int servo4open = 20;
 
-const int servo5close = 60;
-const int servo5open = 160;
+const int servo5close = 90;
+const int servo5open = 0;
 
 
 
@@ -170,7 +170,7 @@ void loop() {
       light = nowmillis;
       if(digitalRead(red) == HIGH){ //if it's now red check
         mil = 2500;
-        door5.write(servo5close);
+        door5.write(servo5open);
         digitalWrite(red, LOW);
         digitalWrite(yellow, LOW);
         digitalWrite(green, HIGH);
@@ -185,7 +185,7 @@ void loop() {
       }
       else if(digitalRead(yellow) == HIGH){ //if it's now yellow check
         mil = 5000;
-        door5.write(servo5open);
+        door5.write(servo5close);
         digitalWrite(red, HIGH);
         digitalWrite(yellow, LOW);
         digitalWrite(green, LOW);
