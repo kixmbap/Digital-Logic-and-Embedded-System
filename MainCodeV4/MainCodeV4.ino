@@ -35,8 +35,8 @@ Servo door5;
 const int CLOSED = 0;
 const int OPEN = 90;
 
-const int servo1close = 0;
-const int servo1open = 90;
+const int servo1close = 90;
+const int servo1open = 180;
 
 const int servo2close = 0;
 const int servo2open = 90;
@@ -47,8 +47,8 @@ const int servo3open = 90;
 const int servo4close = 0;
 const int servo4open = 90;
 
-const int servo5close = 0;
-const int servo5open = 90;
+const int servo5close = 90;
+const int servo5open = 0;
 
 
 
@@ -219,8 +219,8 @@ void loop() {
   if (door4Opened) {
     door4.write(servo4open);
   }
-  checkIRservo(IR1, door3, servo3close, door5Locked);
-  checkIRservo2(IR1, door5, servo5close, door5Locked);
+  checkIRservo3(IR2, door3, servo3close, door3Locked);
+  checkIRservo2(IR2, door5, servo5close, door5Locked);
   delay(50);
 }
 
