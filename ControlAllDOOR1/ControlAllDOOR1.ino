@@ -12,10 +12,22 @@ const int SERVO4_PIN = 5;
 const int SERVO5_PIN = 6;
 
 int state = 0;
-int angle = 0;
 int pinnum = 0;
 
+const int servo1close = 90;
+const int servo1open = 160;
 
+const int servo2close = 17;
+const int servo2open = 100;
+
+const int servo3close = 90;
+const int servo3open = 170;
+
+const int servo4close = 105;
+const int servo4open = 20;
+
+const int servo5close = 90;
+const int servo5open = 0;
 
 void setup() {
   // put your setup code here, to run once:
@@ -29,33 +41,24 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  Serial.println("Input Servo pin : ");
   while(Serial.available() == 0){
   }
   pinnum = Serial.parseInt();
-  Serial.print("Servo number : ");
-  Serial.println(pinnum);
 
-  while(Serial.available() == 0){
-  }
-  angle = Serial.parseInt();
-  Serial.print("ANGLE : ");
-  Serial.println(angle);
   switch(pinnum){
     case 1:
-    setServo(servo1, angle);
+    setServo(servo1, servo1open);
+    setServo(servo2, servo2open);
+    setServo(servo3, servo3open);
+    setServo(servo4, servo4open);
+    setServo(servo5, servo5open);
     break;
     case 2:
-    setServo(servo2, angle);
-    break;
-    case 3:
-    setServo(servo3, angle);
-    break;
-    case 4:
-    setServo(servo4, angle);
-    break;
-    case 5:
-    setServo(servo5, angle);
+    setServo(servo1, servo1close);
+    setServo(servo2, servo2close);
+    setServo(servo3, servo3close);
+    setServo(servo4, servo4close);
+    setServo(servo5, servo5close);
     break;
   }
 }

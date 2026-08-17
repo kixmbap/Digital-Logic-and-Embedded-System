@@ -35,14 +35,14 @@ Servo door5;
 const int CLOSED = 0;
 const int OPEN = 90;
 
-const int servo1close = 70;
+const int servo1close = 90;
 const int servo1open = 160;
 
 const int servo2close = 17;
 const int servo2open = 100;
 
-const int servo3close = 73;
-const int servo3open = 180;
+const int servo3close = 90;
+const int servo3open = 170;
 
 const int servo4close = 105;
 const int servo4open = 20;
@@ -86,6 +86,7 @@ unsigned long totalTime = 0;
 
 void setup() {
   Serial.begin(9600);
+  delay(1000);
   timerPinSetup();
 
   pinMode(yellow, OUTPUT);
@@ -235,6 +236,7 @@ void loop() {
   checkIRservo3(IR2, door3, servo3open, door3Locked);
   checkIRservo2(IR2, door5, servo5close, door5Locked);
   delay(50);
+
 }
 
 void timerPinSetup(){
@@ -283,8 +285,10 @@ void checkIRstart(const int IRpin, int &lastIR, unsigned long &timer, bool &star
   int nowIR = digitalRead(IRpin);
   if(nowIR == 1){
     if(lastIR == 0 && !startround){
+      digitalWrite(red, LOW);
+      digitalWrite(green, LOW);
       digitalWrite(yellow, HIGH);
-      mil = 0
+      mil = 0;
       nowmillis = millis();
       timer = millis();
       Serial.print("Time start now. (");
