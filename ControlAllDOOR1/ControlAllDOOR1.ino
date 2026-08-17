@@ -7,7 +7,7 @@ Servo servo5;
 
 const int SERVO1_PIN = 2;
 const int SERVO2_PIN = 3;
-const int SERVO3_PIN = 4;
+const int SERVO3_PIN = 13;
 const int SERVO4_PIN = 5;
 const int SERVO5_PIN = 6;
 
@@ -20,8 +20,12 @@ const int servo1open = 160;
 const int servo2close = 17;
 const int servo2open = 100;
 
+/*
 const int servo3close = 90;
 const int servo3open = 170;
+*/
+const int servo3close = 0;
+const int servo3open = 90;
 
 const int servo4close = 105;
 const int servo4open = 20;
