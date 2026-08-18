@@ -313,6 +313,16 @@ function escapeHTML(str) {
         .replace(/'/g, "&#39;");
 }
 
+function formatTime(totalSeconds) {
+    const mins = Math.floor(totalSeconds / 60);
+    const secs = totalSeconds - mins * 60;
+    const secsStr = secs.toFixed(2).padStart(5, "0");
+    if (mins > 0) {
+        return `${mins}:${secsStr} นาที`;
+    }
+    return `${secsStr} วิ`;
+}
+
 function igHandleHTML(p) {
     const value = p.ig || p.school || "-";
     if (value === "-") return "-";
@@ -346,7 +356,7 @@ function podiumContentHTML(p, rank) {
         <div class="podium-rank-badge">${rank}</div>
         <div class="podium-name">${escapeHTML(p.name)}</div>
         <div class="podium-ig">${igHandleHTML(p)}</div>
-        <div class="podium-time">${p.time.toFixed(2)} วิ</div>
+        <div class="podium-time">${formatTime(p.time)}</div>
     `;
 }
 
@@ -355,7 +365,7 @@ function restRowContentHTML(p, rank) {
         <div class="rest-rank">${rank}</div>
         <div class="rest-name">${escapeHTML(p.name)}</div>
         <div class="rest-ig">${igHandleHTML(p)}</div>
-        <div class="rest-time">${p.time.toFixed(2)} วิ</div>
+        <div class="rest-time">${formatTime(p.time)}</div>
     `;
 }
 
@@ -393,7 +403,7 @@ function renderPodium(top3) {
         if (podiumOccupantKeys[rank] === key) {
             if (p) {
                 const timeEl = contentEl.querySelector(".podium-time");
-                if (timeEl) timeEl.textContent = `${p.time.toFixed(2)} วิ`;
+                if (timeEl) timeEl.textContent = `${formatTime(p.time)}`;
             }
             continue;
         }
