@@ -41,7 +41,7 @@ const int servo1open = 160;
 const int servo2close = 17;
 const int servo2open = 100;
 
-const int servo3close = 10;
+const int servo3close = 0;
 const int servo3open = 90;
 
 const int servo4close = 105;
@@ -63,7 +63,6 @@ bool door3Locked = false;
 bool door4Opened = false;
 bool door5Opened = false;
 bool door5Locked = false;
-bool door5Free = false;
 
 // Laser
 bool laser1Detected = false;
@@ -121,7 +120,6 @@ void setup() {
   door3Locked = false;
   door4Opened = false;
   door5Opened = false;
-  door5Free = false;
   door5Locked = false;
   laser1Detected = false;
   laser2Detected = false;
@@ -167,7 +165,7 @@ void loop() {
     digitalWrite(yellow, LOW);
     digitalWrite(green, LOW);
     digitalWrite(red, HIGH);
-  } else if(door5Free == true){
+  } else if(door2Locked == true){
     door5.write(servo5open);
     digitalWrite(yellow, LOW);
     digitalWrite(green, HIGH);
@@ -183,7 +181,7 @@ void loop() {
         digitalWrite(yellow, LOW);
         digitalWrite(green, HIGH);
         Serial.println("LIGHT -> GREEN");
-        Serial.println("DOOR 5 -> CLOSED");
+        Serial.println("DOOR 5 -> OPEN");
       }else if(digitalRead(green) == HIGH){ //if it's now green check
         mil = 2500;
         digitalWrite(red, LOW);
@@ -198,7 +196,7 @@ void loop() {
         digitalWrite(yellow, LOW);
         digitalWrite(green, LOW);
         Serial.println("LIGHT -> RED");
-        Serial.println("DOOR 5 -> OPEN");
+        Serial.println("DOOR 5 -> CLOSED");
       }
     }
   }
@@ -314,7 +312,6 @@ void checkIRservo(const int IRpin, Servo door, const int angle, bool &doorlocked
     if(nowIR == LOW){
       doorlocked = true;
       door.write(angle);
-      door5Free = true;
       Serial.println("DOOR 2 -> OPEN");
     } 
   }
