@@ -120,6 +120,7 @@ void setup() {
   door3Locked = false;
   door4Opened = false;
   door5Opened = false;
+  door5Free = false;
   door5Locked = false;
   laser1Detected = false;
   laser2Detected = false;
@@ -165,6 +166,11 @@ void loop() {
     digitalWrite(yellow, LOW);
     digitalWrite(green, LOW);
     digitalWrite(red, HIGH);
+  } else if(door5Free == true){
+    door5.write(servo5open);
+    digitalWrite(yellow, LOW);
+    digitalWrite(green, HIGH);
+    digitalWrite(red, LOW);
   } else {
     nowmillis = millis();
     if(nowmillis - light >= mil){
@@ -307,6 +313,7 @@ void checkIRservo(const int IRpin, Servo door, const int angle, bool &doorlocked
     if(nowIR == LOW){
       doorlocked = true;
       door.write(angle);
+      door5Free = true;
       Serial.println("DOOR 2 -> OPEN");
     } 
   }
