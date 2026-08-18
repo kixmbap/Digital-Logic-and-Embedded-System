@@ -63,6 +63,7 @@ bool door3Locked = false;
 bool door4Opened = false;
 bool door5Opened = false;
 bool door5Locked = false;
+bool door5Free = false;
 
 // Laser
 bool laser1Detected = false;
