@@ -335,7 +335,7 @@ void checkIRservo3(const int IRpin, Servo door, const int angle, bool &doorlocke
     if(nowIR == LOW){
       doorlocked = true;
       door.write(angle);
-      Serial.println("DOOR 3 -> CLOSED");
+      Serial.println("DOOR 3 -> OPENED");
     } 
   }
 }
