@@ -232,9 +232,9 @@ void loop() {
   // ถ้าเปิดแล้ว → เปิดค้าง
   if (door4Opened) {
     door4.write(servo4open);
+    checkIRservo3(IR2, door3, servo3open, door3Locked);
+    checkIRservo2(IR2, door5, servo5close, door5Locked);
   }
-  checkIRservo3(IR2, door3, servo3open, door3Locked);
-  checkIRservo2(IR2, door5, servo5close, door5Locked);
   delay(50);
 
 }
