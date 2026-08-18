@@ -269,6 +269,223 @@ h1 {
     50% { opacity: 0.35; }
 }
 
+/* ===================== AMBIENT IDLE ANIMATION ===================== */
+
+.ambient-blobs {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.ambient-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(30px);
+    opacity: 0.45;
+    background: radial-gradient(circle, #3b82f6, transparent 72%);
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+}
+
+.ambient-blob:nth-child(1) {
+    width: 300px;
+    height: 300px;
+    top: -90px;
+    left: -90px;
+    animation-name: floatBlob1;
+    animation-duration: 34s;
+}
+
+.ambient-blob:nth-child(2) {
+    width: 240px;
+    height: 240px;
+    top: 40%;
+    right: -70px;
+    background: radial-gradient(circle, #2563eb, transparent 72%);
+    animation-name: floatBlob2;
+    animation-duration: 40s;
+    animation-delay: -8s;
+}
+
+.ambient-blob:nth-child(3) {
+    width: 360px;
+    height: 360px;
+    bottom: -140px;
+    left: 30%;
+    background: radial-gradient(circle, #1d4ed8, transparent 72%);
+    animation-name: floatBlob3;
+    animation-duration: 46s;
+    animation-delay: -20s;
+}
+
+.ambient-blob:nth-child(4) {
+    width: 220px;
+    height: 220px;
+    top: 8%;
+    right: 20%;
+    background: radial-gradient(circle, #60a5fa, transparent 72%);
+    animation-name: floatBlob4;
+    animation-duration: 30s;
+    animation-delay: -5s;
+}
+
+@keyframes floatBlob1 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    25% { transform: translate(50vw, 30vh) scale(1.1); }
+    50% { transform: translate(20vw, 65vh) scale(0.9); }
+    75% { transform: translate(-20vw, 25vh) scale(1.05); }
+}
+
+@keyframes floatBlob2 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    25% { transform: translate(-45vw, 20vh) scale(0.95); }
+    50% { transform: translate(-60vw, -30vh) scale(1.1); }
+    75% { transform: translate(-20vw, -50vh) scale(0.9); }
+}
+
+@keyframes floatBlob3 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    25% { transform: translate(30vw, -40vh) scale(1.05); }
+    50% { transform: translate(55vw, -10vh) scale(0.9); }
+    75% { transform: translate(15vw, 20vh) scale(1.1); }
+}
+
+@keyframes floatBlob4 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    25% { transform: translate(-25vw, -35vh) scale(1.1); }
+    50% { transform: translate(-50vw, 10vh) scale(0.95); }
+    75% { transform: translate(-15vw, 45vh) scale(1.05); }
+}
+
+/* ===================== LIVE TIMER ===================== */
+
+.live-timer-box {
+    max-width: 260px;
+    margin: 0 auto 30px;
+    background: #f9fafb;
+    border: 2px solid #93c5fd;
+    border-radius: 16px;
+    padding: 14px 20px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    transition: border-color 0.3s ease;
+}
+
+.live-timer-status {
+    font-size: 0.85rem;
+    color: #6b7280;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+}
+
+.live-timer-value {
+    font-size: 2.4rem;
+    font-weight: bold;
+    color: #1d4ed8;
+    font-family: "Courier New", monospace;
+}
+
+.live-timer-box.running {
+    border-color: #2563eb;
+    animation: liveTimerPulse 1.4s ease-in-out infinite;
+}
+
+.live-timer-box.running .live-timer-status {
+    color: #2563eb;
+}
+
+@keyframes liveTimerPulse {
+    0%, 100% { box-shadow: 0 2px 10px rgba(37,99,235,0.15); }
+    50% { box-shadow: 0 2px 20px rgba(37,99,235,0.4); }
+}
+
+/* ===================== RESULT POPUP ===================== */
+
+.result-popup-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.result-popup-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.result-popup-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 36px 48px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+    border: 3px solid #2563eb;
+    max-width: 90vw;
+    transform: scale(0.85) translateY(20px);
+    transition: transform 0.4s cubic-bezier(.34,1.56,.64,1);
+}
+
+.result-popup-overlay.active .result-popup-card {
+    transform: scale(1) translateY(0);
+}
+
+.result-popup-label {
+    font-size: 1rem;
+    color: #2563eb;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 14px;
+}
+
+.result-popup-photo,
+.result-popup-photo-placeholder {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto 14px;
+    border: 4px solid #2563eb;
+    background: #f3f4f6;
+}
+
+.result-popup-photo-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    font-weight: bold;
+    color: #9ca3af;
+}
+
+.result-popup-name {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #111827;
+    margin-bottom: 6px;
+}
+
+.result-popup-rank {
+    font-size: 1.1rem;
+    color: #4b5563;
+    margin-bottom: 10px;
+}
+
+.result-popup-time {
+    font-size: 2.2rem;
+    font-weight: bold;
+    color: #059669;
+}
+
 </style>
 </head>
 <body>
@@ -285,13 +502,27 @@ h1 {
   </defs>
 </svg>
 
+<div class="ambient-blobs">
+    <div class="ambient-blob"></div>
+    <div class="ambient-blob"></div>
+    <div class="ambient-blob"></div>
+    <div class="ambient-blob"></div>
+</div>
+
 <div class="wrap">
     <!--<h1>ท้าย CP</h1>-->
     <!-- <div class="subtitle"><span class="live-dot"></span>&middot; สถิติ</div> -->
 
+    <div id="liveTimerBox" class="live-timer-box">
+        <div class="live-timer-status" id="liveTimerStatus">รอเริ่มแข่ง</div>
+        <div class="live-timer-value" id="liveTimerValue">00:00</div>
+    </div>
+
     <div id="podiumArea"></div>
     <div id="restArea"></div>
 </div>
+
+<div id="resultPopupOverlay" class="result-popup-overlay" onclick="dismissResultPopup()"></div>
 
 <script>
 
@@ -504,10 +735,76 @@ function renderRestList(rest) {
     });
 }
 
+let hasInitializedSeen = false;
+let seenKeys = new Set();
+let popupQueue = [];
+let popupShowing = false;
+let popupDismissTimer = null;
+
+function resultPopupHTML(p, rank) {
+    const photoHTML = p.photo
+        ? `<img class="result-popup-photo" src="${p.photo}" alt="${escapeHTML(p.name)}">`
+        : `<div class="result-popup-photo-placeholder">${escapeHTML((p.name || "?").trim().charAt(0).toUpperCase() || "?")}</div>`;
+    return `
+        <div class="result-popup-card">
+            <div class="result-popup-label">ผลการแข่งขันล่าสุด</div>
+            ${photoHTML}
+            <div class="result-popup-name">${escapeHTML(p.name)}</div>
+            <div class="result-popup-rank">อันดับที่ ${rank}</div>
+            <div class="result-popup-time">${formatTime(p.time)}</div>
+        </div>
+    `;
+}
+
+function showNextPopup() {
+    const overlay = document.getElementById("resultPopupOverlay");
+    if (popupQueue.length === 0) {
+        popupShowing = false;
+        overlay.classList.remove("active");
+        return;
+    }
+    popupShowing = true;
+    const { p, rank } = popupQueue.shift();
+    overlay.innerHTML = resultPopupHTML(p, rank);
+    requestAnimationFrame(() => overlay.classList.add("active"));
+    popupDismissTimer = setTimeout(() => {
+        overlay.classList.remove("active");
+        setTimeout(showNextPopup, 350);
+    }, 4000);
+}
+
+function dismissResultPopup() {
+    if (!popupShowing) return;
+    clearTimeout(popupDismissTimer);
+    const overlay = document.getElementById("resultPopupOverlay");
+    overlay.classList.remove("active");
+    setTimeout(showNextPopup, 350);
+}
+
+function checkForNewFinishers(scores) {
+    if (!hasInitializedSeen) {
+        scores.forEach(p => seenKeys.add(keyFor(p)));
+        hasInitializedSeen = true;
+        return;
+    }
+    scores.forEach((p, idx) => {
+        const key = keyFor(p);
+        if (!seenKeys.has(key)) {
+            seenKeys.add(key);
+            popupQueue.push({ p, rank: idx + 1 });
+        }
+    });
+    if (!popupShowing && popupQueue.length > 0) {
+        showNextPopup();
+    }
+}
+
 function render() {
     const scores = loadLeaderboard();
     const podiumArea = document.getElementById("podiumArea");
     const restArea = document.getElementById("restArea");
+
+    checkForNewFinishers(scores);
 
     if (scores.length === 0) {
         podiumInitialized = false;
@@ -524,6 +821,109 @@ function render() {
     renderPodium(top3);
     renderRestList(rest);
 }
+
+/* ===================== LIVE TIMER (จากบอร์ดผ่าน server) ===================== */
+
+let liveRaceMs = 0;
+let liveRaceRunning = false;
+let processedSeqKeys = new Set();
+let lastMsgCount = 0;
+
+function parseArduinoTimeDash(text) {
+    let m = text.match(/Time\s+end\.\s+using\s+(\d+)\s+seconds/i);
+    if (m) return { type: "finish", ms: parseInt(m[1], 10) * 1000 };
+
+    m = text.match(/Time\s+end\.\s+using\s+(\d+):(\d+)\s+minutes/i);
+    if (m) return { type: "finish", ms: (parseInt(m[1], 10) * 60 + parseInt(m[2], 10)) * 1000 };
+
+    m = text.match(/Time\s*:\s*(\d+)\s+seconds/i);
+    if (m) return { type: "time", ms: parseInt(m[1], 10) * 1000 };
+
+    m = text.match(/Time\s*:\s*(\d+):(\d+)\s+minutes/i);
+    if (m) return { type: "time", ms: (parseInt(m[1], 10) * 60 + parseInt(m[2], 10)) * 1000 };
+
+    return null;
+}
+
+function formatLiveTime(ms) {
+    const totalSeconds = Math.floor(ms / 1000);
+    const mins = Math.floor(totalSeconds / 60);
+    const secs = totalSeconds % 60;
+    return String(mins).padStart(2, "0") + ":" + String(secs).padStart(2, "0");
+}
+
+function updateLiveTimerUI() {
+    const box = document.getElementById("liveTimerBox");
+    const valueEl = document.getElementById("liveTimerValue");
+    const statusEl = document.getElementById("liveTimerStatus");
+    if (!box) return;
+    valueEl.textContent = formatLiveTime(liveRaceMs);
+    if (liveRaceRunning) {
+        box.classList.add("running");
+        statusEl.textContent = "กำลังแข่งขัน";
+    } else {
+        box.classList.remove("running");
+        statusEl.textContent = "รอเริ่มแข่ง";
+    }
+}
+
+function processLiveMessage(text) {
+    const upper = text.toUpperCase();
+
+    if (upper.includes("TIME START NOW") || upper.includes("START NOW") || upper.includes("RACE START")) {
+        liveRaceRunning = true;
+        liveRaceMs = 0;
+        updateLiveTimerUI();
+        return;
+    }
+
+    if (upper.includes("SYSTEM_RESET_COMPLETE")) {
+        liveRaceRunning = false;
+        liveRaceMs = 0;
+        updateLiveTimerUI();
+        return;
+    }
+
+    const parsed = parseArduinoTimeDash(text);
+    if (parsed) {
+        liveRaceMs = parsed.ms;
+        if (parsed.type === "finish") {
+            liveRaceRunning = false;
+        }
+        updateLiveTimerUI();
+    }
+}
+
+function checkLiveMessages(messages) {
+    if (!Array.isArray(messages) || messages.length === 0) return;
+    if (messages.length < lastMsgCount) processedSeqKeys.clear();
+
+    messages.forEach((msg) => {
+        const key = String(msg.seq);
+        if (processedSeqKeys.has(key)) return;
+        processedSeqKeys.add(key);
+        processLiveMessage(String(msg.text).trim());
+    });
+
+    lastMsgCount = messages.length;
+    if (processedSeqKeys.size > 1000) {
+        processedSeqKeys.clear();
+    }
+}
+
+async function pollLiveState() {
+    try {
+        const res = await fetch("/api/state", { cache: "no-store" });
+        if (!res.ok) return;
+        const data = await res.json();
+        checkLiveMessages(data.messages || []);
+    } catch (e) {
+        // เงียบไว้ ถ้าเชื่อมต่อ server ไม่ได้ ไม่ต้องไปรบกวนส่วนอื่นของ dashboard
+    }
+}
+
+pollLiveState();
+setInterval(pollLiveState, 500);
 
 render();
 setInterval(render, 1000);

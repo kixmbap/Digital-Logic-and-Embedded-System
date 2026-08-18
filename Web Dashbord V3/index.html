@@ -5426,7 +5426,7 @@ function showAllTimeLeaderboard() {
     tbody.innerHTML = "";
 
     if (allTimeLeaderboard.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: #9ca3af; padding: 20px;">ยังไม่มีประวัติการแข่งขัน</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: #9ca3af; padding: 20px;">ยังไม่มีประวัติการแข่งขัน</td></tr>`;
     } else {
         allTimeLeaderboard.forEach((p, idx) => {
             const tr = document.createElement("tr");
@@ -5436,6 +5436,9 @@ function showAllTimeLeaderboard() {
                 <td>${igHandleHTML(p.ig || p.school)}</td>
                 <td style="text-align: right; font-weight: bold; color: #10b981;">${p.time.toFixed(2)} วินาที</td>
                 <td style="text-align: center; color: #6b7280; font-size: 0.85rem;">${p.date || "-"}</td>
+                <td style="text-align: center;">
+                    <button class="btn-secondary" style="background:#ef4444;color:white;padding:4px 10px;font-size:0.8rem;" onclick="deleteAllTimeEntry(${idx})">ลบ</button>
+                </td>
             `;
             tr.classList.add(idx === 0 ? "leaderboard-row-first" : "leaderboard-row-in");
             tr.style.animationDelay = (idx * 0.08) + "s";
@@ -5448,6 +5451,16 @@ function showAllTimeLeaderboard() {
 
 function closeAllTimeLeaderboard() {
     document.getElementById("allTimeLeaderboardModal").classList.remove("active");
+}
+
+function deleteAllTimeEntry(idx) {
+    const entry = allTimeLeaderboard[idx];
+    if (!entry) return;
+    if (confirm(`ต้องการลบสถิติของ "${entry.name}" หรือไม่? การกระทำนี้ไม่สามารถย้อนกลับได้`)) {
+        allTimeLeaderboard.splice(idx, 1);
+        localStorage.setItem("robot_field_alltime_scores", JSON.stringify(allTimeLeaderboard));
+        showAllTimeLeaderboard();
+    }
 }
 
 function clearAllTimeLeaderboard() {
@@ -5646,6 +5659,7 @@ finishRace = function(finalMilliseconds) {
                             <th>IG</th>
                             <th style="width: 120px; text-align: right;">เวลา (วินาที)</th>
                             <th style="width: 120px; text-align: center;">วันที่</th>
+                            <th style="width: 70px; text-align: center;">ลบ</th>
                         </tr>
                     </thead>
                     <tbody id="allTimeLeaderboardTable">
