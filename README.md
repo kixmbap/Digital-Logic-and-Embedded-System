@@ -175,3 +175,6 @@ Arduino จะส่งข้อมูลผ่าน Serial (Baud Rate: `9600`)
 * **ระบบและการรีเซ็ต (System)**:
   * `System Ready` : ระบบพร้อมใช้งาน (ส่งตอน Setup)
   * `SYSTEM_RESET_COMPLETE` : รีเซ็ตสนามเสร็จสมบูรณ์ (ตอบสนองต่อคำสั่ง `R`)
+
+## 8. น้องๆลองเล่น 
+ <img width="1036" height="1548" alt="image" src="https://github.com/user-attachments/assets/26afb73b-53a3-40db-bf4b-019889a78359" />
