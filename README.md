@@ -1,9 +1,6 @@
 ## Arduino Mega2560 Rev3 / Arduino UNO
 <img width="300" height="300" alt="image" src="https://github.com/user-attachments/assets/25f6151c-f29a-40ac-b301-cf5f28af273e" />
 
-## สนาม
-<img width="1000" height="1000" alt="2" src="https://github.com/user-attachments/assets/a02e5e86-a1db-4ea6-b036-eac4f73f008b" />
-
 **รูปสนามจริง (ภาพรวมทั้งหมด)**
 <img width="1000" height="1500" alt="image" src="https://github.com/user-attachments/assets/133459f0-1b3a-4bd6-a419-bb44a4c91cf7" />
 
