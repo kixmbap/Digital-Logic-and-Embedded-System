@@ -5,7 +5,8 @@
 <img width="1000" height="1000" alt="2" src="https://github.com/user-attachments/assets/a02e5e86-a1db-4ea6-b036-eac4f73f008b" />
 
 **รูปสนามจริง (ภาพรวมทั้งหมด)**
-<!-- แนบรูปสนามจริงแบบเห็นภาพรวมทั้งหมด 1 รูป ที่นี่ -->
+<img width="1000" height="1500" alt="image" src="https://github.com/user-attachments/assets/133459f0-1b3a-4bd6-a419-bb44a4c91cf7" />
+
 
 ---
 
@@ -133,7 +134,7 @@
    * ตรวจสอบว่าบอร์ด Arduino เชื่อมต่ออยู่ที่พอร์ตใดของคอมพิวเตอร์ (เช่น `COM7` ใน Windows หรือ `/dev/ttyUSB0` ใน Linux/macOS)
    * เข้าไปแก้ไขพอร์ตในไฟล์ `server.js` ที่บรรทัดที่ 13:
      ```javascript
-     const SERIAL_PORT = "COM7"; // เปลี่ยนให้ตรงกับพอร์ตของคอมพิวเตอร์คุณ
+     const SERIAL_PORT = "COM7"; // เปลี่ยนให้ตรงกับพอร์ตของคอมพิวเตอร์
      ```
 4. **เริ่มการทำงานของเซิร์ฟเวอร์**:
    พิมพ์คำสั่งรันเซิร์ฟเวอร์:
@@ -148,10 +149,12 @@
 ### ภาพหน้าจอ Web Dashboard
 
 **หน้า Robot Field Dashboard (`index.html`)**
-<!-- แนบรูปภาพหน้า index.html ที่นี่ -->
+<img width="1000" height="1500" alt="image" src="https://github.com/user-attachments/assets/fd1f995e-5d68-4ed0-8cad-317d53ee4657" />
+
 
 **หน้า Podium Dashboard (`dashboard.html`)**
-<!-- แนบรูปภาพหน้า dashboard.html ที่นี่ -->
+<img width="1000" height="1500" alt="image" src="https://github.com/user-attachments/assets/4de8e581-1086-4915-8cb5-e6ca6f658a6b" />
+
 
 ---
 
